@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.maindata.bom.mapper.YujiakejiBomDetailMapper">
+
+	<delete id="deleteByMainId" parameterType="java.lang.String">
+		DELETE 
+		FROM  yujiakeji_bom_detail 
+		WHERE
+			 pid = #{mainId} 	</delete>
+	
+	<select id="selectByMainId" parameterType="java.lang.String" resultType="org.jeecg.modules.maindata.bom.entity.YujiakejiBomDetail">
+        SELECT t0.*,
+               t1.specifications,
+               t1.unit       as unit,
+               t1.unit_price as unitPrice
+        FROM yujiakeji_bom_detail t0
+                 INNER JOIN yujiakeji_materials t1 ON t1.material_code = t0.material_code
+        WHERE t0.pid = #{mainId}    </select>
+</mapper>

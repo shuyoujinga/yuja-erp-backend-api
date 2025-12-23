@@ -1,0 +1,96 @@
+package org.jeecg.modules.pur.purreturn.entity;
+
+import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.UnsupportedEncodingException;
+
+/**
+ * @Description: 采购退货_明细
+ * @Author: 舒有敬
+ * @Date:   2025-12-08
+ * @Version: V1.0
+ */
+@ApiModel(value="pur_return_detail对象", description="采购退货_明细")
+@Data
+@TableName("pur_return_detail")
+public class PurReturnDetail implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+	/**主键*/
+	@TableId(type = IdType.ASSIGN_ID)
+    @ApiModelProperty(value = "主键")
+    private String id;
+	/**创建人*/
+    @ApiModelProperty(value = "创建人")
+    private String createBy;
+	/**创建日期*/
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "创建日期")
+    private Date createTime;
+	/**更新人*/
+    @ApiModelProperty(value = "更新人")
+    private String updateBy;
+	/**更新日期*/
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "更新日期")
+    private Date updateTime;
+	/**所属部门*/
+    @ApiModelProperty(value = "所属部门")
+    private String sysOrgCode;
+	/**主表ID*/
+    @ApiModelProperty(value = "主表ID")
+    private String pid;
+	/**订单明细ID*/
+	@Excel(name = "订单明细ID", width = 15)
+    @ApiModelProperty(value = "订单明细ID")
+    private String orderDetailId;
+	/**物料*/
+	@Excel(name = "物料", width = 15)
+    @ApiModelProperty(value = "物料")
+    private String materialCode;
+	/**订单数*/
+	@Excel(name = "订单数", width = 15)
+    @ApiModelProperty(value = "订单数")
+    private Double orderQty;
+	/**单价*/
+	@Excel(name = "单价", width = 15)
+    @ApiModelProperty(value = "单价")
+    private Double orderUnitPrice;
+	/**订单金额*/
+	@Excel(name = "订单金额", width = 15)
+    @ApiModelProperty(value = "订单金额")
+    private Double orderAmount;
+	/**退货数*/
+	@Excel(name = "退货数", width = 15)
+    @ApiModelProperty(value = "退货数")
+    private Double qty;
+	/**退货单价*/
+	@Excel(name = "退货单价", width = 15)
+    @ApiModelProperty(value = "退货单价")
+    private Double unitPrice;
+	/**退货金额*/
+	@Excel(name = "退货金额", width = 15)
+    @ApiModelProperty(value = "退货金额")
+    private Double amount;
+	/**备注*/
+	@Excel(name = "备注", width = 15)
+    @ApiModelProperty(value = "备注")
+    private String remark;
+	/**是否有效*/
+	@Excel(name = "是否有效", width = 15)
+    @ApiModelProperty(value = "是否有效")
+    @TableLogic
+    private Double delFlag;
+}

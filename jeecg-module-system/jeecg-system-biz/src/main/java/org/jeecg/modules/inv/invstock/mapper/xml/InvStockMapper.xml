@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.inv.invstock.mapper.InvStockMapper">
+
+    <select id="queryPageWithMaterial" resultType="org.jeecg.modules.inv.invstock.entity.InvStock">
+        SELECT a.*,
+        b.material_name,
+        b.unit,
+        b.specifications
+        FROM inv_stock a
+        LEFT JOIN yujiakeji_materials b ON b.material_code = a.material_code
+        <where>
+            <if test="paramMap.materialCode != null and paramMap.materialCode.length > 0">
+                AND a.material_code = #{paramMap.materialCode[0]}
+            </if>
+            <if test="paramMap.warehouseCode != null and paramMap.warehouseCode.length > 0">
+                AND a.warehouse_code = #{paramMap.warehouseCode[0]}
+            </if>
+            AND a.del_flag = 0
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="queryListWithMaterial" resultType="org.jeecg.modules.inv.invstock.entity.InvStock">
+        SELECT a.*,
+        b.material_name,
+        b.unit           AS unit,
+        b.specifications AS specifications
+        FROM inv_stock a
+        LEFT JOIN yujiakeji_materials b ON b.material_code = a.material_code
+        <where>
+            <if test="paramMap.materialCode != null">
+                AND a.material_code = #{paramMap.materialCode[0]}
+            </if>
+            <if test="paramMap.warehouseCode != null">
+                AND a.warehouse_code = #{paramMap.warehouseCode[0]}
+            </if>
+        AND a.del_flag=0
+        </where>
+    </select>
+
+
+</mapper>

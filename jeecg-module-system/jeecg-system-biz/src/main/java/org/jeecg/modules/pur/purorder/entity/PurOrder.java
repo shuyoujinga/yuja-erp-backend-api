@@ -1,0 +1,121 @@
+package org.jeecg.modules.pur.purorder.entity;
+
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.jeecg.common.aspect.annotation.Dict;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * @Description: 采购订单
+ * @Author: 舒有敬
+ * @Date:   2025-11-28
+ * @Version: V1.0
+ */
+@ApiModel(value="pur_order对象", description="采购订单")
+@Data
+@TableName("pur_order")
+public class PurOrder implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+	/**主键*/
+	@TableId(type = IdType.ASSIGN_ID)
+    @ApiModelProperty(value = "主键")
+    private String id;
+	/**创建人*/
+    @ApiModelProperty(value = "创建人")
+    @Excel(name = "创建人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    private String createBy;
+	/**创建日期*/
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "创建日期")
+    private Date createTime;
+	/**更新人*/
+    @ApiModelProperty(value = "更新人")
+    private String updateBy;
+	/**更新日期*/
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "更新日期")
+    private Date updateTime;
+	/**所属部门*/
+    @ApiModelProperty(value = "所属部门")
+    @Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    private String sysOrgCode;
+	/**采购申请单*/
+    @ApiModelProperty(value = "采购申请单ID")
+    private String applyId;
+    /**采购申请单*/
+    @Excel(name = "采购申请单", width = 15)
+    @ApiModelProperty(value = "采购申请单")
+    private String applyDocCode;
+	/**供应商*/
+	@Excel(name = "供应商", width = 15, dictTable = "yujiakeji_suppliers", dicText = "name", dicCode = "code")
+    @Dict(dictTable = "yujiakeji_suppliers", dicText = "name", dicCode = "code")
+    @ApiModelProperty(value = "供应商")
+    private String supplierCode;
+	/**采购类型*/
+	@Excel(name = "采购类型", width = 15, dicCode = "dict_pur_order_type")
+    @Dict(dicCode = "dict_pur_order_type")
+    @ApiModelProperty(value = "采购类型")
+    private Integer orderType;
+	/**采购订单*/
+	@Excel(name = "采购订单", width = 15)
+    @ApiModelProperty(value = "采购订单")
+    private String docCode;
+	/**制单日期*/
+	@Excel(name = "制单日期", width = 15, format = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @ApiModelProperty(value = "制单日期")
+    private Date docTime;
+	/**对方单号*/
+	@Excel(name = "对方单号", width = 15)
+    @ApiModelProperty(value = "对方单号")
+    private String externalOrderNo;
+	/**金额合计*/
+	@Excel(name = "金额合计", width = 15)
+    @ApiModelProperty(value = "金额合计")
+    private Double amount;
+	/**审核状态*/
+	@Excel(name = "审核状态", width = 15,dicCode = "dict_audit_status")
+    @ApiModelProperty(value = "审核状态")
+    @Dict(dicCode = "dict_audit_status")
+    private Integer audit;
+	/**审核人*/
+    @Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @ApiModelProperty(value = "审核人")
+    private String auditBy;
+	/**审核时间*/
+	@Excel(name = "审核时间", width = 15, format = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @ApiModelProperty(value = "审核时间")
+    private Date auditTime;
+	/**备注*/
+	@Excel(name = "备注", width = 15)
+    @ApiModelProperty(value = "备注")
+    private String remark;
+	/**是否有效*/
+	@Excel(name = "是否有效", width = 15)
+    @ApiModelProperty(value = "是否有效")
+    @TableLogic
+    private Integer delFlag;
+    /**状态*/
+    @Excel(name = "状态", width = 15,dicCode = "dict_pur_status")
+    @Dict(dicCode = "dict_pur_status")
+    private Integer status;
+}
