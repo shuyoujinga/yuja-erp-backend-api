@@ -115,7 +115,7 @@ public class AutoLogAspect {
 
 
     /**
-     * 获取操作类型
+     * 获取操作类型哈哈
      */
     private int getOperateType(String methodName,int operateType) {
         if (operateType > 0) {
