@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollectionUtil;
 import org.constant.Constants;
+import org.jeecg.modules.aop.DeleteCheckAudit;
 import org.jeecg.modules.maindata.bom.vo.AuditRequest;
+import org.jeecg.modules.pur.purreceive.entity.PurReceive;
+import org.jeecg.modules.pur.purreceive.service.IPurReceiveService;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -149,6 +152,7 @@ public class PurOrderController {
     @ApiOperation(value = "采购订单-批量删除", notes = "采购订单-批量删除")
     @RequiresPermissions("purorder:pur_order:deleteBatch")
     @DeleteMapping(value = "/deleteBatch")
+    @DeleteCheckAudit(service = IPurOrderService.class,entity = PurOrder.class)
     public Result<String> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         this.purOrderService.delBatchMain(Arrays.asList(ids.split(",")));
         return Result.OK("批量删除成功！");

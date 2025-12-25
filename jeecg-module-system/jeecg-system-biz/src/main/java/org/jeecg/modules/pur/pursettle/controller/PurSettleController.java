@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollectionUtil;
 import org.constant.Constants;
+import org.jeecg.modules.aop.DeleteCheckAudit;
 import org.jeecg.modules.maindata.bom.vo.AuditRequest;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
@@ -149,6 +150,7 @@ public class PurSettleController {
 	@ApiOperation(value="采购结算-批量删除", notes="采购结算-批量删除")
     @RequiresPermissions("pursettle:pur_settle:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = IPurSettleService.class,entity = PurSettle.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.purSettleService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
