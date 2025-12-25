@@ -44,5 +44,8 @@ public interface IPurSettleService extends IService<PurSettle> {
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+	int unAudit(List<String> ids);
+
+	int audit(List<String> ids);
 }

@@ -1,6 +1,10 @@
 package org.jeecg.modules.pur.pursettle.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import org.apache.shiro.SecurityUtils;
 import org.constant.Constants;
+import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.modules.pur.purreceive.entity.PurReceive;
 import org.jeecg.modules.pur.pursettle.entity.PurSettle;
 import org.jeecg.modules.pur.pursettle.entity.PurSettleDetail;
 import org.jeecg.modules.pur.pursettle.mapper.PurSettleDetailMapper;
@@ -15,9 +19,7 @@ import org.utils.AmountUtils;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @Description: 采购结算
@@ -93,5 +95,63 @@ public class PurSettleServiceImpl extends ServiceImpl<PurSettleMapper, PurSettle
 			purSettleMapper.deleteById(id);
 		}
 	}
-	
+	@Override
+	public int audit(List<String> ids) {
+		List<String> list = Arrays.asList(ids.toArray(new String[ids.size()]));
+
+		List<PurSettle> purSettles = baseMapper.selectBatchIds(list);
+
+
+
+
+
+		return updateAuditStatus(ids, Constants.DICT_AUDIT_STATUS.YES);
+	}
+
+
+
+	@Override
+	public int unAudit(List<String> ids) {
+		List<String> list = Arrays.asList(ids.toArray(new String[ids.size()]));
+
+		List<PurSettle> purSettles = baseMapper.selectBatchIds(list);
+
+		return updateAuditStatus(ids, Constants.DICT_AUDIT_STATUS.NO);
+	}
+
+
+	/**
+	 * 批量更新审核状态
+	 *
+	 * @param ids    待更新记录ID列表
+	 * @param status 审核状态（YES/NO）
+	 * @return 更新数量
+	 */
+	private int updateAuditStatus(List<String> ids, Integer status) {
+		LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+		if (CollectionUtil.isEmpty(ids)) {
+			return 0;
+		}
+
+		List<PurSettle> records = baseMapper.selectBatchIds(ids);
+		if (CollectionUtil.isEmpty(records)) {
+			return 0;
+		}
+
+		int count = 0;
+		for (PurSettle record : records) {
+
+			if (!status.equals(record.getAudit())) {
+				record.setAudit(status);
+				record.setAuditBy(sysUser.getUsername());
+				record.setAuditTime(new Date());
+				count++;
+			}
+		}
+
+		if (count > 0) {
+			updateBatchById(records);
+		}
+		return count;
+	}
 }

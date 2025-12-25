@@ -71,7 +71,8 @@ public class SalPrepay implements Serializable {
     @ApiModelProperty(value = "审核状态")
     private Integer audit;
 	/**审核人*/
-	@Excel(name = "审核人", width = 15)
+	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
+@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/
