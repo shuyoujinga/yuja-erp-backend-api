@@ -117,6 +117,8 @@ public class Constants {
         String CGSH = "ZA";
         //物料凭证
         String WLPZ = "MV";
+        //采购结算
+        String CGJS = "JS";
     }
 
     /**

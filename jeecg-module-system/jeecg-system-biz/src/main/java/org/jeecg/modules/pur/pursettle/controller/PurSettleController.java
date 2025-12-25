@@ -181,6 +181,19 @@ public class PurSettleController {
 		List<PurSettleDetail> purSettleDetailList = purSettleDetailService.selectByMainId(id);
 		return Result.OK(purSettleDetailList);
 	}
+	 /**
+	  * 通过id查询
+	  *
+	  * @param id
+	  * @return
+	  */
+	 //@AutoLog(value = "采购结算_明细通过主表ID查询")
+	 @ApiOperation(value="采购结算_明细主表ID查询", notes="采购结算_明细-通主表ID查询")
+	 @GetMapping(value = "/queryPurSettleDetailByTargetId")
+	 public Result<List<PurSettleDetail>> queryPurSettleDetailListByTargetId(@RequestParam(name="id",required=true) String id) {
+		 List<PurSettleDetail> purSettleDetailList = purSettleDetailService.selectByTargetId(id);
+		 return Result.OK(purSettleDetailList);
+	 }
 
     /**
     * 导出excel

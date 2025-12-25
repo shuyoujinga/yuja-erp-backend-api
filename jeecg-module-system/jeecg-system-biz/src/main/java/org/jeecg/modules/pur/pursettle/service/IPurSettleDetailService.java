@@ -19,4 +19,6 @@ public interface IPurSettleDetailService extends IService<PurSettleDetail> {
 	 * @return List<PurSettleDetail>
 	 */
 	public List<PurSettleDetail> selectByMainId(String mainId);
+
+	List<PurSettleDetail> selectByTargetId(String id);
 }

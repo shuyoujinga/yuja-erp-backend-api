@@ -64,11 +64,11 @@ public class PurSettle implements Serializable {
 	@Excel(name = "供应商", width = 15, dictTable = "yujiakeji_suppliers", dicText = "name", dicCode = "code")
     @Dict(dictTable = "yujiakeji_suppliers", dicText = "name", dicCode = "code")
     @ApiModelProperty(value = "供应商")
-    private String suplierCode;
+    private String supplierCode;
 	/**采购收货_IDS*/
-	@Excel(name = "采购收货_IDS", width = 15)
     @ApiModelProperty(value = "采购收货_IDS")
     private String receiveIds;
+
 	/**收货单号*/
 	@Excel(name = "收货单号", width = 15)
     @ApiModelProperty(value = "收货单号")
