@@ -76,8 +76,8 @@ public class InvMiscOutPage {
 	@Excel(name = "状态", width = 15)
 	@ApiModelProperty(value = "状态")
     private Integer status;
-	/**审核状态*/
-	@Excel(name = "审核状态", width = 15)
+	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
+    @Dict(dicCode = "dict_audit_status")
 	@ApiModelProperty(value = "审核状态")
     private Integer audit;
 	/**审核人*/

@@ -49,7 +49,9 @@ public class PrdProcess implements Serializable {
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
 	/**所属部门*/
-    @ApiModelProperty(value = "所属部门")
+	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**工序编码*/
 	@Excel(name = "工序编码", width = 15)

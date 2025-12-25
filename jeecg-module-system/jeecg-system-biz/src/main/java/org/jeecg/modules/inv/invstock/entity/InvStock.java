@@ -51,7 +51,9 @@ public class InvStock implements Serializable {
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
 	/**所属部门*/
-    @ApiModelProperty(value = "所属部门")
+	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**仓库*/
 	@Excel(name = "仓库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")

@@ -81,7 +81,9 @@ public class InvMoveType implements Serializable {
     @ApiModelProperty(value = "更新人")
     private String updateBy;
 	/**所属部门*/
-    @ApiModelProperty(value = "所属部门")
+	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**是否有效*/
 	@Excel(name = "是否有效", width = 15)

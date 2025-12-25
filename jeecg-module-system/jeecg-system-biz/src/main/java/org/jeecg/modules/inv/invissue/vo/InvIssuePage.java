@@ -68,8 +68,8 @@ public class InvIssuePage {
 	@Excel(name = "领用组织", width = 15)
 	@ApiModelProperty(value = "领用组织")
     private String orgCode;
-	/**审核状态*/
-	@Excel(name = "审核状态", width = 15)
+	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
+    @Dict(dicCode = "dict_audit_status")
 	@ApiModelProperty(value = "审核状态")
     private Integer audit;
 	/**审核人*/

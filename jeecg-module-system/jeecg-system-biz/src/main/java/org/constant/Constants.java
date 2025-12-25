@@ -119,6 +119,8 @@ public class Constants {
         String WLPZ = "MV";
         //采购结算
         String CGJS = "JS";
+        //采购付款
+        String CGFK = "FK";
     }
 
     /**

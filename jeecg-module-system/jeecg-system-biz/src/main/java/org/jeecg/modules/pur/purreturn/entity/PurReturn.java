@@ -48,7 +48,9 @@ public class PurReturn implements Serializable {
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
 	/**所属部门*/
-    @ApiModelProperty(value = "所属部门")
+	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**退货单号 */
 	@Excel(name = "退货单号 ", width = 15)
@@ -64,8 +66,8 @@ public class PurReturn implements Serializable {
 	@Excel(name = "供应商", width = 15)
     @ApiModelProperty(value = "供应商")
     private String supplierCode;
-	/**审核状态*/
-	@Excel(name = "审核状态", width = 15)
+	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
+    @Dict(dicCode = "dict_audit_status")
     @ApiModelProperty(value = "审核状态")
     private Integer audit;
 	/**审核人*/

@@ -48,7 +48,9 @@ public class InvIssue implements Serializable {
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
 	/**所属部门*/
-    @ApiModelProperty(value = "所属部门")
+	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**领用单号*/
 	@Excel(name = "领用单号", width = 15)
@@ -72,8 +74,8 @@ public class InvIssue implements Serializable {
 	@Excel(name = "领用组织", width = 15)
     @ApiModelProperty(value = "领用组织")
     private String orgCode;
-	/**审核状态*/
-	@Excel(name = "审核状态", width = 15)
+	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
+    @Dict(dicCode = "dict_audit_status")
     @ApiModelProperty(value = "审核状态")
     private Integer audit;
 	/**审核人*/

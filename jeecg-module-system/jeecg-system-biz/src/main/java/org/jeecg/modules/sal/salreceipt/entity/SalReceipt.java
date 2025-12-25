@@ -48,7 +48,9 @@ public class SalReceipt implements Serializable {
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
 	/**所属部门*/
-    @ApiModelProperty(value = "所属部门")
+	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**收款单号*/
 	@Excel(name = "收款单号", width = 15)
@@ -96,8 +98,8 @@ public class SalReceipt implements Serializable {
 	@Excel(name = "实收合计", width = 15)
     @ApiModelProperty(value = "实收合计")
     private Double amount;
-	/**审核状态*/
-	@Excel(name = "审核状态", width = 15)
+	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
+    @Dict(dicCode = "dict_audit_status")
     @ApiModelProperty(value = "审核状态")
     private Integer audit;
 	/**审核人*/

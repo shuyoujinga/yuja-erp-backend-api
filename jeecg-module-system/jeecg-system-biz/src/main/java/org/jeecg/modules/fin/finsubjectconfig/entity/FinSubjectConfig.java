@@ -48,7 +48,9 @@ public class FinSubjectConfig implements Serializable {
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
 	/**所属部门*/
-    @ApiModelProperty(value = "所属部门")
+	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**父级节点*/
 	@Excel(name = "父级节点", width = 15,dictTable = "fin_subject_config",dicText = "subject_name",dicCode = "id")

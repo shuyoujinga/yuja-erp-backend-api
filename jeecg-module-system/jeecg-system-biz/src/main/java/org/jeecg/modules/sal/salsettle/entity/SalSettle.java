@@ -80,8 +80,8 @@ public class SalSettle implements Serializable {
 	@Excel(name = "退货单号", width = 15)
     @ApiModelProperty(value = "退货单号")
     private java.lang.String returnCodes;
-	/**审核状态*/
-	@Excel(name = "审核状态", width = 15)
+	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
+    @Dict(dicCode = "dict_audit_status")
     @ApiModelProperty(value = "审核状态")
     private java.lang.Integer audit;
 	/**审核人*/

@@ -1,9 +1,15 @@
 package org.jeecg.modules.pur.pursettle.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.constant.Constants;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.modules.pur.purpayment.entity.PurPayment;
+import org.jeecg.modules.pur.purpayment.entity.PurPaymentDetail;
+import org.jeecg.modules.pur.purpayment.service.IPurPaymentDetailService;
+import org.jeecg.modules.pur.purpayment.service.IPurPaymentService;
 import org.jeecg.modules.pur.purreceive.entity.PurReceive;
 import org.jeecg.modules.pur.pursettle.entity.PurSettle;
 import org.jeecg.modules.pur.pursettle.entity.PurSettleDetail;
@@ -15,7 +21,9 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.utils.AmountUtils;
+import org.utils.Assert;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -29,6 +37,7 @@ import java.util.*;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class PurSettleServiceImpl extends ServiceImpl<PurSettleMapper, PurSettle> implements IPurSettleService {
 
 	@Resource
@@ -37,6 +46,10 @@ public class PurSettleServiceImpl extends ServiceImpl<PurSettleMapper, PurSettle
 	private PurSettleDetailMapper purSettleDetailMapper;
 	@Autowired
 	private SerialNumberService serialNumberService;
+	@Autowired
+	private IPurPaymentService purPaymentService;
+	@Autowired
+	private IPurPaymentDetailService purPaymentDetailService;
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -96,14 +109,49 @@ public class PurSettleServiceImpl extends ServiceImpl<PurSettleMapper, PurSettle
 		}
 	}
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int audit(List<String> ids) {
 		List<String> list = Arrays.asList(ids.toArray(new String[ids.size()]));
 
 		List<PurSettle> purSettles = baseMapper.selectBatchIds(list);
 
 
+		// 产生采购付款单
+		for (PurSettle purSettle : purSettles) {
 
+			if (Constants.DICT_AUDIT_STATUS.YES.equals(purSettle.getAudit())) {
+				continue;
+			}
 
+			PurPayment purPayment = new PurPayment();
+
+			purPayment.setSupplierCode(purSettle.getSupplierCode());
+			purPayment.setDocTime(new Date());
+			purPayment.setSettleIds(purSettle.getId());
+			purPayment.setSettleCodes(purSettle.getDocCode());
+			purPayment.setAmount(purSettle.getAmount());
+			purPayment.setRemark(purSettle.getRemark());
+			List<PurSettleDetail> settleList = purSettleDetailMapper.selectByMainId(purSettle.getId());
+
+			List<PurPaymentDetail>  detailList=new ArrayList<>();
+			for (PurSettleDetail purSettleDetail : settleList) {
+				PurPaymentDetail purPaymentDetail = new PurPaymentDetail();
+				purPaymentDetail.setMaterialCode(purSettleDetail.getMaterialCode());
+				purPaymentDetail.setSettleNum(purSettleDetail.getSettleNum());
+				purPaymentDetail.setSettleUnitPrice(purSettleDetail.getSettleUnitPrice());
+				purPaymentDetail.setSettleAmount(purSettleDetail.getSettleAmount());
+				purPaymentDetail.setAmount(purSettle.getAmount());
+				purPaymentDetail.setRemark(purSettle.getRemark());
+				detailList.add(purPaymentDetail);
+			}
+
+			purPaymentService.saveMain(purPayment,detailList);
+		}
+		log.info("采购付款-单据添加完毕！"+ids);
+
+		// todo 采购结算-差异处理-做物料凭证
+
+		// todo 采购结算-生成财务凭证
 
 		return updateAuditStatus(ids, Constants.DICT_AUDIT_STATUS.YES);
 	}
@@ -111,10 +159,28 @@ public class PurSettleServiceImpl extends ServiceImpl<PurSettleMapper, PurSettle
 
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int unAudit(List<String> ids) {
 		List<String> list = Arrays.asList(ids.toArray(new String[ids.size()]));
 
 		List<PurSettle> purSettles = baseMapper.selectBatchIds(list);
+
+
+		List<PurPayment> purPayments = new ArrayList<>();
+		for (PurSettle purSettle : purSettles) {
+
+			if (Constants.DICT_AUDIT_STATUS.NO.equals(purSettle.getAudit())) {
+				continue;
+			}
+			PurPayment payment = purPaymentService.getOne(new LambdaQueryWrapper<PurPayment>().eq(PurPayment::getAudit, Constants.DICT_AUDIT_STATUS.NO).eq(PurPayment::getSettleIds, purSettle.getId()).eq(PurPayment::getDelFlag, Constants.DICT_YN.YES).last(Constants.CONST_SQL.LIMIT_ONE));
+
+			Assert.isTrue(ObjectUtils.isEmpty(payment),"存在已经付款的付款单据，因此采购结算单不可反审核！请联系财务处理！");
+			purPayments.add(payment);
+
+		}
+		for (PurPayment purPayment : purPayments) {
+			purPaymentService.delMain(purPayment.getId());
+		}
 
 		return updateAuditStatus(ids, Constants.DICT_AUDIT_STATUS.NO);
 	}
