@@ -1,18 +1,17 @@
 package org.jeecg.modules.pur.pursettle.vo;
 
-import java.util.List;
-import org.jeecg.modules.pur.pursettle.entity.PurSettle;
-import org.jeecg.modules.pur.pursettle.entity.PurSettleDetail;
-import lombok.Data;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecgframework.poi.excel.annotation.ExcelEntity;
-import org.jeecgframework.poi.excel.annotation.ExcelCollection;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import java.util.Date;
-import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecg.modules.pur.pursettle.entity.PurSettleDetail;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.jeecgframework.poi.excel.annotation.ExcelCollection;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: 采购结算
@@ -45,6 +44,8 @@ public class PurSettlePage {
     private Date updateTime;
 	/**所属部门*/
 	@ApiModelProperty(value = "所属部门")
+	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
 	/**结算单号*/
 	@Excel(name = "结算单号", width = 15)
