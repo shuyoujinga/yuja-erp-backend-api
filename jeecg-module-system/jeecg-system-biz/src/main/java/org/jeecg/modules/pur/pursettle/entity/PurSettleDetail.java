@@ -53,8 +53,8 @@ public class PurSettleDetail implements Serializable {
     @ApiModelProperty(value = "主表ID")
     private String pid;
 	/**物料编码*/
-	@Excel(name = "物料编码", width = 15)
-    @ApiModelProperty(value = "物料编码")
+	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
+    @ApiModelProperty(value = "物料")
     private String materialCode;
 	/**收货数量*/
 	@Excel(name = "收货数量", width = 15)
