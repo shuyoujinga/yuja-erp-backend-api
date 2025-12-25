@@ -47,7 +47,7 @@ public interface IPurReturnService extends IService<PurReturn> {
 
     String smarkRemark(String orderDetailId, String supplierCode);
 
-	int audit(List<String> ids);
+	int audit(List<String> ids) throws Exception;
 
-	int unAudit(List<String> ids);
+	int unAudit(List<String> ids) throws Exception;
 }

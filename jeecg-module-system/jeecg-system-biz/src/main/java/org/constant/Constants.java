@@ -124,6 +124,20 @@ public class Constants {
         //采购退货
         String CGTH = "ZL";
     }
+    /**
+     * 退货蕾西
+      */
+    public interface DICT_RETURN_TYPE{
+        // 未收货退货
+        Integer  NO_RECEIVE= 0 ;
+
+        // 已收退货
+        Integer RECEIVED= 1 ;
+
+
+
+
+    }
 
     /**
      * 审核状态为

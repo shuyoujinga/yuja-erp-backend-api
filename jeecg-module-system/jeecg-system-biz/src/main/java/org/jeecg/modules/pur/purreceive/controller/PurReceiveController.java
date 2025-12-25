@@ -1,54 +1,47 @@
 package org.jeecg.modules.pur.purreceive.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.constant.Constants;
+import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.aop.DeleteCheckAudit;
 import org.jeecg.modules.maindata.bom.vo.AuditRequest;
-import org.jeecg.modules.pur.pursettle.entity.PurSettle;
-import org.jeecg.modules.pur.pursettle.service.IPurSettleService;
+import org.jeecg.modules.pur.purreceive.entity.PurReceive;
+import org.jeecg.modules.pur.purreceive.entity.PurReceiveDetail;
+import org.jeecg.modules.pur.purreceive.service.IPurReceiveDetailService;
+import org.jeecg.modules.pur.purreceive.service.IPurReceiveService;
+import org.jeecg.modules.pur.purreceive.vo.PurReceivePage;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
-import org.jeecg.common.system.vo.LoginUser;
-import org.apache.shiro.SecurityUtils;
-import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.common.util.oConvertUtils;
-import org.jeecg.modules.pur.purreceive.entity.PurReceiveDetail;
-import org.jeecg.modules.pur.purreceive.entity.PurReceive;
-import org.jeecg.modules.pur.purreceive.vo.PurReceivePage;
-import org.jeecg.modules.pur.purreceive.service.IPurReceiveService;
-import org.jeecg.modules.pur.purreceive.service.IPurReceiveDetailService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.extern.slf4j.Slf4j;
-import com.alibaba.fastjson.JSON;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.jeecg.common.aspect.annotation.AutoLog;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.web.servlet.ModelAndView;
 import org.utils.Assert;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -300,7 +293,12 @@ public class PurReceiveController {
 		String type = auditRequest.getType(); // audit 或 reverse
 
 		Assert.isTrue(CollectionUtil.isEmpty(ids), "请选择要操作的记录");
+		List<PurReceive> purReceives = purReceiveService.listByIds(ids);
+		// 只要存在 isReturn = 0 的记录，直接拦截
+		boolean hasSystemReturn = purReceives.stream()
+				.anyMatch(p -> Integer.valueOf(0).equals(p.getIsReturn()));
 
+		Assert.isTrue(hasSystemReturn, "系统自动生成的单据,不允许操作!");
 		int count;
 		if (Constants.DICT_AUDIT_FLAG.AUDIT.equals(type)) {
 			count = purReceiveService.audit(ids);

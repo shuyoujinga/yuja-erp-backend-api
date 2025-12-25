@@ -1,11 +1,17 @@
 package org.jeecg.modules.pur.purreturn.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.constant.Constants;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.modules.maindata.materials.entity.YujiakejiMaterials;
+import org.jeecg.modules.maindata.materials.service.IYujiakejiMaterialsService;
+import org.jeecg.modules.pur.purreceive.entity.PurReceive;
+import org.jeecg.modules.pur.purreceive.entity.PurReceiveDetail;
 import org.jeecg.modules.pur.purreceive.service.IPurReceiveDetailService;
+import org.jeecg.modules.pur.purreceive.service.IPurReceiveService;
 import org.jeecg.modules.pur.purreturn.entity.PurReturn;
 import org.jeecg.modules.pur.purreturn.entity.PurReturnDetail;
 import org.jeecg.modules.pur.purreturn.mapper.PurReturnDetailMapper;
@@ -20,6 +26,7 @@ import org.utils.AmountUtils;
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description: 采购退货
@@ -38,6 +45,10 @@ public class PurReturnServiceImpl extends ServiceImpl<PurReturnMapper, PurReturn
 	private IPurReceiveDetailService purReceiveDetailService;
 	@Autowired
 	private SerialNumberService serialNumberService;
+	@Autowired
+	private IPurReceiveService purReceiveService;
+	@Autowired
+	private IYujiakejiMaterialsService yujiakejiMaterialsService;
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -107,13 +118,91 @@ public class PurReturnServiceImpl extends ServiceImpl<PurReturnMapper, PurReturn
 	}
 
 	@Override
-	public int audit(List<String> ids) {
+	@Transactional(rollbackFor = Exception.class)
+	public int audit(List<String> ids) throws Exception {
+		// 如果是未收货退货就直接改状态 否则需要产生采购收货单
+
+		List<PurReturn> purReturns = this.listByIds(ids);
+		if (CollectionUtil.isEmpty(purReturns)) {
+			return 0;
+		}
+
+		for (PurReturn purReturn : purReturns) {
+			if (Constants.DICT_RETURN_TYPE.NO_RECEIVE.equals(purReturn.getReturnType())) {
+				continue;
+			}
+			PurReceive purReceive = new PurReceive();
+			purReceive.setIsReturn(Constants.YN.Y);
+			purReceive.setSupplierCode(purReturn.getSupplierCode());
+			purReceive.setExternalOrderNo(purReturn.getDocCode());
+			purReceive.setRemark(purReturn.getRemark());
+			purReceive.setDocTime(purReturn.getDocTime());
+			purReceive.setOrderCode(purReturn.getOrderCodes());
+			purReceive.setOrderId(purReturn.getOrderIds());
+
+			List<PurReceiveDetail> detailList=new ArrayList<>();
+
+			List<PurReturnDetail> purReturnDetails = purReturnDetailMapper.selectByMainId(purReturn.getId());
+			List<String> collect = purReturnDetails.stream().map(PurReturnDetail::getMaterialCode).collect(Collectors.toList());
+			List<YujiakejiMaterials> list = yujiakejiMaterialsService.list(new LambdaQueryWrapper<YujiakejiMaterials>().in(YujiakejiMaterials::getMaterialCode, collect));
+			Map<String, YujiakejiMaterials> materialsMap = list.stream().collect(Collectors.toMap(YujiakejiMaterials::getMaterialCode, v -> v));
+
+			for (PurReturnDetail purReturnDetail : purReturnDetails) {
+				PurReceiveDetail entity = new PurReceiveDetail();
+				entity.setRemark(purReturnDetail.getRemark());
+				entity.setMaterialCode(purReturnDetail.getMaterialCode());
+				entity.setUnit(materialsMap.get(purReturnDetail.getMaterialCode()).getUnit());
+				entity.setSpecifications(materialsMap.get(purReturnDetail.getMaterialCode()).getSpecifications());
+				entity.setReceiveQty(AmountUtils.negate( purReturnDetail.getQty()) );
+				entity.setUnitPrice(purReturnDetail.getUnitPrice());
+				entity.setAmount(AmountUtils.negate( purReturnDetail.getAmount()) );
+
+				// 仓库规则映射
+				Map<Character, String> warehouseMap = Map.of(
+						'A', "A01A03A04A01", // 原材料仓
+						'B', "A01A03A04A02", // 半成品仓
+						'C', "A01A03A04A03"  // 制成品仓
+				);
+
+				// 设置仓库
+				String materialCode = entity.getMaterialCode();
+				if (materialCode != null && !materialCode.isEmpty()) {
+					entity.setWarehouseCode(warehouseMap.getOrDefault(materialCode.charAt(0), "")); // 默认空
+				}
+				detailList.add(entity);
+			}
+			purReceiveService.saveMain(purReceive,detailList);
+
+			purReceiveService.audit(Collections.singletonList(purReceive.getId()));
+			purReturn.setReceiveId(purReceive.getId());
+			purReturnMapper.updateById(purReturn);
+
+		}
+
+
 
 		return updateAuditStatus(ids,Constants.DICT_AUDIT_STATUS.YES);
 	}
 
 	@Override
-	public int unAudit(List<String> ids) {
+	@Transactional(rollbackFor = Exception.class)
+	public int unAudit(List<String> ids) throws Exception {
+		List<PurReturn> purReturns = this.listByIds(ids);
+		if (CollectionUtil.isEmpty(purReturns)) {
+			return 0;
+		}
+
+		for (PurReturn purReturn : purReturns) {
+			if (Constants.DICT_RETURN_TYPE.NO_RECEIVE.equals(purReturn.getReturnType())) {
+				continue;
+			}
+
+			purReceiveService.unAudit(Collections.singletonList(purReturn.getReceiveId()));
+			purReceiveService.delMain(purReturn.getReceiveId());
+			purReturn.setReceiveId("");
+			purReturnMapper.updateById(purReturn);
+
+		}
 
 		return updateAuditStatus(ids,Constants.DICT_AUDIT_STATUS.NO);
 	}

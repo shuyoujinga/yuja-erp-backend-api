@@ -86,7 +86,7 @@ public class PurReturn implements Serializable {
 	@Excel(name = "退货类型", width = 15,dicCode = "dict_return_type")
     @Dict(dicCode = "dict_return_type")
     @ApiModelProperty(value = "退货类型")
-    private String returnType;
+    private Integer returnType;
 	/**退货金额*/
 	@Excel(name = "退货金额", width = 15)
     @ApiModelProperty(value = "退货金额")
@@ -107,6 +107,9 @@ public class PurReturn implements Serializable {
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
+    /**采购收货ID*/
+    @ApiModelProperty(value = "采购收货ID")
+    private String receiveId;
 	/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic

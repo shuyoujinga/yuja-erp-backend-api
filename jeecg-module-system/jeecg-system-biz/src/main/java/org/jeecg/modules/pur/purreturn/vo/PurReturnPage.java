@@ -81,7 +81,7 @@ public class PurReturnPage {
 	@Excel(name = "退货类型", width = 15,dicCode = "dict_return_type")
 	@Dict(dicCode = "dict_return_type")
 	@ApiModelProperty(value = "退货类型")
-    private String returnType;
+    private Integer returnType;
 	/**退货金额*/
 	@Excel(name = "退货金额", width = 15)
 	@ApiModelProperty(value = "退货金额")
@@ -102,6 +102,11 @@ public class PurReturnPage {
 	@Excel(name = "备注", width = 15)
 	@ApiModelProperty(value = "备注")
     private String remark;
+	/**是否退货*/
+	@Excel(name = "是否退货", width = 15, dicCode = "yn")
+	@Dict(dicCode = "yn")
+	@ApiModelProperty(value = "是否退货")
+	private Integer isReturn;
 	/**是否有效*/
 	@ApiModelProperty(value = "是否有效")
     private Integer delFlag;

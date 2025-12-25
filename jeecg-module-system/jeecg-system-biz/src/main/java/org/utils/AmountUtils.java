@@ -25,4 +25,14 @@ public class AmountUtils {
         }
         return total;
     }
+    /**
+     * 金额取反（符号翻转）
+     *
+     * @param amount 原金额
+     * @return 取反后的金额
+     */
+    public static double negate(double amount) {
+        return -amount;
+    }
+
 }
