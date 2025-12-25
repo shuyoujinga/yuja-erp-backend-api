@@ -63,7 +63,7 @@ public class DeleteAuditAspect {
 
             Object auditValue = auditField.get(entity);
             if ("1".equals(String.valueOf(auditValue))) {
-                throw new RuntimeException("操作失败：存在已审核单据，不允许删除！");
+                throw new RuntimeException("存在已审核单据，不允许删除！");
             }
         }
     }

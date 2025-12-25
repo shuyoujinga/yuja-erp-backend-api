@@ -21,4 +21,6 @@ public interface IPurReceiveDetailService extends IService<PurReceiveDetail> {
 	public List<PurReceiveDetail> selectByMainId(String mainId);
 
     List<PurReceiveDetail> selectByTargetId(String id);
+
+	Double selectReceiveQtyByOrderIds(List<String> list);
 }

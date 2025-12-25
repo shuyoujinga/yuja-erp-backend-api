@@ -63,7 +63,7 @@ public class PurOrderDetail implements Serializable {
     @ApiModelProperty(value = "要求交期")
     private String requestedDeliveryDate;
 	/**物料*/
-	@Excel(name = "物料", width = 15)
+	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
     private String materialCode;
 	/**规格*/

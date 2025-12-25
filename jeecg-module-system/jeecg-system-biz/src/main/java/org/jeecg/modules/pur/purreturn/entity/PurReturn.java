@@ -1,19 +1,19 @@
 package org.jeecg.modules.pur.purreturn.entity;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Description: 采购退货
@@ -63,7 +63,8 @@ public class PurReturn implements Serializable {
     @ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**供应商*/
-	@Excel(name = "供应商", width = 15)
+    @Excel(name = "供应商", width = 15, dictTable = "yujiakeji_suppliers", dicText = "name", dicCode = "code")
+    @Dict(dictTable = "yujiakeji_suppliers", dicText = "name", dicCode = "code")
     @ApiModelProperty(value = "供应商")
     private String supplierCode;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
@@ -72,7 +73,7 @@ public class PurReturn implements Serializable {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/
@@ -82,7 +83,8 @@ public class PurReturn implements Serializable {
     @ApiModelProperty(value = "审核时间")
     private Date auditTime;
 	/**退货类型*/
-	@Excel(name = "退货类型", width = 15)
+	@Excel(name = "退货类型", width = 15,dicCode = "dict_return_type")
+    @Dict(dicCode = "dict_return_type")
     @ApiModelProperty(value = "退货类型")
     private String returnType;
 	/**退货金额*/
@@ -90,11 +92,11 @@ public class PurReturn implements Serializable {
     @ApiModelProperty(value = "退货金额")
     private Double amount;
 	/**状态*/
-	@Excel(name = "状态", width = 15)
+    @Excel(name = "状态", width = 15,dicCode = "dict_pur_status")
     @ApiModelProperty(value = "状态")
+    @Dict(dicCode = "dict_pur_status")
     private Integer status;
 	/**采购订单_ids*/
-	@Excel(name = "采购订单_ids", width = 15)
     @ApiModelProperty(value = "采购订单_ids")
     private String orderIds;
 	/**采购订单*/
@@ -106,7 +108,6 @@ public class PurReturn implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

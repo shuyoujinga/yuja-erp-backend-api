@@ -19,4 +19,6 @@ public interface IPurReturnDetailService extends IService<PurReturnDetail> {
 	 * @return List<PurReturnDetail>
 	 */
 	public List<PurReturnDetail> selectByMainId(String mainId);
+
+	List<PurReturnDetail> selectByTargetId(String ids);
 }

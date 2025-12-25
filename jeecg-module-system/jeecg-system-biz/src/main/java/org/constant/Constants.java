@@ -121,6 +121,8 @@ public class Constants {
         String CGJS = "JS";
         //采购付款
         String CGFK = "FK";
+        //采购退货
+        String CGTH = "ZL";
     }
 
     /**

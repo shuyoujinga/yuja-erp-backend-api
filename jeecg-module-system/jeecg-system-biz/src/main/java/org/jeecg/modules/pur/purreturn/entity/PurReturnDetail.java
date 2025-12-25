@@ -56,11 +56,10 @@ public class PurReturnDetail implements Serializable {
     @ApiModelProperty(value = "主表ID")
     private String pid;
 	/**订单明细ID*/
-	@Excel(name = "订单明细ID", width = 15)
     @ApiModelProperty(value = "订单明细ID")
     private String orderDetailId;
 	/**物料*/
-	@Excel(name = "物料", width = 15)
+	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
     private String materialCode;
 	/**订单数*/
@@ -71,6 +70,7 @@ public class PurReturnDetail implements Serializable {
 	@Excel(name = "单价", width = 15)
     @ApiModelProperty(value = "单价")
     private Double orderUnitPrice;
+    
 	/**订单金额*/
 	@Excel(name = "订单金额", width = 15)
     @ApiModelProperty(value = "订单金额")

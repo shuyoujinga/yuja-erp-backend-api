@@ -1,7 +1,7 @@
 package org.jeecg.modules.pur.purreceive.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import org.jeecg.modules.pur.purorder.entity.PurOrderDetail;
 import org.jeecg.modules.pur.purorder.service.IPurOrderDetailService;
@@ -9,16 +9,13 @@ import org.jeecg.modules.pur.purreceive.entity.PurReceiveDetail;
 import org.jeecg.modules.pur.purreceive.mapper.PurReceiveDetailMapper;
 import org.jeecg.modules.pur.purreceive.service.IPurReceiveDetailService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.Resource;
 
 /**
  * @Description: 采购收货_明细
@@ -76,6 +73,11 @@ public class PurReceiveDetailServiceImpl extends ServiceImpl<PurReceiveDetailMap
 		}
 
 		return result;
+	}
+
+	@Override
+	public Double selectReceiveQtyByOrderIds(List<String> list) {
+		return baseMapper.selectReceiveQtyByOrderIds(list);
 	}
 
 }

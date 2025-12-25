@@ -44,5 +44,10 @@ public interface IPurReturnService extends IService<PurReturn> {
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+    String smarkRemark(String orderDetailId, String supplierCode);
+
+	int audit(List<String> ids);
+
+	int unAudit(List<String> ids);
 }

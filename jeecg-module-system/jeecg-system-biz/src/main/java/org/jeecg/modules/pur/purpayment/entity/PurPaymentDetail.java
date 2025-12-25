@@ -60,7 +60,7 @@ public class PurPaymentDetail implements Serializable {
     @ApiModelProperty(value = "采购结算明细_ID")
     private String settleDetailId;
 	/**物料*/
-	@Excel(name = "物料", width = 15)
+	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
     private String materialCode;
 	/**结算数量*/
