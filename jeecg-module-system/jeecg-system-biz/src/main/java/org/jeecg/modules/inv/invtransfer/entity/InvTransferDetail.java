@@ -56,7 +56,6 @@ public class InvTransferDetail implements Serializable {
     @ApiModelProperty(value = "主表ID")
     private String pid;
 	/**引用明细ID*/
-	@Excel(name = "引用明细ID", width = 15)
     @ApiModelProperty(value = "引用明细ID")
     private String refDetailId;
 	/**物料*/
@@ -89,7 +88,6 @@ public class InvTransferDetail implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;
