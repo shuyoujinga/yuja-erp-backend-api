@@ -1,19 +1,19 @@
 package org.jeecg.modules.inv.invtransfer.entity;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Description: 物料调拨
@@ -63,12 +63,14 @@ public class InvTransfer implements Serializable {
     @ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**调出仓*/
-	@Excel(name = "调出仓", width = 15)
+	@Excel(name = "调出仓", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "调出仓")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String fromWarehouseCode;
 	/**调入仓*/
-	@Excel(name = "调入仓", width = 15)
+	@Excel(name = "调入仓", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "调入仓")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String toWarehouseCode;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
     @Dict(dicCode = "dict_audit_status")
@@ -76,7 +78,7 @@ public class InvTransfer implements Serializable {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/
@@ -94,13 +96,18 @@ public class InvTransfer implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 	/**引用ID*/
-	@Excel(name = "引用ID", width = 15)
     @ApiModelProperty(value = "引用ID")
     private String refId;
 	/**引用单号*/
-	@Excel(name = "引用单号", width = 15)
     @ApiModelProperty(value = "引用单号")
     private String refCode;
+    /**调出物料凭证*/
+    @ApiModelProperty(value = "调出物料凭证")
+    private String fromMaterialVoucherId;
+    /**调入物料凭证*/
+    @ApiModelProperty(value = "调入物料凭证")
+    private String toMaterialVoucherId;
+
 	/**是否有效*/
 	@Excel(name = "是否有效", width = 15)
     @ApiModelProperty(value = "是否有效")

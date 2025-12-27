@@ -21,5 +21,7 @@ public interface IInvStockService extends IService<InvStock> {
     List<InvStock> queryListWithMaterial(Map<String, String[]> parameterMap);
 
 
+    void addStock(String warehouseCode, String materialCode, Double qty);
 
+    void subStock(String warehouseCode, String materialCode, Double qty);
 }

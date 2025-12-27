@@ -14,6 +14,16 @@ public class Constants {
         String CGRK = "101";
         // 采购入库_冲销
         String CGRK_CX = "102";
+
+        // 调拨入库
+        String DBRK = "111";
+        // 调拨入库_冲销
+        String DBRK_CX = "112";
+
+        // 调拨出库
+        String DBCK = "121";
+        // 调拨出库_冲销
+        String DBCK_CX = "122";
     }
 
     //出入库类型
@@ -34,14 +44,16 @@ public class Constants {
         int SC = 2;
 
         // 财务
-        int CW = 4;
+        int CW = 3;
+        // 仓储
+        int CC = 4;
     }
 
     public interface BIZ_TYPE {
         // 采购收货！
         int CGSH = 0;
-
-        int N = 1;
+        // 物资调拨
+        int WZDB = 1;
     }
 
 
@@ -123,6 +135,8 @@ public class Constants {
         String CGFK = "FK";
         //采购退货
         String CGTH = "ZL";
+        //物资调拨
+        String WZDB = "DB";
     }
     /**
      * 退货蕾西

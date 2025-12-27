@@ -64,8 +64,9 @@ public class InvTransferDetail implements Serializable {
     @ApiModelProperty(value = "物料")
     private String materialCode;
 	/**单位*/
-	@Excel(name = "单位", width = 15)
+	@Excel(name = "单位", width = 15,dicCode = "dict_materials_unit")
     @ApiModelProperty(value = "单位")
+    @Dict(dicCode = "dict_materials_unit")
     private String unit;
 	/**规格*/
 	@Excel(name = "规格", width = 15)

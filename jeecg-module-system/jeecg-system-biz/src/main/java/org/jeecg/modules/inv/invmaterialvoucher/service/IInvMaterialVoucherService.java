@@ -1,8 +1,9 @@
 package org.jeecg.modules.inv.invmaterialvoucher.service;
 
-import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucherDetail;
-import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucher;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucher;
+import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucherDetail;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -44,5 +45,6 @@ public interface IInvMaterialVoucherService extends IService<InvMaterialVoucher>
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+
 }

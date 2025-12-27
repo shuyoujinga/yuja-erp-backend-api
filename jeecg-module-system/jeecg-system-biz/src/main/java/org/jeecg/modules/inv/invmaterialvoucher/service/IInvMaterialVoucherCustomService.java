@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public interface IInvMaterialVoucherCustomService {
+public interface IInvMaterialVoucherCustomService  {
 
     // 创建物料凭证
     Result<T> createVoucher(InvMaterialVoucher voucher, List<InvMaterialVoucherDetail> details) throws Exception;
 
     // 冲销物料凭证
     Result<T> reversalVoucher(String voucherId) throws Exception;
+
+
 }

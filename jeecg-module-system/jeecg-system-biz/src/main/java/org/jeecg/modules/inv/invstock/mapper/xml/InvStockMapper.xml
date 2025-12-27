@@ -38,6 +38,18 @@
         AND a.del_flag=0
         </where>
     </select>
+    <select id="selectByMaterialCode" resultType="org.jeecg.modules.inv.invstock.entity.InvStock">
+        SELECT
+            *
+        FROM
+            inv_stock
+        WHERE
+            material_code = #{materialCode}
+          AND warehouse_code = #{warehouseCode}
+          AND total_qty > 0
+          AND del_flag = 0
+
+    </select>
 
 
 </mapper>

@@ -1,27 +1,28 @@
 package org.jeecg.modules.inv.invmaterialvoucher.service.impl;
 
-import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.constant.Constants;
 import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucher;
 import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucherDetail;
 import org.jeecg.modules.inv.invmaterialvoucher.mapper.InvMaterialVoucherDetailMapper;
 import org.jeecg.modules.inv.invmaterialvoucher.mapper.InvMaterialVoucherMapper;
+import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherCustomService;
 import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherService;
 import org.jeecg.modules.maindata.materials.entity.YujiakejiMaterials;
 import org.jeecg.modules.maindata.materials.service.IYujiakejiMaterialsService;
 import org.jeecg.modules.system.service.impl.SerialNumberService;
-import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,8 @@ import java.util.stream.Collectors;
  * @Version: V1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class InvMaterialVoucherServiceImpl extends ServiceImpl<InvMaterialVoucherMapper, InvMaterialVoucher> implements IInvMaterialVoucherService {
 
 	@Resource
@@ -42,6 +45,7 @@ public class InvMaterialVoucherServiceImpl extends ServiceImpl<InvMaterialVouche
 	private SerialNumberService serialNumberService;
 	@Autowired
 	private IYujiakejiMaterialsService yujiakejiMaterialsService;
+
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -103,5 +107,6 @@ public class InvMaterialVoucherServiceImpl extends ServiceImpl<InvMaterialVouche
 			invMaterialVoucherMapper.deleteById(id);
 		}
 	}
-	
+
+
 }
