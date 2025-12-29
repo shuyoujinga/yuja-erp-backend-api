@@ -725,21 +725,26 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                 return null;
             }
         } else if (dictCode.contains(SymbolConstant.DIY_DICT_CURRENT)) {
+            String[] split = dictCode.split(",");
 
-            if (dictCode.contains(DIY_DICT_CONSTANT.MATERIAL)) {
-                String[] split = dictCode.split(",");
+            if (split[0].equals(DIY_DICT_CONSTANT.MATERIAL)) {
                 ls = this.queryDictItemsByDiyCode(split.length == 1 ? DIY_DICT_CONSTANT.MATERIAL_SQL : DIY_DICT_CONSTANT.MATERIAL_SQL + "where " + split[1]);
             }
+            if (split[0].equals(DIY_DICT_CONSTANT.STOCK_MATERIAL)) {
+                if (split.length>1) {
+                    ls = this.queryDictItemsByDiyCode(String.format(DIY_DICT_CONSTANT.STOCK_WITH_WAREHOUSE_MATERIAL_SQL, split[1]));
+                }else{
+                    ls = this.queryDictItemsByDiyCode(DIY_DICT_CONSTANT.STOCK_MATERIAL_SQL);
+                }
+
+            }
             if (dictCode.contains(DIY_DICT_CONSTANT.SUPPLIER)) {
-                String[] split = dictCode.split(",");
                 ls = this.queryDictItemsByDiyCode(split.length == 1 ? DIY_DICT_CONSTANT.SUPPLIER_SQL : DIY_DICT_CONSTANT.SUPPLIER_SQL + "where " + split[1]);
             }
             if (dictCode.contains(DIY_DICT_CONSTANT.USER)) {
-                String[] split = dictCode.split(",");
                 ls = this.queryDictItemsByDiyCode(split.length == 1 ? DIY_DICT_CONSTANT.USER_SQL : DIY_DICT_CONSTANT.USER_SQL + "where " + split[1]);
             }
             if (dictCode.contains(DIY_DICT_CONSTANT.USER)) {
-                String[] split = dictCode.split(",");
                 ls = this.queryDictItemsByDiyCode(split.length == 1 ? DIY_DICT_CONSTANT.USER_SQL : DIY_DICT_CONSTANT.USER_SQL + "where " + split[1]);
             }
             if (dictCode.contains(DIY_DICT_CONSTANT.WAREHOUSE)) {
@@ -761,6 +766,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     }
 
     private List<DictModel> queryDictItemsByDiyCode(String dictCode) {
+        log.info("查询的字典值SQL==>{}",dictCode);
         return baseMapper.queryDictItemsByDiyCode(dictCode);
     }
 

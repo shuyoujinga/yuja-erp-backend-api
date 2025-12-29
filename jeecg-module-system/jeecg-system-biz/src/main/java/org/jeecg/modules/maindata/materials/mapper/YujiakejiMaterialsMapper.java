@@ -1,10 +1,8 @@
 package org.jeecg.modules.maindata.materials.mapper;
 
-import java.util.List;
-
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.maindata.materials.entity.YujiakejiMaterials;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * @Description: 物料主数据
@@ -14,4 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface YujiakejiMaterialsMapper extends BaseMapper<YujiakejiMaterials> {
 
+    YujiakejiMaterials queryByMaterialCode(@Param("materialCode") String materialCode,@Param("warehouseCode") String warehouseCode);
 }

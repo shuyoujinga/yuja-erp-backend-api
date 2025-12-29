@@ -15,4 +15,6 @@ public interface IYujiakejiMaterialsService extends IService<YujiakejiMaterials>
      * @param yujiakejiMaterials
      */
     void saveEntity(YujiakejiMaterials yujiakejiMaterials);
+
+    YujiakejiMaterials queryByMaterialCode(String materialCode, String warehouseCode);
 }

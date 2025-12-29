@@ -49,4 +49,9 @@ public class YujiakejiMaterialsServiceImpl extends ServiceImpl<YujiakejiMaterial
         yujiakejiMaterials.setMaterialCode(materialCode);
         baseMapper.insert(yujiakejiMaterials);
     }
+
+    @Override
+    public YujiakejiMaterials queryByMaterialCode(String materialCode, String warehouseCode) {
+        return baseMapper.queryByMaterialCode(materialCode,warehouseCode);
+    }
 }
