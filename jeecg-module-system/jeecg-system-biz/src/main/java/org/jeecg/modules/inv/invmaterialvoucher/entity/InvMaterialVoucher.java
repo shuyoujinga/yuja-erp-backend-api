@@ -1,19 +1,19 @@
 package org.jeecg.modules.inv.invmaterialvoucher.entity;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Description: 物料凭证
@@ -80,6 +80,11 @@ public class InvMaterialVoucher implements Serializable {
 	@Excel(name = "来源单据ID", width = 15)
     @ApiModelProperty(value = "来源单据ID")
     private String sourceDocId;
+    /**使用组织*/
+    @Excel(name = "使用组织", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    @ApiModelProperty(value = "使用组织")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    private String orgCode;
 	/**主移动类型*/
 	@Excel(name = "主移动类型", width = 15,dictTable = "inv_move_type",dicText = "move_desc",dicCode = "move_type")
     @ApiModelProperty(value = "主移动类型")
@@ -111,6 +116,18 @@ public class InvMaterialVoucher implements Serializable {
 
 
     public InvMaterialVoucher(Integer bizType, Integer sourceDocType, String sourceDocCode, String sourceDocId, String moveType, String reversalDocId, Integer isReversal, String remark) {
+        this.bizType = bizType;
+        this.sourceDocType = sourceDocType;
+        this.sourceDocCode = sourceDocCode;
+        this.sourceDocId = sourceDocId;
+        this.moveType = moveType;
+        this.reversalDocId = reversalDocId;
+        this.isReversal = isReversal;
+        this.remark = remark;
+    }
+
+
+    public InvMaterialVoucher( String moveType, String sourceDocCode, String sourceDocId, String remark) {
         this.bizType = bizType;
         this.sourceDocType = sourceDocType;
         this.sourceDocCode = sourceDocCode;

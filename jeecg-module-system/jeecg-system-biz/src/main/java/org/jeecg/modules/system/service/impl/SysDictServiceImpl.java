@@ -738,6 +738,9 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                 }
 
             }
+            if (dictCode.contains(DIY_DICT_CONSTANT.ORG_CODE)) {
+                ls = this.queryDictItemsByDiyCode(split.length == 1 ? DIY_DICT_CONSTANT.ORG_CODE_SQL : DIY_DICT_CONSTANT.ORG_CODE_SQL + "where " + split[1]);
+            }
             if (dictCode.contains(DIY_DICT_CONSTANT.SUPPLIER)) {
                 ls = this.queryDictItemsByDiyCode(split.length == 1 ? DIY_DICT_CONSTANT.SUPPLIER_SQL : DIY_DICT_CONSTANT.SUPPLIER_SQL + "where " + split[1]);
             }

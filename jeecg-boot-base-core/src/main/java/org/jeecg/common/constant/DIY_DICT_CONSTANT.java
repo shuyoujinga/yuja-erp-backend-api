@@ -58,5 +58,15 @@ public class DIY_DICT_CONSTANT {
      * 自定义部门数据-仓位的SQL语句
      */
     public static  final String WAREHOUSE_SQL = "SELECT depart_name AS text, org_code AS `value`  FROM sys_depart  where org_type=4 AND  org_code like 'A01A03A04%' ";
+    /**
+     * 自定义部门数据-仓位
+     */
+    public static  final String ORG_CODE = "OrgCode";
+
+
+    /**
+     * 自定义部门数据-仓位的SQL语句
+     */
+    public static  final String ORG_CODE_SQL = "SELECT depart_name AS `text`,org_code AS `value` FROM sys_depart  WHERE org_type > 2  ORDER BY org_code ASC ";
 
 }

@@ -1,19 +1,19 @@
 package org.jeecg.modules.inv.invissue.entity;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Description: 物料领用
@@ -63,16 +63,19 @@ public class InvIssue implements Serializable {
     @ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**仓库*/
-	@Excel(name = "仓库", width = 15)
+	@Excel(name = "仓库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "仓库")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String warehouseCode;
 	/**领用类型*/
-	@Excel(name = "领用类型", width = 15)
+	@Excel(name = "领用类型", width = 15,dicCode = "dict_issue_type")
     @ApiModelProperty(value = "领用类型")
-    private Integer purpose;
+    @Dict(dicCode = "dict_issue_type")
+    private String purpose;
 	/**领用组织*/
-	@Excel(name = "领用组织", width = 15)
+	@Excel(name = "领用组织", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "领用组织")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String orgCode;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
     @Dict(dicCode = "dict_audit_status")
@@ -80,7 +83,7 @@ public class InvIssue implements Serializable {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

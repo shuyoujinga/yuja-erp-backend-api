@@ -137,6 +137,8 @@ public class Constants {
         String CGTH = "ZL";
         //物资调拨
         String WZDB = "DB";
+        //物料领用
+        String WLLY = "LY";
     }
     /**
      * 退货蕾西
