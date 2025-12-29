@@ -19,4 +19,6 @@ public interface IInvStockTakeDetailService extends IService<InvStockTakeDetail>
 	 * @return List<InvStockTakeDetail>
 	 */
 	public List<InvStockTakeDetail> selectByMainId(String mainId);
+
+	List<InvStockTakeDetail> selectByLocation(String warehouseAndlocation);
 }

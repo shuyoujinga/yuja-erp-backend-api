@@ -60,6 +60,17 @@ public class Constants {
         String YPLY = "241";
         // 样品领用_冲销
         String YPLY_CX = "242";
+
+        // 盘盈入库
+        String PYRK = "251";
+        // 盘盈入库_冲销
+        String PYRK_CX = "252";
+
+        // 盘亏出库
+        String PKCK = "261";
+        // 盘亏出库_冲销
+        String PKCK_CX = "262";
+
     }
 
     //出入库类型
@@ -175,6 +186,8 @@ public class Constants {
         String WZDB = "DB";
         //物料领用
         String WLLY = "LY";
+        //物资盘点
+        String WLPD = "PD";
     }
     /**
      * 退货蕾西

@@ -157,7 +157,9 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
     @Override
     public String getVoucherIdBySourceDocId(String sourceDocId) {
         InvMaterialVoucher entity = invMaterialVoucherService.getOne(new LambdaQueryWrapper<InvMaterialVoucher>().eq(InvMaterialVoucher::getSourceDocId, sourceDocId).eq(InvMaterialVoucher::getIsReversal, Constants.YN.N).eq(InvMaterialVoucher::getDelFlag, Constants.YN.Y).last(Constants.CONST_SQL.LIMIT_ONE));
-        Assert.isTrue(ObjectUtils.isEmpty(entity),"冲销失败!相关物料凭证不存在!");
+        if (ObjectUtils.isEmpty(entity)) {
+            return "";
+        }
         return entity.getId();
     }
 

@@ -1,18 +1,17 @@
 package org.jeecg.modules.inv.invstocktake.vo;
 
-import java.util.List;
-import org.jeecg.modules.inv.invstocktake.entity.InvStockTake;
-import org.jeecg.modules.inv.invstocktake.entity.InvStockTakeDetail;
-import lombok.Data;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecgframework.poi.excel.annotation.ExcelEntity;
-import org.jeecgframework.poi.excel.annotation.ExcelCollection;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import java.util.Date;
-import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecg.modules.inv.invstocktake.entity.InvStockTakeDetail;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.jeecgframework.poi.excel.annotation.ExcelCollection;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: 物料盘点
@@ -51,12 +50,14 @@ public class InvStockTakePage {
 	@ApiModelProperty(value = "盘点单号")
     private String docCode;
 	/**制单日期*/
-	@Excel(name = "制单日期", width = 15)
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@ApiModelProperty(value = "制单日期")
-    private String docTime;
+	private Date docTime;
 	/**仓库*/
-	@Excel(name = "仓库", width = 15)
+	@Excel(name = "仓库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
 	@ApiModelProperty(value = "仓库")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String warehouseCode;
 	/**库区*/
 	@Excel(name = "库区", width = 15)

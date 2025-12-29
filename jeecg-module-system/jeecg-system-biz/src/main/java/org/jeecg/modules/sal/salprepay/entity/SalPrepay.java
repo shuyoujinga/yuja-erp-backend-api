@@ -56,10 +56,10 @@ public class SalPrepay implements Serializable {
 	@Excel(name = "预收单号", width = 15)
     @ApiModelProperty(value = "预收单号")
     private String docCode;
-	/**制单日期*/
-	@Excel(name = "制单日期", width = 15)
-    @ApiModelProperty(value = "制单日期")
-    private String docTime;
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+	@ApiModelProperty(value = "制单日期")
+    private Date docTime;
 	/**客户*/
 	@Excel(name = "客户", width = 15)
     @ApiModelProperty(value = "客户")
