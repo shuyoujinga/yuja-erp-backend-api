@@ -17,4 +17,5 @@ public interface IInvMaterialVoucherCustomService  {
     Result<T> reversalVoucher(String voucherId) throws Exception;
 
 
+    String getVoucherIdBySourceDocId(String sourceDocId);
 }

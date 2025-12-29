@@ -3,23 +3,32 @@ package org.jeecg.modules.inv.invmaterialvoucher.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
+import org.apache.shiro.SecurityUtils;
 import org.constant.Constants;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucher;
 import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucherDetail;
 import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherCustomService;
 import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherDetailService;
 import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherService;
+import org.jeecg.modules.inv.invmovetype.entity.InvMoveType;
+import org.jeecg.modules.inv.invmovetype.service.IInvMoveTypeService;
 import org.jeecg.modules.inv.invstock.entity.InvStock;
 import org.jeecg.modules.inv.invstock.service.IInvStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+import org.utils.Assert;
 import org.utils.MathUtils;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,6 +42,8 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
     private IInvMaterialVoucherDetailService invMaterialVoucherDetailService;
     @Autowired
     private IInvStockService invStockService;
+    @Autowired
+    private IInvMoveTypeService iInvMoveTypeService;
 
     // =============================================
     // 新增物料凭证
@@ -43,6 +54,10 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
 
         log.info("开始创建物料凭证，sourceDocCode={}，detailCount={}",
                 voucher.getSourceDocCode(), details == null ? 0 : details.size());
+        List<InvMoveType> moveTypeList = iInvMoveTypeService.list();
+        Assert.isTrue(CollectionUtils.isEmpty(moveTypeList),"操作失败!移动类型配置表为空!");
+        Map<String, InvMoveType> moveTypeMap = moveTypeList.stream().collect(Collectors.toMap(InvMoveType::getMoveType, v -> v));
+        preCheckInfo(moveTypeMap,voucher,details);
 
         validateVoucher(voucher, details);
         preprocessDetails(details);
@@ -68,6 +83,27 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
         // 保存凭证
         invMaterialVoucherService.saveMain(voucher, details);
         return Result.OK("新增成功");
+    }
+
+    private void preCheckInfo(Map<String, InvMoveType> moveTypeMap, InvMaterialVoucher voucher, List<InvMaterialVoucherDetail> details) {
+        String moveType = voucher.getMoveType();
+        InvMoveType invMoveType = moveTypeMap.get(moveType);
+        Assert.isTrue(ObjectUtils.isEmpty(invMoveType),String.format("移动类型%s不存在!",moveType));
+        if (StringUtils.isEmpty(voucher.getBizType())) {
+            voucher.setBizType(invMoveType.getBizType());
+        }
+        if (StringUtils.isEmpty(voucher.getSourceDocType())) {
+            voucher.setSourceDocType(invMoveType.getSourceDocType());
+        }
+        if (StringUtils.isEmpty(voucher.getOrgCode())) {
+            LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+            voucher.setOrgCode(sysUser.getOrgCode());
+        }
+        for (InvMaterialVoucherDetail detail : details) {
+            if (StringUtils.isEmpty(detail.getStockType())) {
+                detail.setStockType(invMoveType.getDirection());
+            }
+        }
     }
 
     // =============================================
@@ -116,6 +152,13 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
         invMaterialVoucherService.updateById(original);
 
         return Result.OK("冲销成功");
+    }
+
+    @Override
+    public String getVoucherIdBySourceDocId(String sourceDocId) {
+        InvMaterialVoucher entity = invMaterialVoucherService.getOne(new LambdaQueryWrapper<InvMaterialVoucher>().eq(InvMaterialVoucher::getSourceDocId, sourceDocId).eq(InvMaterialVoucher::getIsReversal, Constants.YN.N).eq(InvMaterialVoucher::getDelFlag, Constants.YN.Y).last(Constants.CONST_SQL.LIMIT_ONE));
+        Assert.isTrue(ObjectUtils.isEmpty(entity),"冲销失败!相关物料凭证不存在!");
+        return entity.getId();
     }
 
     // =============================================

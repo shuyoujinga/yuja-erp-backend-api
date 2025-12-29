@@ -10,13 +10,20 @@ import org.jeecg.modules.inv.invissue.entity.InvIssueDetail;
 import org.jeecg.modules.inv.invissue.mapper.InvIssueDetailMapper;
 import org.jeecg.modules.inv.invissue.mapper.InvIssueMapper;
 import org.jeecg.modules.inv.invissue.service.IInvIssueService;
-import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherService;
+import org.jeecg.modules.inv.invissue.util.IssuePurposeMoveTypeMapping;
+import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucher;
+import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucherDetail;
+import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherCustomService;
 import org.jeecg.modules.system.service.impl.SerialNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.utils.Assert;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,14 +38,14 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class InvIssueServiceImpl extends ServiceImpl<InvIssueMapper, InvIssue> implements IInvIssueService {
 
-	@Autowired
+	@Resource
 	private InvIssueMapper invIssueMapper;
-	@Autowired
+	@Resource
 	private InvIssueDetailMapper invIssueDetailMapper;
 	@Autowired
 	private SerialNumberService serialNumberService;
 	@Autowired
-	private IInvMaterialVoucherService invMaterialVoucherService;
+	private IInvMaterialVoucherCustomService invMaterialVoucherService;
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -90,15 +97,61 @@ public class InvIssueServiceImpl extends ServiceImpl<InvIssueMapper, InvIssue> i
 
     @Override
 	@Transactional(rollbackFor = Exception.class)
-    public int audit(List<String> ids) {
+    public int audit(List<String> ids) throws Exception {
 
+		// 物料领用\审核逻辑
+		List<InvIssue> invIssues = listByIds(ids);
+		Assert.isTrue(CollectionUtils.isEmpty(invIssues),"物料领用单已经失效,请检查!");
 
+		for (InvIssue invIssue : invIssues) {
+			// 已经审核的单据不需要构建物料凭证
+			if (Constants.DICT_AUDIT_STATUS.YES.equals(invIssue.getAudit())) {
+				continue;
+			}
+
+			List<InvIssueDetail> invIssueDetailList = invIssueDetailMapper.selectByMainId(invIssue.getId());
+			String moveType = IssuePurposeMoveTypeMapping.getMoveType(invIssue.getPurpose());
+			InvMaterialVoucher invMaterialVoucher = new InvMaterialVoucher(moveType,invIssue.getDocCode(),invIssue.getId(),invIssue.getRemark());
+			invMaterialVoucher.setOrgCode(invIssue.getOrgCode());
+			List<InvMaterialVoucherDetail> detailList =new ArrayList<InvMaterialVoucherDetail>();
+			for (InvIssueDetail invIssueDetail : invIssueDetailList) {
+				InvMaterialVoucherDetail entity = new InvMaterialVoucherDetail();
+				entity.setSourceDocDetailId(invIssueDetail.getId());
+				entity.setMaterialCode(invIssueDetail.getMaterialCode());
+				entity.setUnit(invIssueDetail.getUnit());
+				entity.setSpecifications(invIssueDetail.getSpecifications());
+				entity.setQty(invIssueDetail.getQty());
+				entity.setWarehouseCode(invIssue.getWarehouseCode());
+				entity.setMoveType(moveType);
+				detailList.add(entity);
+
+			}
+
+			invMaterialVoucherService.createVoucher(invMaterialVoucher,detailList);
+
+		}
 		return updateAuditStatus(ids, Constants.DICT_AUDIT_STATUS.YES);
     }
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int unAudit(List<String> ids) {
+	public int unAudit(List<String> ids) throws Exception {
+		// 物料领用\审核逻辑
+		List<InvIssue> invIssues = listByIds(ids);
+		Assert.isTrue(CollectionUtils.isEmpty(invIssues),"物料领用单已经失效,请检查!");
+
+		for (InvIssue invIssue : invIssues) {
+			// 未审核的单据不需要构建物料凭证
+			if (Constants.DICT_AUDIT_STATUS.NO.equals(invIssue.getAudit())) {
+				continue;
+			}
+			String reversalId = invMaterialVoucherService.getVoucherIdBySourceDocId(invIssue.getId());
+
+			invMaterialVoucherService.reversalVoucher(reversalId);
+
+
+		}
+
 
 		return updateAuditStatus(ids, Constants.DICT_AUDIT_STATUS.NO);
 	}

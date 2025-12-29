@@ -128,13 +128,9 @@ public class InvMaterialVoucher implements Serializable {
 
 
     public InvMaterialVoucher( String moveType, String sourceDocCode, String sourceDocId, String remark) {
-        this.bizType = bizType;
-        this.sourceDocType = sourceDocType;
+        this.moveType = moveType;
         this.sourceDocCode = sourceDocCode;
         this.sourceDocId = sourceDocId;
-        this.moveType = moveType;
-        this.reversalDocId = reversalDocId;
-        this.isReversal = isReversal;
         this.remark = remark;
     }
 }

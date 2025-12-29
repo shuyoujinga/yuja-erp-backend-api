@@ -45,7 +45,7 @@ public interface IInvIssueService extends IService<InvIssue> {
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
 
-    int audit(List<String> ids);
+    int audit(List<String> ids) throws Exception;
 
-	int unAudit(List<String> ids);
+	int unAudit(List<String> ids) throws Exception;
 }

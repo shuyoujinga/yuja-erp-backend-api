@@ -62,7 +62,7 @@ public class InvMoveType implements Serializable {
 	@Excel(name = "业务类型", width = 15, dicCode = "dict_biz_type")
 	@Dict(dicCode = "dict_biz_type")
     @ApiModelProperty(value = "业务类型")
-    private String bizType;
+    private Integer bizType;
 	/**来源单据类型*/
 	@Excel(name = "业务类型", width = 15, dicCode = "dict_source_doc_type")
 	@Dict(dicCode = "dict_source_doc_type")

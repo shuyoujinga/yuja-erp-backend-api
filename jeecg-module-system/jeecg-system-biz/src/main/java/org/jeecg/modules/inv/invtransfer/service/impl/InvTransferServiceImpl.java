@@ -9,7 +9,7 @@ import org.constant.Constants;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucher;
 import org.jeecg.modules.inv.invmaterialvoucher.entity.InvMaterialVoucherDetail;
-import org.jeecg.modules.inv.invmaterialvoucher.service.impl.InvMaterialVoucherCustomService;
+import org.jeecg.modules.inv.invmaterialvoucher.service.IInvMaterialVoucherCustomService;
 import org.jeecg.modules.inv.invstock.entity.InvStock;
 import org.jeecg.modules.inv.invstock.service.IInvStockService;
 import org.jeecg.modules.inv.invtransfer.entity.InvTransfer;
@@ -50,7 +50,7 @@ public class InvTransferServiceImpl extends ServiceImpl<InvTransferMapper, InvTr
 	@Autowired
 	private IInvStockService iInvStockService;
 	@Autowired
-	private InvMaterialVoucherCustomService invMaterialVoucherCustomService;
+	private IInvMaterialVoucherCustomService invMaterialVoucherCustomService;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)

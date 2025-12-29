@@ -8,6 +8,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Constants {
+
+    public interface ISSUE_PURPOSE {
+        String PROD = "PROD";     // 生产
+        String RND = "RND";       // 研发
+        String MRO = "MRO";       // 维修
+        String ADMIN = "ADMIN";   // 行政
+        String SAMPLE = "SAMPLE"; // 样品
+    }
+
+
     //来源类型
     public interface DICT_MOVE_TYPE {
         // 采购入库
@@ -24,6 +34,32 @@ public class Constants {
         String DBCK = "121";
         // 调拨出库_冲销
         String DBCK_CX = "122";
+
+        // 生产领用
+        String SCLY = "201";
+        // 生产领用_冲销
+        String SCLY_CX = "202";
+
+        // 研发领用
+        String YFLY = "211";
+        // 研发领用_冲销
+        String YFLY_CX = "212";
+
+
+        // 维修领用
+        String WXLY = "221";
+        // 维修领用_冲销
+        String WXLY_CX = "222";
+
+        // 行政领用
+        String XZLY = "231";
+        // 行政领用_冲销
+        String XZLY_CX = "232";
+
+        // 样品领用
+        String YPLY = "241";
+        // 样品领用_冲销
+        String YPLY_CX = "242";
     }
 
     //出入库类型
