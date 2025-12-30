@@ -9,6 +9,111 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constants {
 
+    /**
+     * 其他入库类型（含冲销）
+     * 编码规则：
+     * - String 类型
+     * - 奇数：正向入库
+     * - 偶数：冲销入库
+     * - 一正一反成对
+     */
+    public interface DICT_OTHER_IN_TYPE {
+
+        /**
+         * 报废返库
+         */
+        String SCRAP_RETURN = "271";
+        /**
+         * 报废返库-冲销
+         */
+        String SCRAP_RETURN_REVERSE = "272";
+
+        /**
+         * 借出归还
+         */
+        String BORROW_RETURN = "273";
+        /**
+         * 借出归还-冲销
+         */
+        String BORROW_RETURN_REVERSE = "274";
+
+        /**
+         * 委外退料
+         */
+        String OUTSOURCE_RETURN = "275";
+        /**
+         * 委外退料-冲销
+         */
+        String OUTSOURCE_RETURN_REVERSE = "276";
+
+        /**
+         * 资产转库存
+         */
+        String ASSET_TO_STOCK = "277";
+        /**
+         * 资产转库存-冲销
+         */
+        String ASSET_TO_STOCK_REVERSE = "278";
+
+        //手工调整入库
+        String MANUAL_ADJUST = "279";
+    }
+
+
+    /**
+     * 其他出库类型（含冲销）
+     * 编码规则：
+     * - String 类型
+     * - 奇数：正向出库
+     * - 偶数：冲销出库
+     * - 一正一反成对
+     */
+    public interface DICT_OTHER_OUT_TYPE {
+
+        /**
+         * 报废出库
+         */
+        String SCRAP_OUT = "281";
+        /**
+         * 报废出库-冲销
+         */
+        String SCRAP_OUT_REVERSE = "282";
+
+        /**
+         * 借出出库
+         */
+        String BORROW_OUT = "283";
+        /**
+         * 借出出库-冲销
+         */
+        String BORROW_OUT_REVERSE = "284";
+
+        /**
+         * 委外发料出库
+         */
+        String OUTSOURCE_ISSUE = "285";
+        /**
+         * 委外发料出库-冲销
+         */
+        String OUTSOURCE_ISSUE_REVERSE = "286";
+
+        /**
+         * 资产转出库
+         */
+        String ASSET_OUT = "287";
+        /**
+         * 资产转出库-冲销
+         */
+        String ASSET_OUT_REVERSE = "288";
+
+        /**
+         * 手工调整出库（兜底）
+         */
+        String MANUAL_ADJUST = "289";
+
+    }
+
+
     public interface ISSUE_PURPOSE {
         String PROD = "PROD";     // 生产
         String RND = "RND";       // 研发
@@ -73,6 +178,7 @@ public class Constants {
 
     }
 
+
     //出入库类型
     public interface DICT_STOCK_TYPE {
         // 入库
@@ -81,6 +187,7 @@ public class Constants {
         int OUT = -1;
 
     }
+
     //来源类型
     public interface DICT_SOURCE_DOC_TYPE {
         // 采购！
@@ -108,13 +215,13 @@ public class Constants {
         int Y = 0;
         int N = 1;
     }
+
     public interface DICT_YN {
 
         String YES = "0";
 
         String NO = "1";
     }
-
 
 
     /**
@@ -188,18 +295,19 @@ public class Constants {
         String WLLY = "LY";
         //物资盘点
         String WLPD = "PD";
+        //其他入库
+        String QTRK = "RK";
     }
+
     /**
      * 退货蕾西
-      */
-    public interface DICT_RETURN_TYPE{
+     */
+    public interface DICT_RETURN_TYPE {
         // 未收货退货
-        Integer  NO_RECEIVE= 0 ;
+        Integer NO_RECEIVE = 0;
 
         // 已收退货
-        Integer RECEIVED= 1 ;
-
-
+        Integer RECEIVED = 1;
 
 
     }

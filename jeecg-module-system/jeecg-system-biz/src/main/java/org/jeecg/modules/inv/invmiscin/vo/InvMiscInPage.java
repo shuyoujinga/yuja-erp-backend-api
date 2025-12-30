@@ -57,12 +57,14 @@ public class InvMiscInPage {
 	@ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**入库类型*/
-	@Excel(name = "入库类型", width = 15)
+	@Excel(name = "入库类型", width = 15,dicCode = "dict_other_in_type")
 	@ApiModelProperty(value = "入库类型")
-    private Integer inType;
+	@Dict(dicCode = "dict_other_in_type")
+    private String inType;
 	/**仓库*/
-	@Excel(name = "仓库", width = 15)
+	@Excel(name = "仓库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
 	@ApiModelProperty(value = "仓库")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String warehouseCode;
 	/**库区*/
 	@Excel(name = "库区", width = 15)

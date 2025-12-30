@@ -55,9 +55,9 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
         log.info("开始创建物料凭证，sourceDocCode={}，detailCount={}",
                 voucher.getSourceDocCode(), details == null ? 0 : details.size());
         List<InvMoveType> moveTypeList = iInvMoveTypeService.list();
-        Assert.isTrue(CollectionUtils.isEmpty(moveTypeList),"操作失败!移动类型配置表为空!");
+        Assert.isTrue(CollectionUtils.isEmpty(moveTypeList), "操作失败!移动类型配置表为空!");
         Map<String, InvMoveType> moveTypeMap = moveTypeList.stream().collect(Collectors.toMap(InvMoveType::getMoveType, v -> v));
-        preCheckInfo(moveTypeMap,voucher,details);
+        preCheckInfo(moveTypeMap, voucher, details);
 
         validateVoucher(voucher, details);
         preprocessDetails(details);
@@ -74,7 +74,7 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
                 .collect(Collectors.toList());
 
         List<InvStock> stockList = invStockService.list(
-                new LambdaQueryWrapper<InvStock>().in(InvStock::getWarehouseCode,wareHouseCodes).in(InvStock::getMaterialCode, materialCodes)
+                new LambdaQueryWrapper<InvStock>().in(InvStock::getWarehouseCode, wareHouseCodes).in(InvStock::getMaterialCode, materialCodes)
         );
 
         // 执行库存操作
@@ -88,7 +88,7 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
     private void preCheckInfo(Map<String, InvMoveType> moveTypeMap, InvMaterialVoucher voucher, List<InvMaterialVoucherDetail> details) {
         String moveType = voucher.getMoveType();
         InvMoveType invMoveType = moveTypeMap.get(moveType);
-        Assert.isTrue(ObjectUtils.isEmpty(invMoveType),String.format("移动类型%s不存在!",moveType));
+        Assert.isTrue(ObjectUtils.isEmpty(invMoveType), String.format("移动类型%s不存在!", moveType));
         if (StringUtils.isEmpty(voucher.getBizType())) {
             voucher.setBizType(invMoveType.getBizType());
         }
@@ -118,6 +118,12 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
         InvMaterialVoucher original = invMaterialVoucherService.getById(voucherId);
         Assert.notNull(original, "原凭证不存在");
 
+        // 校验物料凭证是否可以冲销
+
+        InvMoveType moveTypeEntity = iInvMoveTypeService.getOne(new LambdaQueryWrapper<InvMoveType>().eq(InvMoveType::getMoveType, original.getMoveType()));
+
+        Assert.isTrue(Constants.DICT_YN.NO.equals(moveTypeEntity.getIsReversal().toString()), String.format("冲销失败!移动类型[%s]不允许冲销!请联系财务!", moveTypeEntity.getMoveDesc()));
+
         List<InvMaterialVoucherDetail> oldDetails =
                 invMaterialVoucherDetailService.selectByMainId(voucherId);
 
@@ -138,11 +144,16 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
                 .collect(Collectors.toList());
 
         List<InvStock> stockList = invStockService.list(
-                new LambdaQueryWrapper<InvStock>().in(InvStock::getWarehouseCode,wareHouseCodes).in(InvStock::getMaterialCode, materialCodes)
+                new LambdaQueryWrapper<InvStock>().in(InvStock::getWarehouseCode, wareHouseCodes).in(InvStock::getMaterialCode, materialCodes)
         );
 
         // 库存操作（负逻辑）
         applyStockChange(reversalDetails, stockList);
+
+        // 处理使用组织的问题-在冲销的时候不能使用
+        if (StringUtils.isEmpty(reversal.getOrgCode())) {
+            reversal.setOrgCode(original.getOrgCode());
+        }
 
         // 保存冲销凭证
         invMaterialVoucherService.saveMain(reversal, reversalDetails);
@@ -296,14 +307,26 @@ public class InvMaterialVoucherCustomService implements IInvMaterialVoucherCusto
         return r;
     }
 
-    // 类型尾数互换：1 ↔ 2
+    /**
+     * 类型奇偶互换：
+     * 奇数  -> +1
+     * 偶数  -> -1
+     */
     private String swapMoveType(String moveType) {
-        if (moveType == null || moveType.isEmpty()) return moveType;
-        char c = moveType.charAt(moveType.length() - 1);
-        return (c == '1')
-                ? moveType.substring(0, moveType.length() - 1) + "2"
-                : (c == '2')
-                ? moveType.substring(0, moveType.length() - 1) + "1"
-                : moveType;
+        if (StringUtils.isEmpty(moveType)) {
+            return moveType;
+        }
+
+        int type;
+        try {
+            type = Integer.parseInt(moveType);
+        } catch (NumberFormatException e) {
+            // 非数字直接原样返回，避免误伤
+            return moveType;
+        }
+
+        // 奇数 +1，偶数 -1
+        return String.valueOf((type & 1) == 1 ? type + 1 : type - 1);
     }
+
 }
