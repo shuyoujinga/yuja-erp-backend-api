@@ -95,8 +95,7 @@ public class PurSettleDetail implements Serializable {
     @ApiModelProperty(value = "采购收货明细ID")
     private String receiveDetailId;
 
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

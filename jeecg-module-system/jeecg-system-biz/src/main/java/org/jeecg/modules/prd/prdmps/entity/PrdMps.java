@@ -85,8 +85,7 @@ public class PrdMps implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @ApiModelProperty(value = "审核时间")
     private Date auditTime;
-	/**状态*/
-	@Excel(name = "状态", width = 15)
+    /**状态*/
     @ApiModelProperty(value = "状态")
     private Integer status;
 	/**备注*/
@@ -105,8 +104,7 @@ public class PrdMps implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @ApiModelProperty(value = "回复交期")
     private Date replyDeliveryTime;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

@@ -70,8 +70,7 @@ public class InvAssembly implements Serializable {
 	@Excel(name = "组装出库", width = 15)
     @ApiModelProperty(value = "组装出库")
     private String outWarehouseCode;
-	/**状态*/
-	@Excel(name = "状态", width = 15)
+    /**状态*/
     @ApiModelProperty(value = "状态")
     private Integer status;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
@@ -84,15 +83,17 @@ public class InvAssembly implements Serializable {
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/
-	@Excel(name = "审核时间", width = 15)
-    @ApiModelProperty(value = "审核时间")
-    private String auditTime;
+/**审核时间*/
+	@Excel(name = "审核时间", width = 15, format = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+	@ApiModelProperty(value = "审核时间")
+    private Date auditTime;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

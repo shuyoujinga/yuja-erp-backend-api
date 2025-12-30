@@ -63,11 +63,19 @@ public class SalQuote implements Serializable {
     @ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
-	/**状态*/
-	@Excel(name = "状态", width = 15)
+    /**金额合计*/
+    @Excel(name = "金额合计", width = 15)
+    @ApiModelProperty(value = "金额合计")
+    private Double amount;
+    /**含税合计*/
+    @Excel(name = "含税合计", width = 15)
+    @ApiModelProperty(value = "含税合计")
+    private Double taxAmount;
+    /**状态*/
     @ApiModelProperty(value = "状态")
     private Integer status;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
@@ -76,19 +84,20 @@ public class SalQuote implements Serializable {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
-	/**审核时间*/
-	@Excel(name = "审核时间", width = 15)
-    @ApiModelProperty(value = "审核时间")
-    private String auditTime;
+    /**审核时间*/
+	@Excel(name = "审核时间", width = 15, format = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+	@ApiModelProperty(value = "审核时间")
+    private Date auditTime;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

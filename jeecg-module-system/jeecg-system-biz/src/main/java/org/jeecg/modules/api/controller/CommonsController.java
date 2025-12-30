@@ -43,5 +43,20 @@ public class CommonsController {
         Assert.isTrue(ObjectUtils.isArray(yujiakejiMaterials), TipsMessage.METERIALS_CODE_ERROR.getMessage());
         return Result.OK(yujiakejiMaterials);
     }
-
+    /**
+     * 根据物料编码查询
+     *
+     * @param materialCode 物料编码
+     * @return
+     */
+    @ApiOperation(value = "公共接口-根据物料编码查询-销售模块专用", notes = "根据物料编码查询物料主数据")
+    @GetMapping(value = "/queryByMaterialCodeInSale")
+    public Result<YujiakejiMaterials> queryByMaterialCodeInSale(@RequestParam(name = "materialCode", required = true) String materialCode) {
+        if (StringUtils.isEmpty(materialCode)) {
+            return Result.error("物料编码不能为空");
+        }
+        YujiakejiMaterials yujiakejiMaterials = yujiakejiMaterialsService.queryByMaterialCodeInSale(materialCode);
+        Assert.isTrue(ObjectUtils.isArray(yujiakejiMaterials), TipsMessage.METERIALS_CODE_ERROR.getMessage());
+        return Result.OK(yujiakejiMaterials);
+    }
 }

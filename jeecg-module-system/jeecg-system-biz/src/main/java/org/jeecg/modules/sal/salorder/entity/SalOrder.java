@@ -63,8 +63,9 @@ public class SalOrder implements Serializable {
     @ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**要求交期*/
 	@Excel(name = "要求交期", width = 15, format = "yyyy-MM-dd")
@@ -95,8 +96,7 @@ public class SalOrder implements Serializable {
 	@Excel(name = "金额合计", width = 15)
     @ApiModelProperty(value = "金额合计")
     private Double amount;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

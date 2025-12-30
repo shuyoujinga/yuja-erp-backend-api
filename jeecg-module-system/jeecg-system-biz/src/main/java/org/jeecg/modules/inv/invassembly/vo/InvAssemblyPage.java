@@ -77,10 +77,12 @@ public class InvAssemblyPage {
 @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private String auditBy;
-	/**审核时间*/
-	@Excel(name = "审核时间", width = 15)
+/**审核时间*/
+	@Excel(name = "审核时间", width = 15, format = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
 	@ApiModelProperty(value = "审核时间")
-    private String auditTime;
+    private Date auditTime;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
 	@ApiModelProperty(value = "备注")

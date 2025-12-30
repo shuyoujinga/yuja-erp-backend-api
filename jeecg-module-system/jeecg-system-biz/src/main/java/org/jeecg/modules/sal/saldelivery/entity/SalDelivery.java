@@ -75,11 +75,11 @@ public class SalDelivery implements Serializable {
     @ApiModelProperty(value = "运费类型")
     private Integer freightType;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
-	/**状态*/
-	@Excel(name = "状态", width = 15)
+    /**状态*/
     @ApiModelProperty(value = "状态")
     private Integer status;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
@@ -100,8 +100,7 @@ public class SalDelivery implements Serializable {
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

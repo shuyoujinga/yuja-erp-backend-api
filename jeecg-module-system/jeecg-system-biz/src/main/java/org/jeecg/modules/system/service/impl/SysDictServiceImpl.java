@@ -43,6 +43,8 @@ import org.springframework.util.CollectionUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.jeecg.common.constant.DIY_DICT_CONSTANT.PRODUCTION_SQL;
+
 /**
  * <p>
  * 字典表 服务实现类
@@ -737,6 +739,14 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                     ls = this.queryDictItemsByDiyCode(DIY_DICT_CONSTANT.STOCK_MATERIAL_SQL);
                 }
 
+            }
+            // 客户
+            if (dictCode.contains(DIY_DICT_CONSTANT.CUSTOMER)) {
+                ls = this.queryDictItemsByDiyCode(DIY_DICT_CONSTANT.CUSTOMER_SQL);
+            }
+            // 产品
+            if (dictCode.contains(DIY_DICT_CONSTANT.PRODUCTION)) {
+                ls = this.queryDictItemsByDiyCode(PRODUCTION_SQL);
             }
             if (dictCode.contains(DIY_DICT_CONSTANT.ORG_CODE)) {
                 ls = this.queryDictItemsByDiyCode(split.length == 1 ? DIY_DICT_CONSTANT.ORG_CODE_SQL : DIY_DICT_CONSTANT.ORG_CODE_SQL + "where " + split[1]);

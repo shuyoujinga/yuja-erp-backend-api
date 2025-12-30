@@ -71,24 +71,31 @@ public class SalQuoteDetail implements Serializable {
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
     private Double qty;
-	/**单价*/
-	@Excel(name = "单价", width = 15)
-    @ApiModelProperty(value = "单价")
-    private Double unitPrice;
     /**折扣*/
     @Excel(name = "折扣", width = 15)
     @ApiModelProperty(value = "折扣")
     private Double discountRate;
+	/**单价*/
+	@Excel(name = "单价", width = 15)
+    @ApiModelProperty(value = "单价")
+    private Double unitPrice;
 	/**金额*/
 	@Excel(name = "金额", width = 15)
     @ApiModelProperty(value = "金额")
     private Double amount;
+    /**含税单价*/
+    @Excel(name = "含税单价", width = 15)
+    @ApiModelProperty(value = "含税单价")
+    private Double taxUnitPrice;
+    /**含税金额*/
+    @Excel(name = "含税金额", width = 15)
+    @ApiModelProperty(value = "含税金额")
+    private Double taxAmount;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

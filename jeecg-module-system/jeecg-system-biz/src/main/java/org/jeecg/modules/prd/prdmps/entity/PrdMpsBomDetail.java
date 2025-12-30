@@ -83,8 +83,7 @@ public class PrdMpsBomDetail implements Serializable {
 	@Excel(name = "其他说明", width = 15)
     @ApiModelProperty(value = "其他说明")
     private String remark;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

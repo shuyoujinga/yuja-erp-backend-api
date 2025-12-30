@@ -61,8 +61,9 @@ public class SalPrepay implements Serializable {
 	@ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**金额*/
 	@Excel(name = "金额", width = 15)
@@ -83,16 +84,14 @@ public class SalPrepay implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @ApiModelProperty(value = "审核时间")
     private Date auditTime;
-	/**状态*/
-	@Excel(name = "状态", width = 15)
+    /**状态*/
     @ApiModelProperty(value = "状态")
     private Integer status;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

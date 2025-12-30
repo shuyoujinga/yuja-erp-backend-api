@@ -36,7 +36,7 @@ public class DIY_DICT_CONSTANT {
     /**
      * 自定义供应商的SQL语句
      */
-    public static  final String SUPPLIER_SQL = "SELECT CONCAT_WS( '_', code, name ) AS text, code AS `value`  FROM yujiakeji_suppliers ";
+    public static  final String SUPPLIER_SQL = "SELECT CONCAT_WS( '_', code, name ) AS text, code AS `value`  FROM yujiakeji_suppliers where del_flag=0 order by `code` asc ";
     /**
      * 自定义供应商
      */
@@ -68,5 +68,29 @@ public class DIY_DICT_CONSTANT {
      * 自定义部门数据-仓位的SQL语句
      */
     public static  final String ORG_CODE_SQL = "SELECT depart_name AS `text`,org_code AS `value` FROM sys_depart  WHERE org_type > 2  ORDER BY org_code ASC ";
+
+    /**
+     * 自定义成品数据
+     */
+    public static  final String PRODUCTION = "Production";
+
+
+    /**
+     * 自定义成品数据
+     */
+    public static  final String PRODUCTION_SQL = "SELECT CONCAT_WS( '_', t1.material_code, t1.material_name, t1.specifications ) AS text,t0.material_code AS `value` FROM inv_stock t0\tINNER JOIN yujiakeji_materials t1 ON t0.material_code = t1.material_code  WHERE t0.total_qty > 0  AND t0.del_flag = 0  AND t1.material_code like 'C%' ORDER BY t0.material_code ASC ";
+
+
+    /**
+     * 自定义部门数据-仓位
+     */
+    public static  final String CUSTOMER = "Customer";
+
+
+    /**
+     * 自定义部门数据-仓位的SQL语句
+     */
+    public static  final String CUSTOMER_SQL = "SELECT CONCAT_WS( '_', code, name ) AS text, code AS `value`  FROM yujiakeji_customers where del_flag=0  order by `code` asc  ";
+
 
 }

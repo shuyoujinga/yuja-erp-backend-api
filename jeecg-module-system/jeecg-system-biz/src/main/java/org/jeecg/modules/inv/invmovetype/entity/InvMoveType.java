@@ -89,8 +89,7 @@ public class InvMoveType implements Serializable {
 	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
 	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
-	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
+/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

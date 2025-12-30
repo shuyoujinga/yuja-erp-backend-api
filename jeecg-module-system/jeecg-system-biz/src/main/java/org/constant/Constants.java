@@ -299,6 +299,8 @@ public class Constants {
         String QTRK = "RK";
         //其他出库
         String QTCK = "CK";
+        //其他出库
+        String XSBJ = "RU";
     }
 
     /**

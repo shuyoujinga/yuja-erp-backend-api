@@ -13,4 +13,6 @@ import org.jeecg.modules.maindata.materials.entity.YujiakejiMaterials;
 public interface YujiakejiMaterialsMapper extends BaseMapper<YujiakejiMaterials> {
 
     YujiakejiMaterials queryByMaterialCode(@Param("materialCode") String materialCode,@Param("warehouseCode") String warehouseCode);
+
+    YujiakejiMaterials queryByMaterialCodeInSale(@Param("materialCode")  String materialCode);
 }
