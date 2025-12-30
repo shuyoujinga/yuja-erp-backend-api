@@ -19,4 +19,6 @@ public interface ISalOrderDetailService extends IService<SalOrderDetail> {
 	 * @return List<SalOrderDetail>
 	 */
 	public List<SalOrderDetail> selectByMainId(String mainId);
+
+	List<SalOrderDetail> selectByTargetId(String ids);
 }

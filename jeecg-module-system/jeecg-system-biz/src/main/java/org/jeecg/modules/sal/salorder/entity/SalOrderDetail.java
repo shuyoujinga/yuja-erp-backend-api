@@ -70,27 +70,32 @@ public class SalOrderDetail implements Serializable {
 	/**规格*/
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
-    private String specificaitons;
+    private String specifications;
+    /**库存数量*/
+    @Excel(name = "库存数量", width = 15)
+    @ApiModelProperty(value = "库存数量")
+    private Double stockQty;
 	/**数量*/
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
-    private String qty;
+    private Double qty;
+    /**件数*/
+    @Excel(name = "件数", width = 15)
+    @ApiModelProperty(value = "件数")
+    private Double pieceQty;
+    /**折扣*/
+    @Excel(name = "折扣", width = 15)
+    @ApiModelProperty(value = "折扣")
+    private Double discountRate;
 	/**单价*/
 	@Excel(name = "单价", width = 15)
     @ApiModelProperty(value = "单价")
     private Double unitPrice;
-	/**折扣*/
-	@Excel(name = "折扣", width = 15)
-    @ApiModelProperty(value = "折扣")
-    private Double discountRate;
-	/**件数*/
-	@Excel(name = "件数", width = 15)
-    @ApiModelProperty(value = "件数")
-    private Double pieceQty;
 	/**金额*/
 	@Excel(name = "金额", width = 15)
     @ApiModelProperty(value = "金额")
     private Double amount;
+
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")

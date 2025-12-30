@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jeecg.modules.aop.DeleteCheckAudit;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -145,6 +146,7 @@ public class SalOrderController {
 	@ApiOperation(value="销售订单-批量删除", notes="销售订单-批量删除")
     @RequiresPermissions("salorder:sal_order:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = ISalOrderService.class,entity = SalOrder.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.salOrderService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
@@ -181,6 +183,19 @@ public class SalOrderController {
 		List<SalOrderDetail> salOrderDetailList = salOrderDetailService.selectByMainId(id);
 		return Result.OK(salOrderDetailList);
 	}
+	 /**
+	  * 通过id查询
+	  *
+	  * @param id
+	  * @return
+	  */
+	 //@AutoLog(value = "销售订单_明细通过主表ID查询")
+	 @ApiOperation(value="销售订单_特定明细主表ID查询", notes="销售订单_明细-通主表ID查询")
+	 @GetMapping(value = "/querySalOrderDetailByTargetId")
+	 public Result<List<SalOrderDetail>> querySalOrderDetailByTargetId(@RequestParam(name="id",required=true) String id) {
+		 List<SalOrderDetail> salOrderDetailList = salOrderDetailService.selectByTargetId(id);
+		 return Result.OK(salOrderDetailList);
+	 }
 
     /**
     * 导出excel

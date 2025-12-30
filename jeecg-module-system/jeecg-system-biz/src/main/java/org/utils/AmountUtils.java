@@ -105,4 +105,9 @@ public class AmountUtils {
     private static BigDecimal defaultZero(BigDecimal value) {
         return value == null ? BigDecimal.ZERO : value;
     }
+
+    public static boolean isZero(Double stockQty) {
+        return stockQty == null || stockQty.compareTo(0D) == 0;
+    }
+
 }

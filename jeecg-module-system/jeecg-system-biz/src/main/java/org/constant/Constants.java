@@ -212,8 +212,8 @@ public class Constants {
 
 
     public interface YN {
-        int Y = 0;
-        int N = 1;
+        Integer Y = 0;
+        Integer N = 1;
     }
 
     public interface DICT_YN {
@@ -299,8 +299,10 @@ public class Constants {
         String QTRK = "RK";
         //其他出库
         String QTCK = "CK";
-        //其他出库
+        //销售报价
         String XSBJ = "RU";
+        //其他出库
+        String XSDD = "ZP";
     }
 
     /**
