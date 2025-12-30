@@ -66,7 +66,11 @@ public class InvMiscOutDetail implements Serializable {
 	/**规格*/
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
-    private String specificcations;
+    private String specifications;
+    /**库存数量*/
+    @Excel(name = "库存数量", width = 15)
+    @ApiModelProperty(value = "库存数量")
+    private Double stockQty;
 	/**数量*/
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")

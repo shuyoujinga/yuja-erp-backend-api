@@ -297,6 +297,8 @@ public class Constants {
         String WLPD = "PD";
         //其他入库
         String QTRK = "RK";
+        //其他出库
+        String QTCK = "CK";
     }
 
     /**

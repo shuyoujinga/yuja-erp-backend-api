@@ -275,9 +275,9 @@ public class InvMiscInController {
 	  * @param auditRequest 审核请求参数，包含ID列表和操作类型（audit/reverse）
 	  * @return
 	  */
-	 @AutoLog(value = "物资盘点-审核/反审核")
-	 @ApiOperation(value = "物资盘点-审核/反审核", notes = "物资盘点-审核/反审核")
-	 @RequiresPermissions("invstocktake:inv_stock_take:audit")
+	 @AutoLog(value = "其他入库-审核/反审核")
+	 @ApiOperation(value = "其他入库-审核/反审核", notes = "物资盘点-审核/反审核")
+	 @RequiresPermissions("invmiscin:inv_misc_in:audit")
 	 @RequestMapping(value = "/audit", method = {RequestMethod.PUT, RequestMethod.POST})
 	 public Result<String> audit(@RequestBody AuditRequest auditRequest) throws Exception {
 		 List<String> ids = auditRequest.getIds();

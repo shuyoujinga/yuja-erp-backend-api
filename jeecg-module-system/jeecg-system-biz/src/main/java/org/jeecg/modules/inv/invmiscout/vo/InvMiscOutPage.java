@@ -59,7 +59,7 @@ public class InvMiscOutPage {
 	/**出库类型*/
 	@Excel(name = "出库类型", width = 15)
 	@ApiModelProperty(value = "出库类型")
-    private Integer outType;
+    private String outType;
 	/**仓库*/
 	@Excel(name = "仓库", width = 15)
 	@ApiModelProperty(value = "仓库")
