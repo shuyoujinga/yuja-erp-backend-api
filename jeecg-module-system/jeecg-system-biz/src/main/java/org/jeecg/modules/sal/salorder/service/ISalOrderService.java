@@ -44,5 +44,8 @@ public interface ISalOrderService extends IService<SalOrder> {
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+	int audit(List<String> ids);
+
+	int unAudit(List<String> ids);
 }
