@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.constant.Constants;
+import org.jeecg.modules.aop.DeleteCheckAudit;
+import org.jeecg.modules.maindata.bom.vo.AuditRequest;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -155,6 +158,7 @@ public class SalBizPlanController {
 	@ApiOperation(value="业务计划-批量删除", notes="业务计划-批量删除")
     @RequiresPermissions("salbizplan:sal_biz_plan:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = ISalBizPlanService.class,entity = SalBizPlan.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.salBizPlanService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
@@ -311,5 +315,33 @@ public class SalBizPlanController {
       }
       return Result.OK("文件导入失败！");
     }
+
+	/**
+	 * 审核/反审核
+	 *
+	 * @param auditRequest 审核请求参数，包含ID列表和操作类型（audit/reverse）
+	 * @return
+	 */
+	@AutoLog(value = "销售报价-审核/反审核")
+	@ApiOperation(value = "销售报价-审核/反审核", notes = "销售报价-审核/反审核")
+	@RequiresPermissions("salbizplan:sal_biz_plan:audit")
+	@RequestMapping(value = "/audit", method = {RequestMethod.PUT, RequestMethod.POST})
+	public Result<String> audit(@RequestBody AuditRequest auditRequest) throws Exception {
+		List<String> ids = auditRequest.getIds();
+		String type = auditRequest.getType(); // audit 或 reverse
+
+		Assert.isTrue(CollectionUtil.isEmpty(ids), "请选择要操作的记录");
+
+
+		int count;
+		if (Constants.DICT_AUDIT_FLAG.AUDIT.equals(type)) {
+			count = salBizPlanService.audit(ids);
+		} else {
+			count = salBizPlanService.unAudit(ids);
+		}
+
+
+		return Result.OK(String.format("操作成功，共计完成对%s条数据的操作！", count));
+	}
 
 }

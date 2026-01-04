@@ -1,7 +1,9 @@
 package org.jeecg.modules.sal.salbizplan.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.apache.shiro.SecurityUtils;
 import org.constant.Constants;
+import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.sal.salbizplan.entity.SalBizPlan;
 import org.jeecg.modules.sal.salbizplan.entity.SalBizPlanDetail;
 import org.jeecg.modules.sal.salbizplan.entity.SalBizPlanBomDetail;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Collection;
 
@@ -27,6 +30,7 @@ import java.util.Collection;
  * @Version: V1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SalBizPlanServiceImpl extends ServiceImpl<SalBizPlanMapper, SalBizPlan> implements ISalBizPlanService {
 
 	@Resource
@@ -103,5 +107,49 @@ public class SalBizPlanServiceImpl extends ServiceImpl<SalBizPlanMapper, SalBizP
 			salBizPlanMapper.deleteById(id);
 		}
 	}
-	
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int audit(List<String> ids) {
+		return updateAuditStatus(ids,Constants.DICT_AUDIT_STATUS.YES);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int unAudit(List<String> ids) {
+		return updateAuditStatus(ids,Constants.DICT_AUDIT_STATUS.NO);
+	}
+	/**
+	 * 批量更新审核状态
+	 *
+	 * @param ids    待更新记录ID列表
+	 * @param status 审核状态（YES/NO）
+	 * @return 更新数量
+	 */
+	private int updateAuditStatus(List<String> ids, Integer status) {
+		LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+		if (CollectionUtil.isEmpty(ids)) {
+			return 0;
+		}
+
+		List<SalBizPlan> records = baseMapper.selectBatchIds(ids);
+		if (CollectionUtil.isEmpty(records)) {
+			return 0;
+		}
+
+		int count = 0;
+		for (SalBizPlan record : records) {
+			if (!status.equals(record.getAudit())) {
+				record.setAudit(status);
+				record.setAuditBy(sysUser.getUsername());
+				record.setAuditTime(new Date());
+				count++;
+			}
+		}
+
+		if (count > 0) {
+			updateBatchById(records);
+		}
+		return count;
+	}
 }
