@@ -57,8 +57,9 @@ public class SalReceiptPage {
 	@ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
-	@ApiModelProperty(value = "客户")
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
+    @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**结算IDS*/
 	@Excel(name = "结算IDS", width = 15)
@@ -116,8 +117,8 @@ public class SalReceiptPage {
 	@ApiModelProperty(value = "备注")
     private String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="销售收款_明细")

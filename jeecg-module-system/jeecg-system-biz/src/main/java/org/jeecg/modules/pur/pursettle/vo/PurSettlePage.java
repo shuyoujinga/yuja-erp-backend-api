@@ -109,8 +109,8 @@ public class PurSettlePage {
 	@ApiModelProperty(value = "备注")
 	private String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="采购结算_明细")

@@ -57,33 +57,35 @@ public class SalDeliveryPage {
 	@ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**销售订单*/
-	@Excel(name = "销售订单", width = 15)
 	@ApiModelProperty(value = "销售订单")
     private String orderCodes;
 	/**销售订单_IDS*/
-	@Excel(name = "销售订单_IDS", width = 15)
 	@ApiModelProperty(value = "销售订单_IDS")
     private String orderIds;
 	/**运费类型*/
-	@Excel(name = "运费类型", width = 15)
+	@Excel(name = "运费类型", width = 15,dicCode = "dict_freight_type")
 	@ApiModelProperty(value = "运费类型")
     private Integer freightType;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
-	@ApiModelProperty(value = "客户")
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
+    @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
+	/**金额合计*/
+	@Excel(name = "金额合计", width = 15)
+	@ApiModelProperty(value = "金额合计")
+	private Double amount;
 	/**状态*/
-	@Excel(name = "状态", width = 15)
 	@ApiModelProperty(value = "状态")
     private Integer status;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
     @Dict(dicCode = "dict_audit_status")
 	@ApiModelProperty(value = "审核状态")
     private Integer audit;
-	/**审批人*/
-	@Excel(name = "审批人", width = 15)
-	@ApiModelProperty(value = "审批人")
-    private String auditBy;
+	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@ApiModelProperty(value = "审核人")
+	private String auditBy;
 	/**审批时间*/
 	@Excel(name = "审批时间", width = 15, format = "yyyy-MM-dd")
 	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
@@ -95,8 +97,8 @@ public class SalDeliveryPage {
 	@ApiModelProperty(value = "备注")
     private String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="销售发货_明细")

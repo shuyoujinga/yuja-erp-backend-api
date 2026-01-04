@@ -58,8 +58,9 @@ public class SalBizPlanPage {
 	@ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
-	@ApiModelProperty(value = "客户")
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
+    @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**要求交期*/
 	@Excel(name = "要求交期", width = 15, format = "yyyy-MM-dd")
@@ -96,8 +97,8 @@ public class SalBizPlanPage {
 	@ApiModelProperty(value = "备注")
     private String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="业务计划_明细")

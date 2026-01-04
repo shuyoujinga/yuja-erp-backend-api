@@ -79,7 +79,7 @@ public class PrdWorkOrder implements Serializable {
     @ApiModelProperty(value = "生产产品")
     private String materialCode;
 	/**单位*/
-	@Excel(name = "单位", width = 15)
+    @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
     private String unit;
 	/**规格*/

@@ -71,14 +71,19 @@ public class SalDelivery implements Serializable {
     @ApiModelProperty(value = "销售订单_IDS")
     private String orderIds;
 	/**运费类型*/
-	@Excel(name = "运费类型", width = 15)
+	@Excel(name = "运费类型", width = 15,dicCode = "dict_freight_type")
     @ApiModelProperty(value = "运费类型")
+    @Dict(dicCode = "dict_freight_type")
     private Integer freightType;
 	/**客户*/
 	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     @ApiModelProperty(value = "客户")
     @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
+    /**金额合计*/
+    @Excel(name = "金额合计", width = 15)
+    @ApiModelProperty(value = "金额合计")
+    private Double amount;
     /**状态*/
     @ApiModelProperty(value = "状态")
     private Integer status;
@@ -87,8 +92,9 @@ public class SalDelivery implements Serializable {
     @ApiModelProperty(value = "审核状态")
     private Integer audit;
 	/**审批人*/
-	@Excel(name = "审批人", width = 15)
-    @ApiModelProperty(value = "审批人")
+    @Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审批时间*/
 	@Excel(name = "审批时间", width = 15, format = "yyyy-MM-dd")
@@ -100,7 +106,7 @@ public class SalDelivery implements Serializable {
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
-/**是否有效*/
+    /**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

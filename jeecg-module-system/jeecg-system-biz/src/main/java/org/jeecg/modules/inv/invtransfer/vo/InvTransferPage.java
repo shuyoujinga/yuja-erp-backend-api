@@ -98,8 +98,8 @@ public class InvTransferPage {
 	@ApiModelProperty(value = "引用单号")
     private String refCode;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="物料调拨_明细")

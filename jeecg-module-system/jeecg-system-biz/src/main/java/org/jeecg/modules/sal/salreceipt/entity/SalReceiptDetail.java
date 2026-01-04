@@ -60,11 +60,11 @@ public class SalReceiptDetail implements Serializable {
     @ApiModelProperty(value = "结算明细ID")
     private String settleDetailId;
 	/**货品*/
-	@Excel(name = "货品", width = 15)
+    @Excel(name = "货品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "货品")
     private String materialCode;
 	/**单位*/
-	@Excel(name = "单位", width = 15)
+    @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
     private String unit;
 	/**规格*/

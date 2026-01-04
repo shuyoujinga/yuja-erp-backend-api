@@ -71,7 +71,7 @@ public class PurOrderDetail implements Serializable {
     @ApiModelProperty(value = "规格")
     private String specifications;
 	/**单位*/
-	@Excel(name = "单位", width = 15)
+    @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
     private String unit;
 	/**采购数量*/

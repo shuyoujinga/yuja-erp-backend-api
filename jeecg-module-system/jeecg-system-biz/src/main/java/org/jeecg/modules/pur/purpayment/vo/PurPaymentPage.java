@@ -98,8 +98,8 @@ public class PurPaymentPage {
 	@ApiModelProperty(value = "状态")
     private Integer status;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="采购付款_明细")

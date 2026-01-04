@@ -55,8 +55,9 @@ public class SalPrepayPage {
 	@ApiModelProperty(value = "制单日期")
     private String docTime;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
-	@ApiModelProperty(value = "客户")
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
+    @ApiModelProperty(value = "客户")
+    @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**金额*/
 	@Excel(name = "金额", width = 15)
@@ -86,8 +87,8 @@ public class SalPrepayPage {
 	@ApiModelProperty(value = "备注")
     private String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="预收使用_明细")

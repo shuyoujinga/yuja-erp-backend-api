@@ -112,8 +112,8 @@ public class PrdWorkOrderPage {
 	@ApiModelProperty(value = "状态")
     private Integer status;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
-	@ApiModelProperty(value = "是否有效")
+    /**是否有效*/
+    @ApiModelProperty(value = "是否有效")
     private Integer delFlag;
 
 	@ExcelCollection(name="生产工单_物料明细")

@@ -56,21 +56,24 @@ public class SalDeliveryDetail implements Serializable {
     @ApiModelProperty(value = "主表ID")
     private String pid;
 	/**明细表ID*/
-	@Excel(name = "明细表ID", width = 15)
     @ApiModelProperty(value = "明细表ID")
     private String orderDetailId;
 	/**货品*/
-	@Excel(name = "货品", width = 15)
+    @Excel(name = "货品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "货品")
     private String materialCode;
 	/**单位*/
-	@Excel(name = "单位", width = 15)
+    @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
     private String unit;
 	/**规格*/
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
+    /**库存数量*/
+    @Excel(name = "库存数量", width = 15)
+    @ApiModelProperty(value = "库存数量")
+    private Double stockQty;
 	/**订单数*/
 	@Excel(name = "订单数", width = 15)
     @ApiModelProperty(value = "订单数")

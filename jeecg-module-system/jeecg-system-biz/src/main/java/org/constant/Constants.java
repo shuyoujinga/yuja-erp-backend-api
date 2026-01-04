@@ -59,6 +59,10 @@ public class Constants {
         String MANUAL_ADJUST = "279";
     }
 
+    public interface WAREHOUSE {
+        // 制成品仓库
+        String PRODUCTION="A01A03A04A03";
+    }
 
     /**
      * 其他出库类型（含冲销）
@@ -176,6 +180,10 @@ public class Constants {
         // 盘亏出库_冲销
         String PKCK_CX = "262";
 
+        // 销售出库
+        String XSCH = "601";
+        // 盘亏出库_冲销
+        String XSCH_CX = "602";
     }
 
 
@@ -303,8 +311,10 @@ public class Constants {
         String XSBJ = "RU";
         //其他出库
         String XSDD = "ZP";
-        //其他出库
+        //业务计划
         String YWJH = "JH";
+        //业务计划
+        String XSFH = "ZD";
     }
 
     /**
