@@ -1,5 +1,6 @@
 package org.jeecg.modules.maindata.materials.service;
 
+import org.jeecg.modules.api.vo.MaterialInfoVO;
 import org.jeecg.modules.maindata.materials.entity.YujiakejiMaterials;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,4 +20,6 @@ public interface IYujiakejiMaterialsService extends IService<YujiakejiMaterials>
     YujiakejiMaterials queryByMaterialCode(String materialCode, String warehouseCode);
 
     YujiakejiMaterials queryByMaterialCodeInSale(String materialCode);
+
+    MaterialInfoVO queryByMaterialInfoAndBomList(String materialCode);
 }

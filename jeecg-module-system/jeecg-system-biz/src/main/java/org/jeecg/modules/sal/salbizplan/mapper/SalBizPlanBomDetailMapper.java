@@ -28,4 +28,6 @@ public interface SalBizPlanBomDetailMapper extends BaseMapper<SalBizPlanBomDetai
    * @return List<SalBizPlanBomDetail>
    */
 	public List<SalBizPlanBomDetail> selectByMainId(@Param("mainId") String mainId);
+
+	List<SalBizPlanBomDetail> selectByTargetIds(@Param("list") List<String> list);
 }

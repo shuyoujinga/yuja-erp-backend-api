@@ -59,6 +59,10 @@ public class SalBizPlanBomDetail implements Serializable {
 	@Excel(name = "标准BOM", width = 15)
     @ApiModelProperty(value = "标准BOM")
     private String bomCode;
+    /**物料*/
+    @Excel(name = "货品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
+    @ApiModelProperty(value = "货品")
+    private String productionMaterialCode;
 	/**物料*/
 	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
@@ -71,6 +75,10 @@ public class SalBizPlanBomDetail implements Serializable {
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
+    /**标准用量*/
+    @Excel(name = "标准用量", width = 15)
+    @ApiModelProperty(value = "标准用量")
+    private Double standardQty;
 	/**需求数*/
 	@Excel(name = "需求数", width = 15)
     @ApiModelProperty(value = "需求数")

@@ -2,6 +2,8 @@ package org.jeecg.modules.sal.salbizplan.service;
 
 import org.jeecg.modules.sal.salbizplan.entity.SalBizPlanDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
+import reactor.core.Exceptions;
+
 import java.util.List;
 
 /**
@@ -19,4 +21,6 @@ public interface ISalBizPlanDetailService extends IService<SalBizPlanDetail> {
 	 * @return List<SalBizPlanDetail>
 	 */
 	public List<SalBizPlanDetail> selectByMainId(String mainId);
+
+	List<SalBizPlanDetail> selectByTargetId(String ids);
 }

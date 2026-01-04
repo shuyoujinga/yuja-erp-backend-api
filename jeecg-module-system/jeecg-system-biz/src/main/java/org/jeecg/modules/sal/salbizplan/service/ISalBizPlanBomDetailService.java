@@ -19,4 +19,6 @@ public interface ISalBizPlanBomDetailService extends IService<SalBizPlanBomDetai
 	 * @return List<SalBizPlanBomDetail>
 	 */
 	public List<SalBizPlanBomDetail> selectByMainId(String mainId);
+
+	List<SalBizPlanBomDetail> selectByTargetId(String id);
 }

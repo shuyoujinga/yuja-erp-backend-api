@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.constant.TipsMessage;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.modules.api.vo.MaterialInfoVO;
 import org.jeecg.modules.maindata.materials.entity.YujiakejiMaterials;
 import org.jeecg.modules.maindata.materials.service.IYujiakejiMaterialsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,6 @@ public class CommonsController {
             return Result.error("物料编码不能为空");
         }
         YujiakejiMaterials yujiakejiMaterials = yujiakejiMaterialsService.queryByMaterialCode(materialCode,warehouseCode);
-        Assert.isTrue(ObjectUtils.isArray(yujiakejiMaterials), TipsMessage.METERIALS_CODE_ERROR.getMessage());
         return Result.OK(yujiakejiMaterials);
     }
     /**
@@ -56,7 +56,23 @@ public class CommonsController {
             return Result.error("物料编码不能为空");
         }
         YujiakejiMaterials yujiakejiMaterials = yujiakejiMaterialsService.queryByMaterialCodeInSale(materialCode);
-        Assert.isTrue(ObjectUtils.isArray(yujiakejiMaterials), TipsMessage.METERIALS_CODE_ERROR.getMessage());
         return Result.OK(yujiakejiMaterials);
+    }
+
+
+    /**
+     * 根据物料编码查询
+     *
+     * @param materialCode 物料编码
+     * @return
+     */
+    @ApiOperation(value = "公共接口-根据物料编码查询-包含BOMLIST", notes = "包含BOMLIST")
+    @GetMapping(value = "/queryByMaterialInfoAndBomList")
+    public Result<MaterialInfoVO> queryByMaterialInfoAndBomList(@RequestParam(name = "materialCode", required = true) String materialCode) {
+        if (StringUtils.isEmpty(materialCode)) {
+            return Result.error("物料编码不能为空");
+        }
+        MaterialInfoVO entity = yujiakejiMaterialsService.queryByMaterialInfoAndBomList(materialCode);
+        return Result.OK(entity);
     }
 }

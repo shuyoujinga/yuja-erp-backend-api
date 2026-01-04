@@ -67,10 +67,11 @@ public class SalBizPlanPage {
     @DateTimeFormat(pattern="yyyy-MM-dd")
 	@ApiModelProperty(value = "要求交期")
     private Date requiredDeliveryTime;
-	/**金额合计*/
-	@Excel(name = "金额合计", width = 15)
-	@ApiModelProperty(value = "金额合计")
-    private Double amount;
+	/**业务计划类型*/
+	@Excel(name = "计划类型", width = 15,dicCode = "dict_biz_plan_type")
+	@ApiModelProperty(value = "计划类型")
+	@Dict(dicCode = "dict_biz_plan_type")
+	private Integer bizPlanType;
 	/**状态*/
 	@Excel(name = "状态", width = 15)
 	@ApiModelProperty(value = "状态")
@@ -81,7 +82,7 @@ public class SalBizPlanPage {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

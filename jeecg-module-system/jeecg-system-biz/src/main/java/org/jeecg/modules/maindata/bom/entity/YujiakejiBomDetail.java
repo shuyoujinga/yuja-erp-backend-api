@@ -61,20 +61,20 @@ public class YujiakejiBomDetail implements Serializable {
     /**规格*/
     @Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
-    @TableField(exist = false)
     private String specifications;
     /**单位*/
     @Excel(name = "单位", width = 15,dicCode = "dict_materials_unit")
     @ApiModelProperty(value = "单位")
     @Dict(dicCode = "dict_materials_unit")
-    @TableField(exist = false)
     private String unit;
     /**单价*/
     @Excel(name = "单价", width = 15)
     @ApiModelProperty(value = "单价")
-    @TableField(exist = false)
+    private Double qty;
+    /**单价*/
+    @Excel(name = "单价", width = 15)
+    @ApiModelProperty(value = "单价")
     private Double unitPrice;
-
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")

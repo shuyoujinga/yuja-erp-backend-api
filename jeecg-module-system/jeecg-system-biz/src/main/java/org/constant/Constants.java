@@ -303,6 +303,8 @@ public class Constants {
         String XSBJ = "RU";
         //其他出库
         String XSDD = "ZP";
+        //其他出库
+        String YWJH = "JH";
     }
 
     /**

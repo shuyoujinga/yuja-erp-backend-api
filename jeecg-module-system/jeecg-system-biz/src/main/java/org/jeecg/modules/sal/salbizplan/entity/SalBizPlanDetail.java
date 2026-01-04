@@ -79,14 +79,6 @@ public class SalBizPlanDetail implements Serializable {
 	@Excel(name = "计划数", width = 15)
     @ApiModelProperty(value = "计划数")
     private Double qty;
-	/**单价*/
-	@Excel(name = "单价", width = 15)
-    @ApiModelProperty(value = "单价")
-    private Double unitPrice;
-	/**金额*/
-	@Excel(name = "金额", width = 15)
-    @ApiModelProperty(value = "金额")
-    private Double amount;
 	/**BOM编码*/
 	@Excel(name = "BOM编码", width = 15)
     @ApiModelProperty(value = "BOM编码")

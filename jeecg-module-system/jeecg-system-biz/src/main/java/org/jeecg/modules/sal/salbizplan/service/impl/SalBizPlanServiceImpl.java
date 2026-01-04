@@ -1,5 +1,7 @@
 package org.jeecg.modules.sal.salbizplan.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import org.constant.Constants;
 import org.jeecg.modules.sal.salbizplan.entity.SalBizPlan;
 import org.jeecg.modules.sal.salbizplan.entity.SalBizPlanDetail;
 import org.jeecg.modules.sal.salbizplan.entity.SalBizPlanBomDetail;
@@ -7,10 +9,13 @@ import org.jeecg.modules.sal.salbizplan.mapper.SalBizPlanDetailMapper;
 import org.jeecg.modules.sal.salbizplan.mapper.SalBizPlanBomDetailMapper;
 import org.jeecg.modules.sal.salbizplan.mapper.SalBizPlanMapper;
 import org.jeecg.modules.sal.salbizplan.service.ISalBizPlanService;
+import org.jeecg.modules.system.service.impl.SerialNumberService;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Collection;
@@ -24,16 +29,19 @@ import java.util.Collection;
 @Service
 public class SalBizPlanServiceImpl extends ServiceImpl<SalBizPlanMapper, SalBizPlan> implements ISalBizPlanService {
 
-	@Autowired
+	@Resource
 	private SalBizPlanMapper salBizPlanMapper;
-	@Autowired
+	@Resource
 	private SalBizPlanDetailMapper salBizPlanDetailMapper;
-	@Autowired
+	@Resource
 	private SalBizPlanBomDetailMapper salBizPlanBomDetailMapper;
+	@Autowired
+	private SerialNumberService serialNumberService;
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void saveMain(SalBizPlan salBizPlan, List<SalBizPlanDetail> salBizPlanDetailList,List<SalBizPlanBomDetail> salBizPlanBomDetailList) {
+		salBizPlan.setDocCode(serialNumberService.generateRuleCode(Constants.DICT_SERIAL_NUM.YWJH));
 		salBizPlanMapper.insert(salBizPlan);
 		if(salBizPlanDetailList!=null && salBizPlanDetailList.size()>0) {
 			for(SalBizPlanDetail entity:salBizPlanDetailList) {
@@ -68,6 +76,7 @@ public class SalBizPlanServiceImpl extends ServiceImpl<SalBizPlanMapper, SalBizP
 				salBizPlanDetailMapper.insert(entity);
 			}
 		}
+
 		if(salBizPlanBomDetailList!=null && salBizPlanBomDetailList.size()>0) {
 			for(SalBizPlanBomDetail entity:salBizPlanBomDetailList) {
 				//外键设置

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -44,9 +45,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.utils.Assert;
 
 
- /**
+/**
  * @Description: 业务计划
  * @Author: 舒有敬
  * @Date:   2025-12-09
@@ -97,6 +99,8 @@ public class SalBizPlanController {
     @RequiresPermissions("salbizplan:sal_biz_plan:add")
 	@PostMapping(value = "/add")
 	public Result<String> add(@RequestBody SalBizPlanPage salBizPlanPage) {
+		Assert.isTrue(CollectionUtil.isEmpty(salBizPlanPage.getSalBizPlanBomDetailList()),"材料清单为空,不能提交数据!");
+		Assert.isTrue(CollectionUtil.isEmpty(salBizPlanPage.getSalBizPlanDetailList()),"业务计划_明细为空,不能提交数据!");
 		SalBizPlan salBizPlan = new SalBizPlan();
 		BeanUtils.copyProperties(salBizPlanPage, salBizPlan);
 		salBizPlanService.saveMain(salBizPlan, salBizPlanPage.getSalBizPlanDetailList(),salBizPlanPage.getSalBizPlanBomDetailList());
@@ -114,6 +118,8 @@ public class SalBizPlanController {
     @RequiresPermissions("salbizplan:sal_biz_plan:edit")
 	@RequestMapping(value = "/edit", method = {RequestMethod.PUT,RequestMethod.POST})
 	public Result<String> edit(@RequestBody SalBizPlanPage salBizPlanPage) {
+		Assert.isTrue(CollectionUtil.isEmpty(salBizPlanPage.getSalBizPlanBomDetailList()),"材料清单为空,不能提交数据!");
+		Assert.isTrue(CollectionUtil.isEmpty(salBizPlanPage.getSalBizPlanDetailList()),"业务计划_明细为空,不能提交数据!");
 		SalBizPlan salBizPlan = new SalBizPlan();
 		BeanUtils.copyProperties(salBizPlanPage, salBizPlan);
 		SalBizPlan salBizPlanEntity = salBizPlanService.getById(salBizPlan.getId());
@@ -198,7 +204,30 @@ public class SalBizPlanController {
 		List<SalBizPlanBomDetail> salBizPlanBomDetailList = salBizPlanBomDetailService.selectByMainId(id);
 		return Result.OK(salBizPlanBomDetailList);
 	}
-
+	 /**
+	  * 通过id查询
+	  *
+	  * @param id
+	  * @return
+	  */
+	 @ApiOperation(value="通销售订单ID查询", notes="业务计划_明细-通销售订单ID查询")
+	 @GetMapping(value = "/querySalBizPlanDetailByTargetId")
+	 public Result<List<SalBizPlanDetail>> querySalBizPlanDetailListByTargetId(@RequestParam(name="id",required=true) String id) {
+		 List<SalBizPlanDetail> salBizPlanDetailList = salBizPlanDetailService.selectByTargetId(id);
+		 return Result.OK(salBizPlanDetailList);
+	 }
+	 /**
+	  * 通过id查询
+	  *
+	  * @param id
+	  * @return
+	  */
+	 @ApiOperation(value="业务计划_材料明细通销售订单ID查询", notes="业务计划_材料明细-通销售订单ID查询")
+	 @GetMapping(value = "/querySalBizPlanBomDetailByTargetId")
+	 public Result<List<SalBizPlanBomDetail>> querySalBizPlanBomDetailListByTargetId(@RequestParam(name="id",required=true) String id) {
+		 List<SalBizPlanBomDetail> salBizPlanBomDetailList = salBizPlanBomDetailService.selectByTargetId(id);
+		 return Result.OK(salBizPlanBomDetailList);
+	 }
     /**
     * 导出excel
     *
