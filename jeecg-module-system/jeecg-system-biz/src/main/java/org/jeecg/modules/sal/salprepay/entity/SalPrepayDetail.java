@@ -56,7 +56,6 @@ public class SalPrepayDetail implements Serializable {
     @ApiModelProperty(value = "主表ID")
     private String pid;
 	/**销售收款ID*/
-	@Excel(name = "销售收款ID", width = 15)
     @ApiModelProperty(value = "销售收款ID")
     private String receiptId;
 	/**收款单号*/

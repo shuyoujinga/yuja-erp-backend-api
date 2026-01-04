@@ -66,7 +66,7 @@ public class SalOrderPage {
 	@ApiModelProperty(value = "金额合计")
 	private Double amount;
 	/**含税合计*/
-	@Excel(name = "含税合计", width = 15)
+
 	@ApiModelProperty(value = "含税合计")
 	private Double taxAmount;
 	/**要求交期*/

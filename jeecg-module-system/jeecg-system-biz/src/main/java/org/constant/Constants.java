@@ -313,8 +313,10 @@ public class Constants {
         String XSDD = "ZP";
         //业务计划
         String YWJH = "JH";
-        //业务计划
+        //销售发货
         String XSFH = "ZD";
+        //销售预收
+        String XSYS = "YS";
     }
 
     /**
