@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import java.util.Date;
@@ -15,15 +16,15 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.UnsupportedEncodingException;
 
 /**
- * @Description: 拆卸单_明细
+ * @Description: 拆卸单_材料清单
  * @Author: 舒有敬
  * @Date:   2026-01-05
  * @Version: V1.0
  */
-@ApiModel(value="inv_disassembly_detail对象", description="拆卸单_明细")
+@ApiModel(value="inv_disassembly_bom_detail对象", description="拆卸单_材料清单")
 @Data
-@TableName("inv_disassembly_detail")
-public class InvDisassemblyDetail implements Serializable {
+@TableName("inv_disassembly_bom_detail")
+public class InvDisassemblyBomDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	/**主键*/
@@ -46,12 +47,21 @@ public class InvDisassemblyDetail implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
-	/**所属部门*/
+    /**所属部门*/
     @ApiModelProperty(value = "所属部门")
+    @Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String sysOrgCode;
-	/**主表ID*/
+    /**主表ID*/
     @ApiModelProperty(value = "主表ID")
     private String pid;
+    /**标准BOM*/
+    @ApiModelProperty(value = "标准BOM")
+    private String bomCode;
+    /**物料*/
+    @Excel(name = "货品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
+    @ApiModelProperty(value = "货品")
+    private String productionMaterialCode;
     /**物料*/
     @Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
@@ -60,29 +70,26 @@ public class InvDisassemblyDetail implements Serializable {
     @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
     private String unit;
-	/**规格*/
-	@Excel(name = "规格", width = 15)
+    /**规格*/
+    @Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
-    /**库存数量*/
-    @Excel(name = "库存数量", width = 15)
-    @ApiModelProperty(value = "库存数量")
-    private Double stockQty;
-    /**数量*/
-    @Excel(name = "数量", width = 15)
+	/**标准用量*/
+	@Excel(name = "标准用量", width = 15)
+    @ApiModelProperty(value = "标准用量")
+    private Double standardQty;
+	/**数量*/
+	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
     private Double qty;
-    /**单价*/
-    @Excel(name = "单价", width = 15)
+	/**单价*/
+	@Excel(name = "单价", width = 15)
     @ApiModelProperty(value = "单价")
     private Double unitPrice;
-    /**金额*/
-    @Excel(name = "金额", width = 15)
+	/**金额*/
+	@Excel(name = "金额", width = 15)
     @ApiModelProperty(value = "金额")
     private Double amount;
-    /**bom编码*/
-    @ApiModelProperty(value = "规格")
-    private String bomCode;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")

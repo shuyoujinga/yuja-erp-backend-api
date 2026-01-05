@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
  * @Description: 拆卸单
  * @Author: 舒有敬
- * @Date:   2025-12-10
+ * @Date:   2026-01-05
  * @Version: V1.0
  */
 public interface InvDisassemblyMapper extends BaseMapper<InvDisassembly> {

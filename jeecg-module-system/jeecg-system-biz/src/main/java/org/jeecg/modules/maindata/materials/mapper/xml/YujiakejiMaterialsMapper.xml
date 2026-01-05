@@ -33,6 +33,7 @@
             t0.material_code AS `production_material_code`,
             t1.material_code,
             t1.unit,
+            t1.unit_price,
             t1.specifications,
             t1.qty AS standard_qty
         FROM

@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.collection.CollectionUtil;
+import org.constant.Constants;
+import org.jeecg.modules.aop.DeleteCheckAudit;
+import org.jeecg.modules.maindata.bom.vo.AuditRequest;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -23,10 +27,12 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.inv.invdisassembly.entity.InvDisassemblyDetail;
+import org.jeecg.modules.inv.invdisassembly.entity.InvDisassemblyBomDetail;
 import org.jeecg.modules.inv.invdisassembly.entity.InvDisassembly;
 import org.jeecg.modules.inv.invdisassembly.vo.InvDisassemblyPage;
 import org.jeecg.modules.inv.invdisassembly.service.IInvDisassemblyService;
 import org.jeecg.modules.inv.invdisassembly.service.IInvDisassemblyDetailService;
+import org.jeecg.modules.inv.invdisassembly.service.IInvDisassemblyBomDetailService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,12 +48,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.utils.Assert;
 
 
- /**
+/**
  * @Description: 拆卸单
  * @Author: 舒有敬
- * @Date:   2025-12-10
+ * @Date:   2026-01-05
  * @Version: V1.0
  */
 @Api(tags="拆卸单")
@@ -59,6 +66,8 @@ public class InvDisassemblyController {
 	private IInvDisassemblyService invDisassemblyService;
 	@Autowired
 	private IInvDisassemblyDetailService invDisassemblyDetailService;
+	@Autowired
+	private IInvDisassemblyBomDetailService invDisassemblyBomDetailService;
 	
 	/**
 	 * 分页列表查询
@@ -95,7 +104,7 @@ public class InvDisassemblyController {
 	public Result<String> add(@RequestBody InvDisassemblyPage invDisassemblyPage) {
 		InvDisassembly invDisassembly = new InvDisassembly();
 		BeanUtils.copyProperties(invDisassemblyPage, invDisassembly);
-		invDisassemblyService.saveMain(invDisassembly, invDisassemblyPage.getInvDisassemblyDetailList());
+		invDisassemblyService.saveMain(invDisassembly, invDisassemblyPage.getInvDisassemblyDetailList(),invDisassemblyPage.getInvDisassemblyBomDetailList());
 		return Result.OK("添加成功！");
 	}
 	
@@ -116,7 +125,7 @@ public class InvDisassemblyController {
 		if(invDisassemblyEntity==null) {
 			return Result.error("未找到对应数据");
 		}
-		invDisassemblyService.updateMain(invDisassembly, invDisassemblyPage.getInvDisassemblyDetailList());
+		invDisassemblyService.updateMain(invDisassembly, invDisassemblyPage.getInvDisassemblyDetailList(),invDisassemblyPage.getInvDisassemblyBomDetailList());
 		return Result.OK("编辑成功!");
 	}
 	
@@ -145,6 +154,7 @@ public class InvDisassemblyController {
 	@ApiOperation(value="拆卸单-批量删除", notes="拆卸单-批量删除")
     @RequiresPermissions("invdisassembly:inv_disassembly:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = IInvDisassemblyService.class,entity = InvDisassembly.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.invDisassemblyService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
@@ -181,6 +191,19 @@ public class InvDisassemblyController {
 		List<InvDisassemblyDetail> invDisassemblyDetailList = invDisassemblyDetailService.selectByMainId(id);
 		return Result.OK(invDisassemblyDetailList);
 	}
+	/**
+	 * 通过id查询
+	 *
+	 * @param id
+	 * @return
+	 */
+	//@AutoLog(value = "拆卸单_材料清单通过主表ID查询")
+	@ApiOperation(value="拆卸单_材料清单主表ID查询", notes="拆卸单_材料清单-通主表ID查询")
+	@GetMapping(value = "/queryInvDisassemblyBomDetailByMainId")
+	public Result<List<InvDisassemblyBomDetail>> queryInvDisassemblyBomDetailListByMainId(@RequestParam(name="id",required=true) String id) {
+		List<InvDisassemblyBomDetail> invDisassemblyBomDetailList = invDisassemblyBomDetailService.selectByMainId(id);
+		return Result.OK(invDisassemblyBomDetailList);
+	}
 
     /**
     * 导出excel
@@ -211,6 +234,8 @@ public class InvDisassemblyController {
           BeanUtils.copyProperties(main, vo);
           List<InvDisassemblyDetail> invDisassemblyDetailList = invDisassemblyDetailService.selectByMainId(main.getId());
           vo.setInvDisassemblyDetailList(invDisassemblyDetailList);
+          List<InvDisassemblyBomDetail> invDisassemblyBomDetailList = invDisassemblyBomDetailService.selectByMainId(main.getId());
+          vo.setInvDisassemblyBomDetailList(invDisassemblyBomDetailList);
           pageList.add(vo);
       }
 
@@ -247,7 +272,7 @@ public class InvDisassemblyController {
               for (InvDisassemblyPage page : list) {
                   InvDisassembly po = new InvDisassembly();
                   BeanUtils.copyProperties(page, po);
-                  invDisassemblyService.saveMain(po, page.getInvDisassemblyDetailList());
+                  invDisassemblyService.saveMain(po, page.getInvDisassemblyDetailList(),page.getInvDisassemblyBomDetailList());
               }
               return Result.OK("文件导入成功！数据行数:" + list.size());
           } catch (Exception e) {
@@ -263,5 +288,31 @@ public class InvDisassemblyController {
       }
       return Result.OK("文件导入失败！");
     }
+	 /**
+	  * 审核/反审核
+	  *
+	  * @param auditRequest 审核请求参数，包含ID列表和操作类型（audit/reverse）
+	  * @return
+	  */
+	 @AutoLog(value = "拆卸单-审核/反审核")
+	 @ApiOperation(value = "拆卸单-审核/反审核", notes = "拆卸单-审核/反审核")
+	 @RequiresPermissions("invdisassembly:inv_disassembly:audit")
+	 @RequestMapping(value = "/audit", method = {RequestMethod.PUT, RequestMethod.POST})
+	 public Result<String> audit(@RequestBody AuditRequest auditRequest) throws Exception {
+		 List<String> ids = auditRequest.getIds();
+		 String type = auditRequest.getType(); // audit 或 reverse
 
+		 Assert.isTrue(CollectionUtil.isEmpty(ids), "请选择要操作的记录");
+
+
+		 int count;
+		 if (Constants.DICT_AUDIT_FLAG.AUDIT.equals(type)) {
+			 count = invDisassemblyService.audit(ids);
+		 } else {
+			 count = invDisassemblyService.unAudit(ids);
+		 }
+
+
+		 return Result.OK(String.format("操作成功，共计完成对%s条数据的操作！", count));
+	 }
 }

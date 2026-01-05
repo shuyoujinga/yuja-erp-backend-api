@@ -3,11 +3,14 @@ package org.jeecg.modules.maindata.materials.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.constant.Constants;
 import org.constant.TipsMessage;
 import org.jeecg.common.constant.FillRuleConstant;
 import org.jeecg.common.util.FillRuleUtil;
 import org.jeecg.modules.api.vo.MaterialBomInfoVO;
 import org.jeecg.modules.api.vo.MaterialInfoVO;
+import org.jeecg.modules.inv.invstock.entity.InvStock;
+import org.jeecg.modules.inv.invstock.mapper.InvStockMapper;
 import org.jeecg.modules.inv.invstock.service.IInvStockService;
 import org.jeecg.modules.maindata.bom.service.IYujiakejiBomDetailService;
 import org.jeecg.modules.maindata.materials.entity.YujiakejiMaterials;
@@ -23,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.utils.Assert;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -38,8 +42,8 @@ import java.util.List;
 public class YujiakejiMaterialsServiceImpl extends ServiceImpl<YujiakejiMaterialsMapper, YujiakejiMaterials> implements IYujiakejiMaterialsService {
     @Autowired
     private ISysCategoryService sysCategoryService;
-    @Autowired
-    private IYujiakejiBomDetailService yujiakejiBomDetailService;;
+    @Resource
+    private InvStockMapper invStockService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -61,16 +65,30 @@ public class YujiakejiMaterialsServiceImpl extends ServiceImpl<YujiakejiMaterial
 
     @Override
     public YujiakejiMaterials queryByMaterialCode(String materialCode, String warehouseCode) {
-        return baseMapper.queryByMaterialCode(materialCode,warehouseCode);
+        return baseMapper.queryByMaterialCode(materialCode, warehouseCode);
     }
 
     @Override
     public YujiakejiMaterials queryByMaterialCodeInSale(String materialCode) {
-        return  baseMapper.queryByMaterialCodeInSale(materialCode);
+        return baseMapper.queryByMaterialCodeInSale(materialCode);
     }
 
     @Override
     public MaterialInfoVO queryByMaterialInfoAndBomList(String materialCode) {
+
+        //materialCode用#拼接了仓库
+        String[] splitArr = materialCode.split("#");
+
+        materialCode = splitArr[0];
+        String warehouseCode = "";
+        InvStock invStock =null;
+        if (splitArr.length > 1) {
+            warehouseCode = splitArr[1];
+            invStock= invStockService.selectOne(new LambdaQueryWrapper<InvStock>().eq(InvStock::getMaterialCode, materialCode).eq(InvStock::getWarehouseCode, warehouseCode).eq(InvStock::getDelFlag, Constants.YN.Y).last("limit 1"));
+        }
+
+
+
         MaterialInfoVO result = new MaterialInfoVO();
         YujiakejiMaterials yujiakejiMaterials = baseMapper.selectOne(new LambdaQueryWrapper<YujiakejiMaterials>().eq(YujiakejiMaterials::getMaterialCode, materialCode).last("limit 1"));
         if (ObjectUtils.isEmpty(yujiakejiMaterials)) {
@@ -80,8 +98,10 @@ public class YujiakejiMaterialsServiceImpl extends ServiceImpl<YujiakejiMaterial
         result.setMaterialCode(yujiakejiMaterials.getMaterialCode());
         result.setUnit(yujiakejiMaterials.getUnit());
         result.setSpecifications(yujiakejiMaterials.getSpecifications());
+        result.setUnitPrice(yujiakejiMaterials.getUnitPrice());
+        result.setStockQty(ObjectUtils.isEmpty(invStock)?null:invStock.getStockQty());
         // todo 查询库存需要仓库 否则不合适
-        List<MaterialBomInfoVO>  materialBomInfoVO = baseMapper.queryBomListByMaterialCode(materialCode);
+        List<MaterialBomInfoVO> materialBomInfoVO = baseMapper.queryBomListByMaterialCode(materialCode);
         result.setBomInfoList(materialBomInfoVO);
         return result;
     }
