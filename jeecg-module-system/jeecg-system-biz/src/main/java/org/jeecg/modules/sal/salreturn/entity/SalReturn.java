@@ -68,8 +68,9 @@ public class SalReturn implements Serializable {
     @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**仓库*/
-	@Excel(name = "仓库", width = 15)
+	@Excel(name = "仓库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "仓库")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String stockCode;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
     @Dict(dicCode = "dict_audit_status")
@@ -77,7 +78,7 @@ public class SalReturn implements Serializable {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

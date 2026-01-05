@@ -184,6 +184,11 @@ public class Constants {
         String XSCH = "601";
         // 盘亏出库_冲销
         String XSCH_CX = "602";
+
+        // 销售退货
+        String XSTH = "611";
+        // 盘亏出库_冲销
+        String XSTH_CX = "612";
     }
 
 
@@ -319,6 +324,8 @@ public class Constants {
         String XSYS = "YS";
         //销售结算
         String XSJS = "DZ";
+        //销售结算
+        String XSTH = "XSTH";
     }
 
     /**

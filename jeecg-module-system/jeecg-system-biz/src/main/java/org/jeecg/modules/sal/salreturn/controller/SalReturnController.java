@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.collection.CollectionUtil;
+import org.constant.Constants;
+import org.jeecg.modules.aop.DeleteCheckAudit;
+import org.jeecg.modules.maindata.bom.vo.AuditRequest;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -42,9 +46,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.utils.Assert;
 
 
- /**
+/**
  * @Description: 销售退货
  * @Author: 舒有敬
  * @Date:   2025-12-09
@@ -145,6 +150,7 @@ public class SalReturnController {
 	@ApiOperation(value="销售退货-批量删除", notes="销售退货-批量删除")
     @RequiresPermissions("salreturn:sal_return:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = ISalReturnService.class,entity = SalReturn.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.salReturnService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
@@ -263,5 +269,31 @@ public class SalReturnController {
       }
       return Result.OK("文件导入失败！");
     }
+	 /**
+	  * 审核/反审核
+	  *
+	  * @param auditRequest 审核请求参数，包含ID列表和操作类型（audit/reverse）
+	  * @return
+	  */
+	 @AutoLog(value = "销售退货-审核/反审核")
+	 @ApiOperation(value = "销售结算-审核/反审核", notes = "销售结算-审核/反审核")
+	 @RequiresPermissions("salreturn:sal_return:audit")
+	 @RequestMapping(value = "/audit", method = {RequestMethod.PUT, RequestMethod.POST})
+	 public Result<String> audit(@RequestBody AuditRequest auditRequest) throws Exception {
+		 List<String> ids = auditRequest.getIds();
+		 String type = auditRequest.getType(); // audit 或 reverse
 
+		 Assert.isTrue(CollectionUtil.isEmpty(ids), "请选择要操作的记录");
+
+
+		 int count;
+		 if (Constants.DICT_AUDIT_FLAG.AUDIT.equals(type)) {
+			 count = salReturnService.audit(ids);
+		 } else {
+			 count = salReturnService.unAudit(ids);
+		 }
+
+
+		 return Result.OK(String.format("操作成功，共计完成对%s条数据的操作！", count));
+	 }
 }

@@ -62,8 +62,9 @@ public class SalReturnPage {
     @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**仓库*/
-	@Excel(name = "仓库", width = 15)
+	@Excel(name = "仓库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
 	@ApiModelProperty(value = "仓库")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String stockCode;
 	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
     @Dict(dicCode = "dict_audit_status")
@@ -71,7 +72,7 @@ public class SalReturnPage {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/
@@ -80,6 +81,10 @@ public class SalReturnPage {
     @DateTimeFormat(pattern="yyyy-MM-dd")
 	@ApiModelProperty(value = "审核时间")
     private Date auditTime;
+	/**金额合计*/
+	@Excel(name = "金额合计", width = 15)
+	@ApiModelProperty(value = "金额合计")
+	private Double amount;
 	/**状态*/
 	@Excel(name = "状态", width = 15)
 	@ApiModelProperty(value = "状态")
@@ -88,10 +93,7 @@ public class SalReturnPage {
 	@Excel(name = "备注", width = 15)
 	@ApiModelProperty(value = "备注")
     private String remark;
-	/**金额合计*/
-	@Excel(name = "金额合计", width = 15)
-	@ApiModelProperty(value = "金额合计")
-    private Double amount;
+
 	/**是否有效*/
     /**是否有效*/
     @ApiModelProperty(value = "是否有效")
