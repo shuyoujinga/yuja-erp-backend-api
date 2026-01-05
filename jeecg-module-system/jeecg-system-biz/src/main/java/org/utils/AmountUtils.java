@@ -109,5 +109,8 @@ public class AmountUtils {
     public static boolean isZero(Double stockQty) {
         return stockQty == null || stockQty.compareTo(0D) == 0;
     }
+    public static boolean isNegative(Double amount) {
+        return amount != null && amount.compareTo(0D) < 0;
+    }
 
 }

@@ -44,5 +44,8 @@ public interface ISalSettleService extends IService<SalSettle> {
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+	int audit(List<String> ids);
+
+	int unAudit(List<String> ids);
 }

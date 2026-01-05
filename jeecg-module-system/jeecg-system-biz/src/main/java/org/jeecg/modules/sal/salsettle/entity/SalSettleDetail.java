@@ -53,19 +53,17 @@ public class SalSettleDetail implements Serializable {
     @ApiModelProperty(value = "主编ID")
     private java.lang.String pid;
 	/**结算明细ID*/
-	@Excel(name = "结算明细ID", width = 15)
     @ApiModelProperty(value = "结算明细ID")
     private java.lang.String deliveryDetailId;
 	/**退货明细ID*/
-	@Excel(name = "退货明细ID", width = 15)
     @ApiModelProperty(value = "退货明细ID")
     private java.lang.String returnDetailId;
 	/**货品*/
-	@Excel(name = "货品", width = 15)
+	@Excel(name = "货品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "货品")
     private java.lang.String materialCode;
 	/**单位*/
-	@Excel(name = "单位", width = 15)
+    @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
     private java.lang.String unit;
 	/**规格*/
@@ -97,7 +95,6 @@ public class SalSettleDetail implements Serializable {
     @ApiModelProperty(value = "备注")
     private java.lang.String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private java.lang.Integer delFlag;

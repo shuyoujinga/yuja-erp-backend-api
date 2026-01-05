@@ -57,11 +57,11 @@ public class SalSettlePage {
 	@ApiModelProperty(value = "制单日期")
     private java.util.Date docTime;
 	/**客户*/
-	@Excel(name = "客户", width = 15)
+	@Excel(name = "客户", width = 15,dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
 	@ApiModelProperty(value = "客户")
-    private java.lang.String customerCode;
+	@Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
+	private String customerCode;
 	/**发货单号_IDS*/
-	@Excel(name = "发货单号_IDS", width = 15)
 	@ApiModelProperty(value = "发货单号_IDS")
     private java.lang.String deliveryIds;
 	/**发货单号*/
@@ -69,7 +69,6 @@ public class SalSettlePage {
 	@ApiModelProperty(value = "发货单号")
     private java.lang.String deliveryCodes;
 	/**退货单号_IDS*/
-	@Excel(name = "退货单号_IDS", width = 15)
 	@ApiModelProperty(value = "退货单号_IDS")
     private java.lang.String returnIds;
 	/**退货单号*/
@@ -82,7 +81,7 @@ public class SalSettlePage {
     private java.lang.Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private java.lang.String auditBy;
 	/**审核时间*/
@@ -95,24 +94,23 @@ public class SalSettlePage {
 	@Excel(name = "状态", width = 15)
 	@ApiModelProperty(value = "状态")
     private java.lang.Integer status;
-	/**结算合计*/
-	@Excel(name = "结算合计", width = 15)
-	@ApiModelProperty(value = "结算合计")
-    private java.lang.Double settleAmount;
+	/**发货合计*/
+	@Excel(name = "发货合计", width = 15)
+	@ApiModelProperty(value = "发货合计")
+    private java.lang.Double deliveryAmount;
 	/**退货冲抵*/
 	@Excel(name = "退货冲抵", width = 15)
 	@ApiModelProperty(value = "退货冲抵")
     private java.lang.Double returnAmount;
-	/**金额合计*/
-	@Excel(name = "金额合计", width = 15)
-	@ApiModelProperty(value = "金额合计")
+	/**结算合计*/
+	@Excel(name = "结算合计", width = 15)
+	@ApiModelProperty(value = "结算合计")
     private java.lang.Double amount;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
 	@ApiModelProperty(value = "备注")
     private java.lang.String remark;
 	/**是否有效*/
-	@Excel(name = "是否有效", width = 15)
 	@ApiModelProperty(value = "是否有效")
     private java.lang.Integer delFlag;
 

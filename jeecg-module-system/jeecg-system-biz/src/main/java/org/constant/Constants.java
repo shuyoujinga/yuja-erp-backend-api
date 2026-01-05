@@ -317,6 +317,8 @@ public class Constants {
         String XSFH = "ZD";
         //销售预收
         String XSYS = "YS";
+        //销售结算
+        String XSJS = "DZ";
     }
 
     /**
