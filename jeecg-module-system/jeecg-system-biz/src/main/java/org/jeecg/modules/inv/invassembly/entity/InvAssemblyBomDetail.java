@@ -15,20 +15,20 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.UnsupportedEncodingException;
 
 /**
- * @Description: 组装单_明细
+ * @Description: 组装单_材料明细
  * @Author: 舒有敬
  * @Date:   2026-01-05
  * @Version: V1.0
  */
-@ApiModel(value="inv_assembly_detail对象", description="组装单_明细")
+@ApiModel(value="inv_assembly_bom_detail对象", description="组装单_材料明细")
 @Data
-@TableName("inv_assembly_detail")
-public class InvAssemblyDetail implements Serializable {
+@TableName("inv_assembly_bom_detail")
+public class InvAssemblyBomDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
-	/**主键*/
+	/**id*/
 	@TableId(type = IdType.ASSIGN_ID)
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty(value = "id")
     private String id;
 	/**创建人*/
     @ApiModelProperty(value = "创建人")
@@ -52,6 +52,14 @@ public class InvAssemblyDetail implements Serializable {
 	/**主表ID*/
     @ApiModelProperty(value = "主表ID")
     private String pid;
+	/**BOM编号*/
+
+    @ApiModelProperty(value = "BOM编号")
+    private String bomCode;
+    /**物料*/
+    @Excel(name = "货品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
+    @ApiModelProperty(value = "货品")
+    private String productionMaterialCode;
     /**物料*/
     @Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
@@ -60,27 +68,28 @@ public class InvAssemblyDetail implements Serializable {
     @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
     private String unit;
-	/**规格*/
-	@Excel(name = "规格", width = 15)
+    /**规格*/
+    @Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
-	/**数量*/
-	@Excel(name = "数量", width = 15)
+    /**标准用量*/
+    @Excel(name = "标准用量", width = 15)
+    @ApiModelProperty(value = "标准用量")
+    private Double standardQty;
+    /**数量*/
+    @Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
     private Double qty;
-	/**单价*/
-	@Excel(name = "单价", width = 15)
+    /**单价*/
+    @Excel(name = "单价", width = 15)
     @ApiModelProperty(value = "单价")
     private Double unitPrice;
-	/**金额*/
-	@Excel(name = "金额", width = 15)
+    /**金额*/
+    @Excel(name = "金额", width = 15)
     @ApiModelProperty(value = "金额")
     private Double amount;
-    /**bom编码*/
-    @ApiModelProperty(value = "bom编码")
-    private String bomCode;
-	/**备注*/
-	@Excel(name = "备注", width = 15)
+    /**备注*/
+    @Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
 	/**是否有效*/

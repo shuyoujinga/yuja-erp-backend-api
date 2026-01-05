@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * @Description: 组装单
  * @Author: 舒有敬
- * @Date:   2025-12-16
+ * @Date:   2026-01-05
  * @Version: V1.0
  */
 @ApiModel(value="inv_assembly对象", description="组装单")
@@ -48,9 +48,7 @@ public class InvAssembly implements Serializable {
     @ApiModelProperty(value = "更新日期")
     private Date updateTime;
 	/**所属部门*/
-	@ApiModelProperty(value = "所属部门")
-	@Excel(name = "所属部门", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
-	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    @ApiModelProperty(value = "所属部门")
     private String sysOrgCode;
 	/**组装单号*/
 	@Excel(name = "组装单号", width = 15)
@@ -63,37 +61,45 @@ public class InvAssembly implements Serializable {
     @ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**组装入库*/
-	@Excel(name = "组装入库", width = 15)
+	@Excel(name = "组装入库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "组装入库")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String inWarehouseCode;
 	/**组装出库*/
-	@Excel(name = "组装出库", width = 15)
+	@Excel(name = "组装出库", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "组装出库")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String outWarehouseCode;
     /**状态*/
+    @Excel(name = "状态", width = 15)
     @ApiModelProperty(value = "状态")
     private Integer status;
-	@Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
+    @Excel(name = "审核状态", width = 15, dicCode = "dict_audit_status")
     @Dict(dicCode = "dict_audit_status")
     @ApiModelProperty(value = "审核状态")
     private Integer audit;
-	/**审核人*/
-	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    /**审核人*/
+    @Excel(name = "审核人", width = 15, dictTable = "sys_user", dicText = "realname", dicCode = "username")
+    @Dict(dictTable = "sys_user", dicText = "realname", dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
-	/**审核时间*/
-/**审核时间*/
-	@Excel(name = "审核时间", width = 15, format = "yyyy-MM-dd")
-	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    /**审核时间*/
+    @Excel(name = "审核时间", width = 15, format = "yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern="yyyy-MM-dd")
-	@ApiModelProperty(value = "审核时间")
+    @ApiModelProperty(value = "审核时间")
     private Date auditTime;
-	/**备注*/
-	@Excel(name = "备注", width = 15)
+    /**备注*/
+    @Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
-/**是否有效*/
+    /**入库物料凭证*/
+    @ApiModelProperty(value = "入库物料凭证")
+    private String inVoucherId;
+    /**出库物料凭证*/
+    @ApiModelProperty(value = "入库物料凭证")
+    private String outVoucherId;
+	/**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic
     private Integer delFlag;

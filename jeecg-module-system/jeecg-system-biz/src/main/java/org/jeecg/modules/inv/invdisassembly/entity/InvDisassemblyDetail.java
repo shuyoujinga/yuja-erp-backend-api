@@ -81,7 +81,7 @@ public class InvDisassemblyDetail implements Serializable {
     @ApiModelProperty(value = "金额")
     private Double amount;
     /**bom编码*/
-    @ApiModelProperty(value = "规格")
+    @ApiModelProperty(value = "bom编码")
     private String bomCode;
 	/**备注*/
 	@Excel(name = "备注", width = 15)

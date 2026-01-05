@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Description: 组装单_明细
  * @Author: 舒有敬
- * @Date:   2025-12-16
+ * @Date:   2026-01-05
  * @Version: V1.0
  */
 public interface IInvAssemblyDetailService extends IService<InvAssemblyDetail> {

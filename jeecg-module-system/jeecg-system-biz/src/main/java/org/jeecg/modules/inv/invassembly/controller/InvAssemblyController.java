@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.collection.CollectionUtil;
+import org.constant.Constants;
+import org.jeecg.modules.aop.DeleteCheckAudit;
+import org.jeecg.modules.maindata.bom.vo.AuditRequest;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -23,10 +27,12 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.inv.invassembly.entity.InvAssemblyDetail;
+import org.jeecg.modules.inv.invassembly.entity.InvAssemblyBomDetail;
 import org.jeecg.modules.inv.invassembly.entity.InvAssembly;
 import org.jeecg.modules.inv.invassembly.vo.InvAssemblyPage;
 import org.jeecg.modules.inv.invassembly.service.IInvAssemblyService;
 import org.jeecg.modules.inv.invassembly.service.IInvAssemblyDetailService;
+import org.jeecg.modules.inv.invassembly.service.IInvAssemblyBomDetailService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,12 +48,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.utils.Assert;
 
 
- /**
+/**
  * @Description: 组装单
  * @Author: 舒有敬
- * @Date:   2025-12-16
+ * @Date:   2026-01-05
  * @Version: V1.0
  */
 @Api(tags="组装单")
@@ -59,6 +66,8 @@ public class InvAssemblyController {
 	private IInvAssemblyService invAssemblyService;
 	@Autowired
 	private IInvAssemblyDetailService invAssemblyDetailService;
+	@Autowired
+	private IInvAssemblyBomDetailService invAssemblyBomDetailService;
 	
 	/**
 	 * 分页列表查询
@@ -95,7 +104,7 @@ public class InvAssemblyController {
 	public Result<String> add(@RequestBody InvAssemblyPage invAssemblyPage) {
 		InvAssembly invAssembly = new InvAssembly();
 		BeanUtils.copyProperties(invAssemblyPage, invAssembly);
-		invAssemblyService.saveMain(invAssembly, invAssemblyPage.getInvAssemblyDetailList());
+		invAssemblyService.saveMain(invAssembly, invAssemblyPage.getInvAssemblyDetailList(),invAssemblyPage.getInvAssemblyBomDetailList());
 		return Result.OK("添加成功！");
 	}
 	
@@ -116,7 +125,7 @@ public class InvAssemblyController {
 		if(invAssemblyEntity==null) {
 			return Result.error("未找到对应数据");
 		}
-		invAssemblyService.updateMain(invAssembly, invAssemblyPage.getInvAssemblyDetailList());
+		invAssemblyService.updateMain(invAssembly, invAssemblyPage.getInvAssemblyDetailList(),invAssemblyPage.getInvAssemblyBomDetailList());
 		return Result.OK("编辑成功!");
 	}
 	
@@ -145,6 +154,7 @@ public class InvAssemblyController {
 	@ApiOperation(value="组装单-批量删除", notes="组装单-批量删除")
     @RequiresPermissions("invassembly:inv_assembly:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = IInvAssemblyService.class,entity = InvAssembly.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.invAssemblyService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
@@ -181,6 +191,19 @@ public class InvAssemblyController {
 		List<InvAssemblyDetail> invAssemblyDetailList = invAssemblyDetailService.selectByMainId(id);
 		return Result.OK(invAssemblyDetailList);
 	}
+	/**
+	 * 通过id查询
+	 *
+	 * @param id
+	 * @return
+	 */
+	//@AutoLog(value = "组装单_材料明细通过主表ID查询")
+	@ApiOperation(value="组装单_材料明细主表ID查询", notes="组装单_材料明细-通主表ID查询")
+	@GetMapping(value = "/queryInvAssemblyBomDetailByMainId")
+	public Result<List<InvAssemblyBomDetail>> queryInvAssemblyBomDetailListByMainId(@RequestParam(name="id",required=true) String id) {
+		List<InvAssemblyBomDetail> invAssemblyBomDetailList = invAssemblyBomDetailService.selectByMainId(id);
+		return Result.OK(invAssemblyBomDetailList);
+	}
 
     /**
     * 导出excel
@@ -211,6 +234,8 @@ public class InvAssemblyController {
           BeanUtils.copyProperties(main, vo);
           List<InvAssemblyDetail> invAssemblyDetailList = invAssemblyDetailService.selectByMainId(main.getId());
           vo.setInvAssemblyDetailList(invAssemblyDetailList);
+          List<InvAssemblyBomDetail> invAssemblyBomDetailList = invAssemblyBomDetailService.selectByMainId(main.getId());
+          vo.setInvAssemblyBomDetailList(invAssemblyBomDetailList);
           pageList.add(vo);
       }
 
@@ -247,7 +272,7 @@ public class InvAssemblyController {
               for (InvAssemblyPage page : list) {
                   InvAssembly po = new InvAssembly();
                   BeanUtils.copyProperties(page, po);
-                  invAssemblyService.saveMain(po, page.getInvAssemblyDetailList());
+                  invAssemblyService.saveMain(po, page.getInvAssemblyDetailList(),page.getInvAssemblyBomDetailList());
               }
               return Result.OK("文件导入成功！数据行数:" + list.size());
           } catch (Exception e) {
@@ -263,5 +288,31 @@ public class InvAssemblyController {
       }
       return Result.OK("文件导入失败！");
     }
+	 /**
+	  * 审核/反审核
+	  *
+	  * @param auditRequest 审核请求参数，包含ID列表和操作类型（audit/reverse）
+	  * @return
+	  */
+	 @AutoLog(value = "组装单-审核/反审核")
+	 @ApiOperation(value = "组装单-审核/反审核", notes = "组装单-审核/反审核")
+	 @RequiresPermissions("invassembly:inv_assembly:audit")
+	 @RequestMapping(value = "/audit", method = {RequestMethod.PUT, RequestMethod.POST})
+	 public Result<String> audit(@RequestBody AuditRequest auditRequest) throws Exception {
+		 List<String> ids = auditRequest.getIds();
+		 String type = auditRequest.getType(); // audit 或 reverse
 
+		 Assert.isTrue(CollectionUtil.isEmpty(ids), "请选择要操作的记录");
+
+
+		 int count;
+		 if (Constants.DICT_AUDIT_FLAG.AUDIT.equals(type)) {
+			 count = invAssemblyService.audit(ids);
+		 } else {
+			 count = invAssemblyService.unAudit(ids);
+		 }
+
+
+		 return Result.OK(String.format("操作成功，共计完成对%s条数据的操作！", count));
+	 }
 }

@@ -189,6 +189,18 @@ public class Constants {
         String CXCK = "311";
         // 拆卸出库_冲销
         String CXCK_CX = "312";
+
+
+        // 拆卸入库
+        String ZZRK = "321";
+        // 拆卸入库_冲销
+        String ZZRK_CX = "322";
+
+        // 拆卸出库
+        String ZZCK = "331";
+        // 拆卸出库_冲销
+        String ZZCK_CX = "332";
+
         // 销售出库
         String XSCH = "601";
         // 盘亏出库_冲销
@@ -337,8 +349,10 @@ public class Constants {
         String XSTH = "XSTH";
         //销售收款
         String XSSK = "SK";
-        //销售收款
+        //拆卸单
         String CXD = "CX";
+        //组装单
+        String ZZD = "ZZ";
     }
 
     /**

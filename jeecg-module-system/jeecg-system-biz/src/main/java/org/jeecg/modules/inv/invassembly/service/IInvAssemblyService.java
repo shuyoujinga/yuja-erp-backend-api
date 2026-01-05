@@ -1,6 +1,7 @@
 package org.jeecg.modules.inv.invassembly.service;
 
 import org.jeecg.modules.inv.invassembly.entity.InvAssemblyDetail;
+import org.jeecg.modules.inv.invassembly.entity.InvAssemblyBomDetail;
 import org.jeecg.modules.inv.invassembly.entity.InvAssembly;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @Description: 组装单
  * @Author: 舒有敬
- * @Date:   2025-12-16
+ * @Date:   2026-01-05
  * @Version: V1.0
  */
 public interface IInvAssemblyService extends IService<InvAssembly> {
@@ -20,16 +21,18 @@ public interface IInvAssemblyService extends IService<InvAssembly> {
 	 *
 	 * @param invAssembly
 	 * @param invAssemblyDetailList
+	 * @param invAssemblyBomDetailList
 	 */
-	public void saveMain(InvAssembly invAssembly,List<InvAssemblyDetail> invAssemblyDetailList) ;
+	public void saveMain(InvAssembly invAssembly,List<InvAssemblyDetail> invAssemblyDetailList,List<InvAssemblyBomDetail> invAssemblyBomDetailList) ;
 	
 	/**
 	 * 修改一对多
 	 *
    * @param invAssembly
    * @param invAssemblyDetailList
+   * @param invAssemblyBomDetailList
 	 */
-	public void updateMain(InvAssembly invAssembly,List<InvAssemblyDetail> invAssemblyDetailList);
+	public void updateMain(InvAssembly invAssembly,List<InvAssemblyDetail> invAssemblyDetailList,List<InvAssemblyBomDetail> invAssemblyBomDetailList);
 	
 	/**
 	 * 删除一对多
@@ -44,5 +47,8 @@ public interface IInvAssemblyService extends IService<InvAssembly> {
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+    int audit(List<String> ids) throws Exception;
+
+	int unAudit(List<String> ids) throws Exception;
 }
