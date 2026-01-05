@@ -62,7 +62,6 @@ public class SalReceiptPage {
     @Dict(dictTable = "yujiakeji_customers",dicText = "name",dicCode = "code")
     private String customerCode;
 	/**结算IDS*/
-	@Excel(name = "结算IDS", width = 15)
 	@ApiModelProperty(value = "结算IDS")
     private String settleIds;
 	/**结算单号*/
@@ -70,16 +69,16 @@ public class SalReceiptPage {
 	@ApiModelProperty(value = "结算单号")
     private String settleCodes;
 	/**预收ID*/
-	@Excel(name = "预收ID", width = 15)
 	@ApiModelProperty(value = "预收ID")
-    private String prepayId;
+    private String prepayIds;
 	/**预收单*/
 	@Excel(name = "预收单", width = 15)
 	@ApiModelProperty(value = "预收单")
-    private String prepayCode;
+    private String prepayCodes;
 	/**收款方式*/
-	@Excel(name = "收款方式", width = 15)
+	@Excel(name = "收款方式", width = 15,dicCode = "dict_receipt_type")
 	@ApiModelProperty(value = "收款方式")
+	@Dict(dicCode = "dict_receipt_type")
     private Integer receiptType;
 	/**结算金额*/
 	@Excel(name = "结算金额", width = 15)
@@ -88,7 +87,7 @@ public class SalReceiptPage {
 	/**预收抵扣*/
 	@Excel(name = "预收抵扣", width = 15)
 	@ApiModelProperty(value = "预收抵扣")
-    private Double prepay;
+    private Double prepayAmount;
 	/**实收合计*/
 	@Excel(name = "实收合计", width = 15)
 	@ApiModelProperty(value = "实收合计")
@@ -99,7 +98,7 @@ public class SalReceiptPage {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/
@@ -109,14 +108,12 @@ public class SalReceiptPage {
 	@ApiModelProperty(value = "审核时间")
     private Date auditTime;
 	/**状态*/
-	@Excel(name = "状态", width = 15)
 	@ApiModelProperty(value = "状态")
     private Integer status;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
 	@ApiModelProperty(value = "备注")
     private String remark;
-	/**是否有效*/
     /**是否有效*/
     @ApiModelProperty(value = "是否有效")
     private Integer delFlag;

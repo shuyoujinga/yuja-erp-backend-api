@@ -19,4 +19,6 @@ public interface ISalReceiptDetailService extends IService<SalReceiptDetail> {
 	 * @return List<SalReceiptDetail>
 	 */
 	public List<SalReceiptDetail> selectByMainId(String mainId);
+
+    List<SalReceiptDetail> selectByTargetId(String ids);
 }

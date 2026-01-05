@@ -56,7 +56,6 @@ public class SalReceiptDetail implements Serializable {
     @ApiModelProperty(value = "主表ID")
     private String pid;
 	/**结算明细ID*/
-	@Excel(name = "结算明细ID", width = 15)
     @ApiModelProperty(value = "结算明细ID")
     private String settleDetailId;
 	/**货品*/

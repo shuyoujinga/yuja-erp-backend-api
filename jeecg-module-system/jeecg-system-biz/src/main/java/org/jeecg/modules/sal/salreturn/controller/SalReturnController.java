@@ -276,7 +276,7 @@ public class SalReturnController {
 	  * @return
 	  */
 	 @AutoLog(value = "销售退货-审核/反审核")
-	 @ApiOperation(value = "销售结算-审核/反审核", notes = "销售结算-审核/反审核")
+	 @ApiOperation(value = "销售退货-审核/反审核", notes = "销售退货-审核/反审核")
 	 @RequiresPermissions("salreturn:sal_return:audit")
 	 @RequestMapping(value = "/audit", method = {RequestMethod.PUT, RequestMethod.POST})
 	 public Result<String> audit(@RequestBody AuditRequest auditRequest) throws Exception {

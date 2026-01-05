@@ -78,14 +78,15 @@ public class SalReceipt implements Serializable {
 	/**预收ID*/
 	@Excel(name = "预收ID", width = 15)
     @ApiModelProperty(value = "预收ID")
-    private String prepayId;
+    private String prepayIds;
 	/**预收单*/
 	@Excel(name = "预收单", width = 15)
     @ApiModelProperty(value = "预收单")
-    private String prepayCode;
-	/**收款方式*/
-	@Excel(name = "收款方式", width = 15)
+    private String prepayCodes;
+    /**收款方式*/
+    @Excel(name = "收款方式", width = 15,dicCode = "dict_receipt_type")
     @ApiModelProperty(value = "收款方式")
+    @Dict(dicCode = "dict_receipt_type")
     private Integer receiptType;
 	/**结算金额*/
 	@Excel(name = "结算金额", width = 15)
@@ -94,7 +95,7 @@ public class SalReceipt implements Serializable {
 	/**预收抵扣*/
 	@Excel(name = "预收抵扣", width = 15)
     @ApiModelProperty(value = "预收抵扣")
-    private Double prepay;
+    private Double prepayAmount;
 	/**实收合计*/
 	@Excel(name = "实收合计", width = 15)
     @ApiModelProperty(value = "实收合计")
@@ -105,7 +106,7 @@ public class SalReceipt implements Serializable {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

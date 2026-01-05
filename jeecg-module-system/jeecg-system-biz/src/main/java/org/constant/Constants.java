@@ -324,8 +324,10 @@ public class Constants {
         String XSYS = "YS";
         //销售结算
         String XSJS = "DZ";
-        //销售结算
+        //销售退货
         String XSTH = "XSTH";
+        //销售收款
+        String XSSK = "SK";
     }
 
     /**

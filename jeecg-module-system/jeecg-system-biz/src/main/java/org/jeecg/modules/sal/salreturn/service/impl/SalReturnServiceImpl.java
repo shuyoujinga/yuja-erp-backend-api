@@ -33,6 +33,7 @@ import java.util.*;
  * @Version: V1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SalReturnServiceImpl extends ServiceImpl<SalReturnMapper, SalReturn> implements ISalReturnService {
 
 	@Resource
