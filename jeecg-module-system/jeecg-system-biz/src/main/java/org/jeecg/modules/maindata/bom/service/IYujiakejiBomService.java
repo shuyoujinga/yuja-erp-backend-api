@@ -48,4 +48,11 @@ public interface IYujiakejiBomService extends IService<YujiakejiBom> {
 	int audit(List<String> ids);
 
 	int unAudit(List<String> ids);
+
+	/**
+	 * 通过主BOMInfo获取
+	 * @param materialCode
+	 * @return
+	 */
+    List<YujiakejiBomDetail> queryBomListByMainCode(String materialCode);
 }

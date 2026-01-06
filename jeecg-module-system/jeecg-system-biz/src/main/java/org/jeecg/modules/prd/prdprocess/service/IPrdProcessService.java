@@ -1,74 +1,48 @@
 package org.jeecg.modules.prd.prdprocess.service;
 
-import org.jeecg.common.system.vo.SelectTreeModel;
+import org.jeecg.modules.prd.prdprocess.entity.PrdProcessDetail;
 import org.jeecg.modules.prd.prdprocess.entity.PrdProcess;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.common.exception.JeecgBootException;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * @Description: 生产工序
  * @Author: 舒有敬
- * @Date:   2025-12-19
+ * @Date:   2026-01-06
  * @Version: V1.0
  */
 public interface IPrdProcessService extends IService<PrdProcess> {
 
-	/**根节点父ID的值*/
-	public static final String ROOT_PID_VALUE = "0";
-	
-	/**树节点有子节点状态值*/
-	public static final String HASCHILD = "1";
-	
-	/**树节点无子节点状态值*/
-	public static final String NOCHILD = "0";
-
 	/**
-	 * 新增节点
+	 * 添加一对多
 	 *
 	 * @param prdProcess
+	 * @param prdProcessDetailList
 	 */
-	void addPrdProcess(PrdProcess prdProcess);
+	public void saveMain(PrdProcess prdProcess,List<PrdProcessDetail> prdProcessDetailList) ;
 	
 	/**
-   * 修改节点
-   *
+	 * 修改一对多
+	 *
    * @param prdProcess
-   * @throws JeecgBootException
-   */
-	void updatePrdProcess(PrdProcess prdProcess) throws JeecgBootException;
+   * @param prdProcessDetailList
+	 */
+	public void updateMain(PrdProcess prdProcess,List<PrdProcessDetail> prdProcessDetailList);
 	
 	/**
-	 * 删除节点
+	 * 删除一对多
 	 *
 	 * @param id
-   * @throws JeecgBootException
 	 */
-	void deletePrdProcess(String id) throws JeecgBootException;
-
-	  /**
-	   * 查询所有数据，无分页
-	   *
-	   * @param queryWrapper
-	   * @return List<PrdProcess>
-	   */
-    List<PrdProcess> queryTreeListNoPage(QueryWrapper<PrdProcess> queryWrapper);
-
+	public void delMain (String id);
+	
 	/**
-	 * 【vue3专用】根据父级编码加载分类字典的数据
+	 * 批量删除一对多
 	 *
-	 * @param parentCode
-	 * @return
+	 * @param idList
 	 */
-	List<SelectTreeModel> queryListByCode(String parentCode);
-
-	/**
-	 * 【vue3专用】根据pid查询子节点集合
-	 *
-	 * @param pid
-	 * @return
-	 */
-	List<SelectTreeModel> queryListByPid(String pid);
-
+	public void delBatchMain (Collection<? extends Serializable> idList);
+	
 }

@@ -1,6 +1,7 @@
 package org.jeecg.modules.maindata.bom.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.shiro.SecurityUtils;
 import org.constant.Constants;
 import org.jeecg.common.system.vo.LoginUser;
@@ -14,9 +15,12 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+import org.utils.Assert;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Collection;
@@ -99,7 +103,15 @@ public class YujiakejiBomServiceImpl extends ServiceImpl<YujiakejiBomMapper, Yuj
 		return updateAuditStatus(ids, Constants.DICT_AUDIT_STATUS.NO);
 	}
 
-	/**
+    @Override
+    public List<YujiakejiBomDetail> queryBomListByMainCode(String materialCode) {
+		YujiakejiBom yujiakejiBom = baseMapper.selectOne(new LambdaQueryWrapper<YujiakejiBom>().eq(YujiakejiBom::getMaterialCode, materialCode).eq(YujiakejiBom::getBomType, 1).eq(YujiakejiBom::getAudit, Constants.DICT_AUDIT_STATUS.YES).eq(YujiakejiBom::getDelFlag, Constants.YN.Y).last("limit 1"));
+		Assert.isTrue(ObjectUtils.isEmpty(yujiakejiBom),String.format("操作失败,物料[%s]的材料清单不存在,请联系工程部维护!",materialCode));
+
+		return yujiakejiBomDetailMapper.selectByMainId(yujiakejiBom.getId());
+    }
+
+    /**
 	 * 批量更新审核状态
 	 *
 	 * @param ids 待更新记录ID列表
