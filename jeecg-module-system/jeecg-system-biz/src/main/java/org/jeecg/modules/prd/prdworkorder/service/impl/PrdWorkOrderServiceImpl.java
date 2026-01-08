@@ -118,6 +118,7 @@ public class PrdWorkOrderServiceImpl extends ServiceImpl<PrdWorkOrderMapper, Prd
 			return 0;
 		}
 		int count = 0;
+		// x
 		for (PrdWorkOrder record : records) {
 			if (!status.equals(record.getAudit())) {
 				record.setAudit(status);
