@@ -55,6 +55,13 @@ public class PrdMpsBomDetail implements Serializable {
 	/**主表ID*/
     @ApiModelProperty(value = "主表ID")
     private String pid;
+    /**BOM编码*/
+    @Excel(name = "BOM编码", width = 15)
+    private String bomCode;
+    /**上级物料*/
+    @Excel(name = "上级物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
+    @ApiModelProperty(value = "上级物料")
+    private String productionMaterialCode;
 	/**物料*/
 	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
@@ -71,6 +78,12 @@ public class PrdMpsBomDetail implements Serializable {
 	@Excel(name = "单价", width = 15)
     @ApiModelProperty(value = "单价")
     private Double unitPrice;
+
+    /**标准用量*/
+    @Excel(name = "标准用量", width = 15)
+    @ApiModelProperty(value = "标准用量")
+    private Double standardQty;
+
 	/**要求数量*/
 	@Excel(name = "要求数量", width = 15)
     @ApiModelProperty(value = "要求数量")

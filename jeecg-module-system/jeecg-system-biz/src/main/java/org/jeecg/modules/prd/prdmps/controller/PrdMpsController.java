@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jeecg.modules.aop.DeleteCheckAudit;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -149,6 +150,7 @@ public class PrdMpsController {
 	@ApiOperation(value="生产计划-批量删除", notes="生产计划-批量删除")
     @RequiresPermissions("prdmps:prd_mps:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = IPrdMpsService.class,entity = PrdMps.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.prdMpsService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
@@ -199,6 +201,32 @@ public class PrdMpsController {
 		return Result.OK(prdMpsBomDetailList);
 	}
 
+	 /**
+	  * 通过id查询
+	  *
+	  * @param id
+	  * @return
+	  */
+	 //@AutoLog(value = "生产计划_明细通过主表ID查询")
+	 @ApiOperation(value="生产计划_明细主表ID查询", notes="生产计划_明细-通主表ID查询")
+	 @GetMapping(value = "/queryPrdMpsDetailByTargetId")
+	 public Result<List<PrdMpsDetail>> queryPrdMpsDetailByTargetId(@RequestParam(name="id",required=true) String id) {
+		 List<PrdMpsDetail> prdMpsDetailList = prdMpsDetailService.selectByTargetId(id);
+		 return Result.OK(prdMpsDetailList);
+	 }
+	 /**
+	  * 通过id查询
+	  *
+	  * @param id
+	  * @return
+	  */
+	 //@AutoLog(value = "生产计划_材料清单通过主表ID查询")
+	 @ApiOperation(value="生产计划_材料清单主表ID查询", notes="生产计划_材料清单-通主表ID查询")
+	 @GetMapping(value = "/queryPrdMpsBomDetailByTargetId")
+	 public Result<List<PrdMpsBomDetail>> queryPrdMpsBomDetailByTargetId(@RequestParam(name="id",required=true) String id) {
+		 List<PrdMpsBomDetail> prdMpsBomDetailList = prdMpsBomDetailService.selectByTargetId(id);
+		 return Result.OK(prdMpsBomDetailList);
+	 }
     /**
     * 导出excel
     *

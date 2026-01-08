@@ -19,4 +19,6 @@ public interface IPrdMpsDetailService extends IService<PrdMpsDetail> {
 	 * @return List<PrdMpsDetail>
 	 */
 	public List<PrdMpsDetail> selectByMainId(String mainId);
+
+    List<PrdMpsDetail> selectByTargetId(String ids);
 }

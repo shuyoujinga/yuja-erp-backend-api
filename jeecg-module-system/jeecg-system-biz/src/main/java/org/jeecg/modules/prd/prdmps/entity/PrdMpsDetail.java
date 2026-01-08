@@ -55,6 +55,12 @@ public class PrdMpsDetail implements Serializable {
 	/**主表ID*/
     @ApiModelProperty(value = "主表ID")
     private String pid;
+    /**业务计划明细ID*/
+    @ApiModelProperty(value = "业务计划明细ID")
+    private String bizDetailId;
+    /**BOM编码*/
+    @Excel(name = "BOM编码", width = 15)
+    private String bomCode;
 	/**物料*/
 	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
@@ -75,10 +81,18 @@ public class PrdMpsDetail implements Serializable {
 	@Excel(name = "排产数量", width = 15)
     @ApiModelProperty(value = "排产数量")
     private Double qty;
+    /**工序类型*/
+    @Excel(name = "工序类型", width = 15,dicCode = "dict_process_type")
+    @ApiModelProperty(value = "工序类型")
+    private String processType;
+    /**产线*/
+    @Excel(name = "产线", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    @ApiModelProperty(value = "产线")
+    private String prdLine;
 	/**工序*/
-	@Excel(name = "工序", width = 15)
+	@Excel(name = "工序", width = 15,dicCode = "dict_process_code")
     @ApiModelProperty(value = "工序")
-    private Integer sequenceCode;
+    private String processCode;
 	/**备注*/
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")

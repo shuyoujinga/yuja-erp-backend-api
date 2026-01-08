@@ -65,7 +65,7 @@ public class PrdProcessDetail implements Serializable {
     @ApiModelProperty(value = "工序名称")
     private String processName;
 	/**目标物料*/
-	@Excel(name = "目标物料", width = 15)
+	@Excel(name = "目标物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "目标物料")
     private String materialCode;
     /**单位*/

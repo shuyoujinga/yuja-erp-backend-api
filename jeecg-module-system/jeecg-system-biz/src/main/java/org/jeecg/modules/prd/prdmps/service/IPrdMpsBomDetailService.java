@@ -19,4 +19,6 @@ public interface IPrdMpsBomDetailService extends IService<PrdMpsBomDetail> {
 	 * @return List<PrdMpsBomDetail>
 	 */
 	public List<PrdMpsBomDetail> selectByMainId(String mainId);
+
+	List<PrdMpsBomDetail> selectByTargetId(String ids);
 }
