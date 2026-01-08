@@ -67,20 +67,33 @@ public class PrdWorkOrder implements Serializable {
     @ApiModelProperty(value = "排产单号_IDS")
     private String mpsIds;
 	/**排查单号*/
-	@Excel(name = "排查单号", width = 15)
-    @ApiModelProperty(value = "排查单号")
+	@Excel(name = "排产单号", width = 15)
+    @ApiModelProperty(value = "排产单号")
     private String mpsDocCodes;
+    /**工序*/
+    @Excel(name = "工序类型", width = 15,dicCode = "dict_process_type")
+    @ApiModelProperty(value = "工序类型")
+    @Dict(dicCode = "dict_process_type")
+    private String processType;
+    /**工序*/
+    @Excel(name = "工序", width = 15,dicCode = "dict_process_code")
+    @ApiModelProperty(value = "工序")
+    @Dict(dicCode = "dict_process_code")
+    private String processCode;
 	/**产线*/
-	@Excel(name = "产线", width = 15)
+	@Excel(name = "产线", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "产线")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     private String prdLine;
 	/**生产产品*/
-	@Excel(name = "生产产品", width = 15)
+	@Excel(name = "生产产品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "生产产品")
+    @Dict(dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     private String materialCode;
 	/**单位*/
     @Excel(name = "单位", width = 15,dicCode="dict_materials_unit")
     @ApiModelProperty(value = "单位")
+    @Dict(dicCode="dict_materials_unit")
     private String unit;
 	/**规格*/
 	@Excel(name = "规格", width = 15)
@@ -100,7 +113,7 @@ public class PrdWorkOrder implements Serializable {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+    @Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
     @ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

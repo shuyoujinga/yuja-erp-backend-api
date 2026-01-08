@@ -61,9 +61,19 @@ public class PrdWorkOrderPage {
 	@ApiModelProperty(value = "排产单号_IDS")
     private String mpsIds;
 	/**排查单号*/
-	@Excel(name = "排查单号", width = 15)
-	@ApiModelProperty(value = "排查单号")
+	@Excel(name = "排产单号", width = 15)
+	@ApiModelProperty(value = "排产单号")
     private String mpsDocCodes;
+	/**工序*/
+	@Excel(name = "工序类型", width = 15,dicCode = "dict_process_type")
+	@ApiModelProperty(value = "工序类型")
+	@Dict(dicCode = "dict_process_type")
+	private String processType;
+	/**工序*/
+	@Excel(name = "工序", width = 15,dicCode = "dict_process_code")
+	@ApiModelProperty(value = "工序")
+	@Dict(dicCode = "dict_process_code")
+	private String processCode;
 	/**产线*/
 	@Excel(name = "产线", width = 15)
 	@ApiModelProperty(value = "产线")

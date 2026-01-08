@@ -67,10 +67,7 @@ public class PrdWorkOrderDetail implements Serializable {
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
-	/**工序*/
-	@Excel(name = "工序", width = 15)
-    @ApiModelProperty(value = "工序")
-    private String processCode;
+
 	/**数量*/
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")

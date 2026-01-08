@@ -353,6 +353,10 @@ public class Constants {
         String CXD = "CX";
         //组装单
         String ZZD = "ZZ";
+        //生产计划
+        String SCJH = "MPS";
+        //组装单
+        String SCGD = "GD";
     }
 
     /**
