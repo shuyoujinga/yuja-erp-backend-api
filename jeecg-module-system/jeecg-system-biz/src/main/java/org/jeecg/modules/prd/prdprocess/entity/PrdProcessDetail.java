@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import java.util.Date;
@@ -76,6 +77,11 @@ public class PrdProcessDetail implements Serializable {
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
+    /**工序类型*/
+    @Excel(name = "用工类型", width = 15,dicCode = "dict_work_type")
+    @ApiModelProperty(value = "用工类型")
+    @Dict(dicCode = "dict_work_type")
+    private String workType;
 	/**工序单价*/
 	@Excel(name = "工序单价", width = 15)
     @ApiModelProperty(value = "工序单价")

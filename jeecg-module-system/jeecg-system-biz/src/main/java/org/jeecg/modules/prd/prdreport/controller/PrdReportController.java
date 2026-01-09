@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jeecg.modules.aop.DeleteCheckAudit;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -145,6 +146,7 @@ public class PrdReportController {
 	@ApiOperation(value="生产报工-批量删除", notes="生产报工-批量删除")
     @RequiresPermissions("prdreport:prd_report:deleteBatch")
 	@DeleteMapping(value = "/deleteBatch")
+	@DeleteCheckAudit(service = IPrdReportService.class,entity = PrdReport.class)
 	public Result<String> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		this.prdReportService.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功！");
@@ -181,6 +183,19 @@ public class PrdReportController {
 		List<PrdReportDetail> prdReportDetailList = prdReportDetailService.selectByMainId(id);
 		return Result.OK(prdReportDetailList);
 	}
+	 /**
+	  * 通过id查询
+	  *
+	  * @param id
+	  * @return
+	  */
+	 //@AutoLog(value = "生产报工_明细通过主表ID查询")
+	 @ApiOperation(value="生产报工_明细主表ID查询", notes="生产报工_明细-通主表ID查询")
+	 @GetMapping(value = "/queryPrdReportDetailByTargetId")
+	 public Result<List<PrdReportDetail>> queryPrdReportDetailByTargetId(@RequestParam(name="id",required=true) String id) {
+		 List<PrdReportDetail> prdReportDetailList = prdReportDetailService.selectByTargetId(id);
+		 return Result.OK(prdReportDetailList);
+	 }
 
     /**
     * 导出excel

@@ -19,4 +19,6 @@ public interface IPrdReportDetailService extends IService<PrdReportDetail> {
 	 * @return List<PrdReportDetail>
 	 */
 	public List<PrdReportDetail> selectByMainId(String mainId);
+
+	List<PrdReportDetail> selectByTargetId(String ids);
 }
