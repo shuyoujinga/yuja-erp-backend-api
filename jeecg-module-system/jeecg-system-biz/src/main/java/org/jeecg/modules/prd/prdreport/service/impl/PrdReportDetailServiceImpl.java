@@ -66,13 +66,13 @@ public class PrdReportDetailServiceImpl extends ServiceImpl<PrdReportDetailMappe
 				entity.setScore(10d);
 				entity.setAvgUnitPrice(avgUnitPrice);
 
-				entity.setAmount(AmountUtils.mul(2,avgUnitPrice,entity.getScore(),prdWorkOrder.getQty()));
+				entity.setAmount(AmountUtils.mul(2,avgUnitPrice,AmountUtils.div(entity.getScore(),10d,2),prdWorkOrder.getQty()));
 				result.add(entity);
 			}else{
 				PrdReportDetail entity = new PrdReportDetail();
 				entity.setAvgUnitPrice(avgUnitPrice);
 				entity.setScore(10d);
-				entity.setAmount(AmountUtils.mul(2,avgUnitPrice,entity.getScore(),prdWorkOrder.getQty()));
+				entity.setAmount(AmountUtils.mul(2,avgUnitPrice,AmountUtils.div(entity.getScore(),10d,2),prdWorkOrder.getQty()));
 				result.add(entity);
 			}
 

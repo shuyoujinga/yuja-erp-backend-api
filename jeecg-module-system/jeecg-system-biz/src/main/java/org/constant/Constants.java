@@ -209,7 +209,10 @@ public class Constants {
         String SCTL = "341";
         // 拆卸出库_冲销
         String SCTL_CX = "342";
-
+        // SCRK
+        String SCRK = "401";
+        // SCRK_CX
+        String SCRK_CX = "402";
         // 销售出库
         String XSCH = "601";
         // 盘亏出库_冲销
