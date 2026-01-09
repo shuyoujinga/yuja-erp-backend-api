@@ -82,6 +82,15 @@ public class PrdMpsDetail implements Serializable {
     @ApiModelProperty(value = "排产数量")
     private Double qty;
     /**工序类型*/
+    @Excel(name = "用工类型", width = 15,dicCode = "dict_work_type")
+    @ApiModelProperty(value = "用工类型")
+    @Dict(dicCode = "dict_work_type")
+    private String workType;
+    /**工序单价*/
+    @Excel(name = "工序单价", width = 15)
+    @ApiModelProperty(value = "工序单价")
+    private Double workUnitPrice;
+    /**工序类型*/
     @Excel(name = "工序类型", width = 15,dicCode = "dict_process_type")
     @ApiModelProperty(value = "工序类型")
     private String processType;

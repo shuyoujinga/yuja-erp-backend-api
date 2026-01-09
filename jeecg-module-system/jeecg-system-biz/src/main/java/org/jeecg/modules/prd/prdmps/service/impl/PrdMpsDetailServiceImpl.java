@@ -83,6 +83,8 @@ public class PrdMpsDetailServiceImpl extends ServiceImpl<PrdMpsDetailMapper, Prd
 			for (PrdProcessDetail prdProcessDetail : processDetailList) {
 				PrdMpsDetail entity=new PrdMpsDetail();
 				entity.setBizDetailId(bizPlanDetail.getId());
+				entity.setWorkType(prdProcessDetail.getWorkType());
+				entity.setWorkUnitPrice(prdProcessDetail.getUnitPrice());
 				entity.setMaterialCode(prdProcessDetail.getMaterialCode());
 				entity.setUnit(prdProcessDetail.getUnit());
 				entity.setSpecifications(prdProcessDetail.getSpecifications());

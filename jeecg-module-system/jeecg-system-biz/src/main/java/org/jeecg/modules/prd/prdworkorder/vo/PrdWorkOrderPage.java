@@ -74,6 +74,15 @@ public class PrdWorkOrderPage {
 	@ApiModelProperty(value = "工序")
 	@Dict(dicCode = "dict_process_code")
 	private String processCode;
+	/**用工类型*/
+	@Excel(name = "用工类型", width = 15,dicCode = "dict_work_type")
+	@ApiModelProperty(value = "用工类型")
+	@Dict(dicCode = "dict_work_type")
+	private String workType;
+	/**工序单价*/
+	@Excel(name = "工序单价", width = 15)
+	@ApiModelProperty(value = "工序单价")
+	private Double workUnitPrice;
 	/**产线*/
 	@Excel(name = "产线", width = 15)
 	@ApiModelProperty(value = "产线")
@@ -104,7 +113,7 @@ public class PrdWorkOrderPage {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

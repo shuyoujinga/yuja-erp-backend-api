@@ -80,6 +80,15 @@ public class PrdWorkOrder implements Serializable {
     @ApiModelProperty(value = "工序")
     @Dict(dicCode = "dict_process_code")
     private String processCode;
+    /**工序类型*/
+    @Excel(name = "用工类型", width = 15,dicCode = "dict_work_type")
+    @ApiModelProperty(value = "用工类型")
+    @Dict(dicCode = "dict_work_type")
+    private String workType;
+    /**工序单价*/
+    @Excel(name = "工序单价", width = 15)
+    @ApiModelProperty(value = "工序单价")
+    private Double workUnitPrice;
 	/**产线*/
 	@Excel(name = "产线", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
     @ApiModelProperty(value = "产线")
@@ -103,6 +112,7 @@ public class PrdWorkOrder implements Serializable {
 	@Excel(name = "计划数量", width = 15)
     @ApiModelProperty(value = "计划数量")
     private Double planQty;
+
 	/**数量*/
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
