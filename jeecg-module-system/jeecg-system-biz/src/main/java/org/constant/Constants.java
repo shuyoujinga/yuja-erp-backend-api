@@ -2,6 +2,9 @@ package org.constant;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 通用常量类
  * 魔法值消除
@@ -61,7 +64,7 @@ public class Constants {
 
     public interface WAREHOUSE {
         // 制成品仓库
-        String PRODUCTION="A01A03A04A03";
+        String PRODUCTION = "A01A03A04A03";
     }
 
     /**
@@ -357,6 +360,17 @@ public class Constants {
         String SCJH = "MPS";
         //组装单
         String SCGD = "GD";
+        //组装单
+        String SCLL = "SCLL";
+    }
+
+    public interface WAREHOUSE_LIST {
+
+        List<String> WAREHOUSE_LIST = Arrays.asList(
+                "A01A03A04A01",
+                "A01A03A04A02",
+                "A01A03A04A03"
+        );
     }
 
     /**

@@ -99,6 +99,10 @@ public class InvIssue implements Serializable {
 	@Excel(name = "备注", width = 15)
     @ApiModelProperty(value = "备注")
     private String remark;
+    /**生产领料ID*/
+    @Excel(name = "生产领料ID", width = 15)
+    @ApiModelProperty(value = "生产领料ID")
+    private String prdIssueId;
 /**是否有效*/
     @ApiModelProperty(value = "是否有效")
     @TableLogic

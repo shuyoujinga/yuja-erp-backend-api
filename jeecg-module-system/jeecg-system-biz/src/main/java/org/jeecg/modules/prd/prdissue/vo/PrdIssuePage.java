@@ -57,24 +57,26 @@ public class PrdIssuePage {
 	@ApiModelProperty(value = "制单日期")
     private Date docTime;
 	/**领料类型*/
-	@Excel(name = "领料类型", width = 15)
+	@Excel(name = "领料类型", width = 15,dicCode = "dict_prd_issue_type")
 	@ApiModelProperty(value = "领料类型")
-    private Integer issueType;
+	@Dict(dicCode = "dict_prd_issue_type")
+	private Integer issueType;
 	/**产线*/
-	@Excel(name = "产线", width = 15)
+	@Excel(name = "产线", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
 	@ApiModelProperty(value = "产线")
-    private String prdLine;
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	private String prdLine;
 	/**生产工单_IDS*/
 	@Excel(name = "生产工单_IDS", width = 15)
-	@ApiModelProperty(value = "生产工单_IDS")
     private String workOrderIds;
 	/**生产工单*/
 	@Excel(name = "生产工单", width = 15)
 	@ApiModelProperty(value = "生产工单")
     private String workOrderCodes;
 	/**生产产品*/
-	@Excel(name = "生产产品", width = 15)
+	@Excel(name = "生产产品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
 	@ApiModelProperty(value = "生产产品")
+	@Dict(dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     private String materialCode;
 	/**工单数量*/
 	@Excel(name = "工单数量", width = 15)
@@ -90,7 +92,7 @@ public class PrdIssuePage {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

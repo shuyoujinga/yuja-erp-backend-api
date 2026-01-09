@@ -44,5 +44,8 @@ public interface IPrdIssueService extends IService<PrdIssue> {
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+    int audit(List<String> ids) throws Exception;
+
+	int unAudit(List<String> ids) throws Exception;
 }

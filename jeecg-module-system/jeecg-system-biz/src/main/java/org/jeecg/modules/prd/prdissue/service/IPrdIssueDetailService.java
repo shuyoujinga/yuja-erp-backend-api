@@ -19,4 +19,6 @@ public interface IPrdIssueDetailService extends IService<PrdIssueDetail> {
 	 * @return List<PrdIssueDetail>
 	 */
 	public List<PrdIssueDetail> selectByMainId(String mainId);
+
+    List<PrdIssueDetail> selectByTargetId(String ids);
 }

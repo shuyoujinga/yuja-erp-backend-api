@@ -55,6 +55,9 @@ public class PrdIssueDetail implements Serializable {
 	/**主表ID*/
     @ApiModelProperty(value = "主表ID")
     private String pid;
+    /**工单主表ID*/
+    @ApiModelProperty(value = "工单主表ID")
+    private String wordOrderDetailId;
 	/**物料*/
 	@Excel(name = "物料", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "物料")
@@ -67,6 +70,14 @@ public class PrdIssueDetail implements Serializable {
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
+    /**仓库*/
+    @Excel(name = "仓库", width = 15)
+    @ApiModelProperty(value = "仓库")
+    private String warehouseCode;
+    /**库存数量*/
+    @Excel(name = "库存数量", width = 15)
+    @ApiModelProperty(value = "库存数量")
+    private Double stockQty;
 	/**数量*/
 	@Excel(name = "数量", width = 15)
     @ApiModelProperty(value = "数量")
