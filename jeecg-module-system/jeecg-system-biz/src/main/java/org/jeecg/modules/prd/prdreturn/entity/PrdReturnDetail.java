@@ -67,6 +67,10 @@ public class PrdReturnDetail implements Serializable {
 	@Excel(name = "规格", width = 15)
     @ApiModelProperty(value = "规格")
     private String specifications;
+    /**仓库*/
+    @Excel(name = "仓库", width = 15)
+    @ApiModelProperty(value = "仓库")
+    private String warehouseCode;
 	/**领用数*/
 	@Excel(name = "领用数", width = 15)
     @ApiModelProperty(value = "领用数")

@@ -56,18 +56,23 @@ public class PrdReturnPage {
     @DateTimeFormat(pattern="yyyy-MM-dd")
 	@ApiModelProperty(value = "制单日期")
     private Date docTime;
+	/**产线*/
+	@Excel(name = "产线", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	@ApiModelProperty(value = "产线")
+	@Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+	private String prdLine;
 	/**生产工单_IDS*/
-	@Excel(name = "生产工单_IDS", width = 15)
 	@ApiModelProperty(value = "生产工单_IDS")
-    private String wordOrderIds;
+	private String workOrderIds;
 	/**生产工单*/
 	@Excel(name = "生产工单", width = 15)
 	@ApiModelProperty(value = "生产工单")
-    private String wordOrderCodes;
+	private String workOrderCodes;
 	/**生产产品*/
-	@Excel(name = "生产产品", width = 15)
+	@Excel(name = "生产产品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
 	@ApiModelProperty(value = "生产产品")
-    private String materialCode;
+	@Dict(dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
+	private String materialCode;
 	/**生产数量*/
 	@Excel(name = "生产数量", width = 15)
 	@ApiModelProperty(value = "生产数量")
@@ -82,7 +87,7 @@ public class PrdReturnPage {
     private Integer audit;
 	/**审核人*/
 	@Excel(name = "审核人", width = 15,dictTable = "sys_user",dicText = "realname",dicCode = "username")
-@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
+	@Dict(dictTable = "sys_user",dicText = "realname",dicCode = "username")
 	@ApiModelProperty(value = "审核人")
     private String auditBy;
 	/**审核时间*/

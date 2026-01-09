@@ -18,6 +18,7 @@ public final class IssuePurposeMoveTypeMapping {
         map.put(Constants.ISSUE_PURPOSE.MRO, Constants.DICT_MOVE_TYPE.WXLY);
         map.put(Constants.ISSUE_PURPOSE.ADMIN, Constants.DICT_MOVE_TYPE.XZLY);
         map.put(Constants.ISSUE_PURPOSE.SAMPLE, Constants.DICT_MOVE_TYPE.YPLY);
+        map.put(Constants.ISSUE_PURPOSE.RETURN, Constants.DICT_MOVE_TYPE.SCTL);
         PURPOSE_TO_MOVE_TYPE = Collections.unmodifiableMap(map);
     }
 

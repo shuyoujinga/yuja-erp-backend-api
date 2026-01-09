@@ -62,17 +62,22 @@ public class PrdReturn implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @ApiModelProperty(value = "制单日期")
     private Date docTime;
-	/**生产工单_IDS*/
-	@Excel(name = "生产工单_IDS", width = 15)
+    /**产线*/
+    @Excel(name = "产线", width = 15,dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    @ApiModelProperty(value = "产线")
+    @Dict(dictTable = "sys_depart",dicText = "depart_name",dicCode = "org_code")
+    private String prdLine;
+    /**生产工单_IDS*/
     @ApiModelProperty(value = "生产工单_IDS")
-    private String wordOrderIds;
-	/**生产工单*/
-	@Excel(name = "生产工单", width = 15)
+    private String workOrderIds;
+    /**生产工单*/
+    @Excel(name = "生产工单", width = 15)
     @ApiModelProperty(value = "生产工单")
-    private String wordOrderCodes;
-	/**生产产品*/
-	@Excel(name = "生产产品", width = 15)
+    private String workOrderCodes;
+    /**生产产品*/
+    @Excel(name = "生产产品", width = 15,dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     @ApiModelProperty(value = "生产产品")
+    @Dict(dictTable = "yujiakeji_materials",dicText = "material_name",dicCode = "material_code")
     private String materialCode;
 	/**生产数量*/
 	@Excel(name = "生产数量", width = 15)

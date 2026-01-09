@@ -19,4 +19,6 @@ public interface IPrdReturnDetailService extends IService<PrdReturnDetail> {
 	 * @return List<PrdReturnDetail>
 	 */
 	public List<PrdReturnDetail> selectByMainId(String mainId);
+
+	List<PrdReturnDetail> selectByTargetId(String ids);
 }

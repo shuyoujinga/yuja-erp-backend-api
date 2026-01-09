@@ -127,6 +127,7 @@ public class Constants {
         String MRO = "MRO";       // 维修
         String ADMIN = "ADMIN";   // 行政
         String SAMPLE = "SAMPLE"; // 样品
+        String RETURN = "RETURN"; // 样品
     }
 
 
@@ -203,6 +204,11 @@ public class Constants {
         String ZZCK = "331";
         // 拆卸出库_冲销
         String ZZCK_CX = "332";
+
+        // 拆卸出库
+        String SCTL = "341";
+        // 拆卸出库_冲销
+        String SCTL_CX = "342";
 
         // 销售出库
         String XSCH = "601";
@@ -358,10 +364,12 @@ public class Constants {
         String ZZD = "ZZ";
         //生产计划
         String SCJH = "MPS";
-        //组装单
+        //生产工单
         String SCGD = "GD";
-        //组装单
+        //生产领料
         String SCLL = "SCLL";
+        //生产退料
+        String SCTL = "SCTL";
     }
 
     public interface WAREHOUSE_LIST {
