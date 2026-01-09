@@ -7,8 +7,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.jeecg.modules.system.entity.SysDepart;
 import org.jeecg.modules.system.entity.SysUser;
-import org.jeecg.modules.system.model.SysDepartTreeModel;
-import org.jeecg.modules.system.model.TreeModel;
 import org.jeecg.modules.system.vo.SysDepartExportVo;
 import org.jeecg.modules.system.vo.SysUserDepVo;
 import org.jeecg.modules.system.vo.lowapp.ExportDepartVo;
@@ -170,4 +168,6 @@ public interface SysDepartMapper extends BaseMapper<SysDepart> {
 	 * @return
 	 */
     List<SysDepartExportVo> getSysDepartList(@Param("parentId") String parentId,@Param("tenantId") Integer tenantId);
+
+    List<SysUser> getEmpByOrgCode(@Param("orgCode") String orgCode);
 }

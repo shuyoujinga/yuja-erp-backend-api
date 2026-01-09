@@ -56,21 +56,19 @@ public class PrdReportDetail implements Serializable {
     @ApiModelProperty(value = "主表ID")
     private String pid;
 	/**员工工号*/
-	@Excel(name = "员工工号", width = 15)
-    @ApiModelProperty(value = "员工工号")
+	@Excel(name = "员工", width = 15)
+    @ApiModelProperty(value = "员工")
     private String employeeId;
-	/**员工姓名*/
-	@Excel(name = "员工姓名", width = 15)
-    @ApiModelProperty(value = "员工姓名")
-    private String employeeName;
-	/**用工类型*/
-	@Excel(name = "用工类型", width = 15)
-    @ApiModelProperty(value = "用工类型")
-    private Integer workType;
+
+    /**评分*/
+    @Excel(name = "评分", width = 15)
+    @ApiModelProperty(value = "评分")
+    private Double avgUnitPrice;
 	/**评分*/
 	@Excel(name = "评分", width = 15)
     @ApiModelProperty(value = "评分")
     private Double score;
+
 	/**员工工资*/
 	@Excel(name = "员工工资", width = 15)
     @ApiModelProperty(value = "员工工资")

@@ -113,4 +113,46 @@ public class AmountUtils {
         return amount != null && amount.compareTo(0D) < 0;
     }
 
+    public static double mul(int scale, double... values) {
+        if (values == null || values.length == 0) return 0d;
+
+        BigDecimal result = BigDecimal.ONE;
+        boolean hasNonZero = false;
+
+        for (double v : values) {
+            if (Double.isNaN(v) || Double.isInfinite(v)) continue;
+            if (v != 0d) {
+                hasNonZero = true;
+                result = result.multiply(bd(v));
+            }
+        }
+
+        if (!hasNonZero) return 0d;
+
+        return result.setScale(scale, RoundingMode.HALF_UP).doubleValue();
+    }
+    private static BigDecimal bd(double v) {
+        return BigDecimal.valueOf(v);
+    }
+    public static double div(double a, double b, int scale) {
+        if (Double.isNaN(a) || Double.isNaN(b)) return 0d;
+        if (Double.isInfinite(a) || Double.isInfinite(b)) return 0d;
+        if (b == 0d) return 0d;
+
+        return bd(a)
+                .divide(bd(b), scale, RoundingMode.HALF_UP)
+                .doubleValue();
+    }
+    public static double mulDiv(double a, double b, double c, int scale) {
+        if (a == 0d || b == 0d || c == 0d) return 0d;
+        if (Double.isNaN(a) || Double.isNaN(b) || Double.isNaN(c)) return 0d;
+        if (Double.isInfinite(a) || Double.isInfinite(b) || Double.isInfinite(c)) return 0d;
+
+        return bd(a)
+                .multiply(bd(b))
+                .divide(bd(c), scale, RoundingMode.HALF_UP)
+                .doubleValue();
+    }
+
+
 }

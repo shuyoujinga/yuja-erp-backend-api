@@ -46,7 +46,7 @@ public class DIY_DICT_CONSTANT {
     /**
      * 自定义供应商的SQL语句
      */
-    public static  final String USER_SQL = "SELECT CONCAT_WS( '_', username, realname ) AS text, username AS `value`  FROM sys_user ";
+    public static  final String USER_SQL = "SELECT CONCAT_WS( '_', username, realname ) AS text, username AS `value`  FROM sys_user  where del_flag=0 AND `status`=1 order by username asc  ";
 
     /**
      * 自定义部门数据-仓位

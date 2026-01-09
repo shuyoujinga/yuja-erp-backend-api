@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.system.entity.SysDepart;
+import org.jeecg.modules.system.entity.SysUser;
 import org.jeecg.modules.system.entity.SysUserDepart;
 import org.jeecg.modules.system.model.DepartIdModel;
 import org.jeecg.modules.system.model.SysDepartTreeModel;
@@ -231,4 +232,6 @@ public interface ISysDepartService extends IService<SysDepart>{
      * @param errorMessageList
      */
     void importSysDepart(List<SysDepartExportVo> listSysDeparts, List<String> errorMessageList);
+
+    List<SysUser> getEmpByOrgCode(String orgCode);
 }

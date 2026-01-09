@@ -1339,7 +1339,12 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 		}
 	}
 
-	/**
+    @Override
+    public List<SysUser> getEmpByOrgCode(String orgCode) {
+        return baseMapper.getEmpByOrgCode(orgCode);
+    }
+
+    /**
 	 * 寻找部门路径
 	 *
 	 * @param departVo       部门vo

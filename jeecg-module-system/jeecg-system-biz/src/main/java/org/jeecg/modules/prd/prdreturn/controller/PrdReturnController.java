@@ -289,8 +289,8 @@ public class PrdReturnController {
 	  * @param auditRequest 审核请求参数，包含ID列表和操作类型（audit/reverse）
 	  * @return
 	  */
-	 @AutoLog(value = "生产领料-审核/反审核")
-	 @ApiOperation(value = "生产领料-审核/反审核", notes = "生产领料-审核/反审核")
+	 @AutoLog(value = "生产退料-审核/反审核")
+	 @ApiOperation(value = "生产退料-审核/反审核", notes = "生产退料-审核/反审核")
 	 @RequiresPermissions("prdreturn:prd_return:audit")
 	 @RequestMapping(value = "/audit", method = {RequestMethod.PUT, RequestMethod.POST})
 	 public Result<String> audit(@RequestBody AuditRequest auditRequest) throws Exception {

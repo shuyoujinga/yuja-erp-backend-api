@@ -370,6 +370,8 @@ public class Constants {
         String SCLL = "SCLL";
         //生产退料
         String SCTL = "SCTL";
+        //生产退料
+        String SCBG = "BG";
     }
 
     public interface WAREHOUSE_LIST {
@@ -392,6 +394,21 @@ public class Constants {
         Integer RECEIVED = 1;
 
 
+    }
+
+    /**
+     * 审核状态为
+     */
+    public interface DICT_WORK_TYPE {
+        /**
+         * 个人计件
+         */
+        String GR = "0";
+
+        /**
+         * 集体计件
+         */
+        String JT = "1";
     }
 
     /**

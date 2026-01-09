@@ -744,6 +744,9 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
             if (dictCode.contains(DIY_DICT_CONSTANT.CUSTOMER)) {
                 ls = this.queryDictItemsByDiyCode(DIY_DICT_CONSTANT.CUSTOMER_SQL);
             }
+            if (dictCode.contains(DIY_DICT_CONSTANT.CUSTOMER)) {
+                ls = this.queryDictItemsByDiyCode(DIY_DICT_CONSTANT.CUSTOMER_SQL);
+            }
             // 产品
             if (dictCode.contains(DIY_DICT_CONSTANT.PRODUCTION)) {
                 ls = this.queryDictItemsByDiyCode(PRODUCTION_SQL);

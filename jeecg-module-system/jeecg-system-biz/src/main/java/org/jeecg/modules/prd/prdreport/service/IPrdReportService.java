@@ -44,5 +44,8 @@ public interface IPrdReportService extends IService<PrdReport> {
 	 * @param idList
 	 */
 	public void delBatchMain (Collection<? extends Serializable> idList);
-	
+
+    int audit(List<String> ids);
+
+	int unAudit(List<String> ids);
 }
